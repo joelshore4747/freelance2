@@ -1,0 +1,1329 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+    /* Light mode colors - reset to normal light theme */
+    --background: oklch(1 0 0); /* Pure white background */
+    --foreground: oklch(0.145 0 0); /* Dark text for maximum contrast */
+    --card: oklch(1 0 0); /* White cards */
+    --card-foreground: oklch(0.145 0 0); /* Dark text on cards */
+    --popover: oklch(1 0 0); /* White popover */
+    --popover-foreground: oklch(0.145 0 0); /* Dark text in popovers */
+
+    /* Enhanced Caribbean blue color system for light mode */
+    --primary: oklch(0.488 0.084 205.882); /* Caribbean Current - Deep teal blue */
+    --primary-foreground: oklch(0.985 0 0); /* White text on primary */
+    --secondary: oklch(0.777 0.068 187.477); /* Light Caribbean blue */
+    --secondary-foreground: oklch(0.145 0 0); /* Dark text on secondary */
+    --accent: oklch(0.555 0.095 208.001); /* Medium Caribbean blue for accents */
+    --accent-foreground: oklch(0.985 0 0); /* White text on accent */
+    --standout: oklch(0.74 0.102 41.397); /* Coral orange for standout text */
+    --standout-foreground: oklch(0.985 0 0); /* White text on standout */
+
+    --muted: oklch(0.97 0 0); /* Light gray for muted elements */
+    --muted-foreground: oklch(0.556 0 0); /* Medium gray for muted text */
+    --destructive: oklch(0.577 0.245 27.325); /* Red for errors */
+    --destructive-foreground: oklch(0.985 0 0); /* White text on red */
+    --border: oklch(0.922 0 0); /* Light gray borders */
+    --input: oklch(0.97 0 0); /* Light input fields */
+    --ring: oklch(0.4 0.15 200); /* Primary color ring */
+
+    /* Enhanced section backgrounds with Caribbean blues */
+    --section-primary: oklch(0.488 0.084 205.882); /* Caribbean Current - Deep teal blue */
+    --section-primary-foreground: oklch(0.985 0 0); /* White text on primary sections */
+    --section-secondary: oklch(0.777 0.068 187.477); /* Light Caribbean blue */
+    --section-secondary-foreground: oklch(0.145 0 0); /* Dark text on light sections */
+    --section-accent: oklch(0.555 0.095 208.001); /* Medium Caribbean blue for accents */
+    --section-accent-foreground: oklch(0.985 0 0); /* White text on accent sections */
+    --section-white: oklch(0.967 0.01 219.588); /* Pure white sections */
+    --section-white-foreground: oklch(0.145 0 0); /* Dark text on white sections */
+    --section-muted: oklch(0.923 0.041 38.731); /* Very light gray sections */
+    --section-muted-foreground: oklch(0.145 0 0); /* Dark text on muted sections */
+
+    /* Light mode dynamic color variables */
+    --company-text-base: oklch(0.145 0 0); /* Dark text base for light mode */
+    --tech-text-base: oklch(0.145 0 0); /* Dark text base for light mode */
+    --tech-accent-1: oklch(0.488 0.084 205.882); /* Deep blue accent */
+    --tech-accent-2: oklch(0.555 0.095 280); /* Purple accent */
+    --tech-accent-3: oklch(0.555 0.095 160); /* Teal accent */
+    --tech-accent-4: oklch(0.74 0.102 41.397); /* Orange accent */
+
+    --chart-1: oklch(0.488 0.084 205.882); /* Caribbean Current - Deep teal blue */
+    --chart-2: oklch(0.555 0.095 208.001);
+    --chart-3: oklch(0.777 0.068 187.477);
+    --chart-4: oklch(0.74 0.102 41.397);
+    --chart-5: oklch(0.7 0.1 180);
+    --radius: 0.75rem; /* Slightly larger radius for modern look */
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.488 0.084 205.882); /* Caribbean Current - Deep teal blue */
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.145 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.488 0.084 205.882); /* Caribbean Current - Deep teal blue */
+    --radius-lg: 1rem; /* Added CSS variables for Apple-inspired styling */
+
+    --shadow-ambient: color-mix(in oklch, var(--color-tech-accent-1) 18%, transparent);
+    --shadow-boost: color-mix(in oklch, var(--color-tech-accent-1) 28%, transparent);
+    /* soft edge for realism */
+    --shadow-soft-edge: color-mix(in oklch, var(--color-border) 35%, transparent);
+
+    /* elevation recipes (use the variables above) */
+    --elev-0: none;
+    --elev-1: 0 4px 20px var(--shadow-ambient), 0 1px 3px var(--shadow-soft-edge);
+    --elev-2: 0 10px 25px var(--shadow-boost), 0 2px 6px var(--shadow-soft-edge);
+}
+
+.dark {
+    /* Updated dark mode with completely different color palette - deep purples and warm golds */
+    --background: oklch(0.12 0.02 270); /* Deep purple-black background */
+    --foreground: oklch(0.92 0.01 60); /* Warm white text */
+    --card: oklch(0.18 0.03 270); /* Dark purple cards */
+    --card-foreground: oklch(0.92 0.01 60); /* Warm white text on cards */
+    --popover: oklch(0.18 0.03 270); /* Dark purple popover */
+    --popover-foreground: oklch(0.92 0.01 60); /* Warm white text in popovers */
+
+    /* Dark mode with purple and gold theme */
+    --primary: oklch(0.65 0.15 280); /* Rich purple primary */
+    --primary-foreground: oklch(0.95 0.01 60); /* Warm white text on primary */
+    --secondary: oklch(0.25 0.05 270); /* Dark purple secondary */
+    --secondary-foreground: oklch(0.85 0.02 60); /* Light warm text on secondary */
+    --accent: oklch(0.7 0.12 45); /* Warm gold accent */
+    --accent-foreground: oklch(0.15 0.02 270); /* Dark purple text on accent */
+    --standout: oklch(0.75 0.15 30); /* Warm orange-gold for standout */
+    --standout-foreground: oklch(0.15 0.02 270); /* Dark purple text on standout */
+
+    --muted: oklch(0.22 0.02 270); /* Dark purple muted elements */
+    --muted-foreground: oklch(0.65 0.01 60); /* Medium warm gray for muted text */
+    --destructive: oklch(0.55 0.2 15); /* Warm red for errors */
+    --destructive-foreground: oklch(0.95 0.01 60); /* Warm white text on red */
+    --border: oklch(0.28 0.03 270); /* Dark purple borders */
+    --input: oklch(0.22 0.02 270); /* Dark purple input fields */
+    --ring: oklch(0.65 0.15 280); /* Purple ring */
+
+    /* Dark mode section backgrounds with purple and gold theme */
+    --section-primary: oklch(0.2 0.04 270); /* Dark purple primary sections */
+    --section-primary-foreground: oklch(0.9 0.01 60); /* Warm white text */
+    --section-secondary: oklch(0.15 0.02 270); /* Very dark purple secondary */
+    --section-secondary-foreground: oklch(0.92 0.01 60); /* Warm white text */
+    --section-accent: oklch(0.25 0.05 45); /* Dark gold accent sections */
+    --section-accent-foreground: oklch(0.9 0.01 60); /* Warm white text */
+    --section-white: oklch(0.18 0.03 270); /* Dark purple instead of white */
+    --section-white-foreground: oklch(0.92 0.01 60); /* Warm white text */
+    --section-muted: oklch(0.14 0.02 270); /* Very dark purple muted */
+    --section-muted-foreground: oklch(0.92 0.01 60); /* Warm white text */
+
+    /* Dark mode dynamic color variables with purple and gold theme */
+    --company-text-base: oklch(0.92 0.01 60); /* Warm white base for dark mode */
+    --tech-text-base: oklch(0.92 0.01 60); /* Warm white base for dark mode */
+    --tech-accent-1: oklch(0.7 0.12 280); /* Purple accent */
+    --tech-accent-2: oklch(0.75 0.15 320); /* Magenta accent */
+    --tech-accent-3: oklch(0.7 0.12 45); /* Gold accent */
+    --tech-accent-4: oklch(0.75 0.15 30); /* Warm orange accent */
+
+    --chart-1: oklch(0.65 0.15 280);
+    --chart-2: oklch(0.7 0.12 45);
+    --chart-3: oklch(0.75 0.15 320);
+    --chart-4: oklch(0.75 0.15 30);
+    --chart-5: oklch(0.7 0.1 200);
+    --sidebar: oklch(0.18 0.03 270);
+    --sidebar-foreground: oklch(0.92 0.01 60);
+    --sidebar-primary: oklch(0.65 0.15 280);
+    --sidebar-primary-foreground: oklch(0.95 0.01 60);
+    --sidebar-accent: oklch(0.22 0.02 270);
+    --sidebar-accent-foreground: oklch(0.92 0.01 60);
+    --sidebar-border: oklch(0.28 0.03 270);
+    --sidebar-ring: oklch(0.65 0.15 280);
+
+    --shadow-ambient: color-mix(in oklch, var(--color-tech-accent-1) 30%, transparent);
+    --shadow-boost: color-mix(in oklch, var(--color-tech-accent-1) 40%, transparent);
+    --shadow-soft-edge: color-mix(in oklch, var(--color-foreground) 12%, transparent);
+}
+
+@theme inline {
+    --font-sans: "Space Grotesk", "Inter", var(--font-geist-sans);
+    --font-serif: "DM Sans", "Plus Jakarta Sans", var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
+    /* Enhanced color mappings with Caribbean blues and standout color */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-standout: var(--standout);
+    --color-standout-foreground: var(--standout-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    /* Added color mappings for dynamic text colors */
+    --color-company-text-base: var(--company-text-base);
+    --color-tech-text-base: var(--tech-text-base);
+    --color-tech-accent-1: var(--tech-accent-1);
+    --color-tech-accent-2: var(--tech-accent-2);
+    --color-tech-accent-3: var(--tech-accent-3);
+    --color-tech-accent-4: var(--tech-accent-4);
+
+    --color-section-primary: var(--section-primary);
+    --color-section-primary-foreground: var(--section-primary-foreground);
+    --color-section-secondary: var(--section-secondary);
+    --color-section-secondary-foreground: var(--section-secondary-foreground);
+    --color-section-accent: var(--section-accent);
+    --color-section-accent-foreground: var(--section-accent-foreground);
+    --color-section-white: var(--section-white);
+    --color-section-white-foreground: var(--section-white-foreground);
+    --color-section-muted: var(--section-muted);
+    --color-section-muted-foreground: var(--section-muted-foreground);
+
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Added utility classes for standout text and section backgrounds */
+@layer utilities {
+    .text-standout {
+        color: var(--color-standout);
+    }
+    .bg-standout {
+        background-color: var(--color-standout);
+    }
+    .bg-section-primary {
+        background-color: var(--color-section-primary);
+        color: var(--color-section-primary-foreground);
+    }
+    .bg-section-secondary {
+        background-color: var(--color-section-secondary);
+        color: var(--color-section-secondary-foreground);
+    }
+    .bg-section-accent {
+        background-color: var(--color-section-accent);
+        color: var(--color-section-accent-foreground);
+    }
+    .bg-section-white {
+        background-color: var(--color-section-white);
+        color: var(--color-section-white-foreground);
+    }
+    .bg-section-muted {
+        background-color: var(--color-section-muted);
+        color: var(--color-section-muted-foreground);
+    }
+
+    /* Modern animations */
+    .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+        opacity: 0;
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .animate-fade-in-left {
+        animation: fadeInLeft 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    .animate-fade-in-right {
+        animation: fadeInRight 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    .animate-slide-in-left {
+        animation: slideInLeft 1s ease-out forwards;
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    .animate-slide-in-up {
+        animation: slideInUp 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    .animate-wave {
+        animation: wave 3s ease-in-out infinite;
+    }
+
+    .animate-glow {
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .animate-bounce-subtle {
+        animation: bounceSubtle 2s ease-in-out infinite;
+    }
+
+    .animate-bounce-in {
+        animation: bounceIn 0.8s ease-out forwards;
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    .animate-pulse-color {
+        animation: pulseColor 2s ease-in-out infinite;
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-count-up {
+        animation: countUp 1s ease-out forwards;
+    }
+
+    .animation-delay-300 {
+        animation-delay: 300ms;
+    }
+
+    .animation-delay-600 {
+        animation-delay: 600ms;
+    }
+
+    .animation-delay-900 {
+        animation-delay: 900ms;
+    }
+
+    .shadow-3xl {
+        box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .shadow-soft {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .shadow-enhanced {
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    /* Added scrollbar-hide utility for Apple-like carousels */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Added Apple-style scroll animations for fade-in + upward motion */
+    .animate-scroll-fade-up {
+        animation: scrollFadeUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    /* Added parallax reveal animation */
+    .animate-parallax-reveal {
+        animation: parallaxReveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    /* Added modern shader gradient animations */
+    .animate-gradient-shift {
+        animation: gradientShift 8s ease-in-out infinite;
+    }
+
+    .animate-mesh-gradient {
+        animation: meshGradient 12s ease-in-out infinite;
+    }
+
+    .animate-wave-flow {
+        animation: waveFlow 6s ease-in-out infinite;
+    }
+
+    /* Replacing subtle depth animations with bold elegant gradient animations */
+    .animate-bold-gradient-1 {
+        animation: boldGradient1 10s ease-in-out infinite;
+    }
+
+    .animate-bold-gradient-2 {
+        animation: boldGradient2 15s ease-in-out infinite reverse;
+    }
+
+    .animate-bold-gradient-3 {
+        animation: boldGradient3 20s ease-in-out infinite;
+    }
+
+    .animate-elegant-flow {
+        animation: elegantFlow 12s ease-in-out infinite;
+    }
+
+    .animate-sleek-morph {
+        animation: sleekMorph 18s ease-in-out infinite;
+    }
+
+    /* Added progress bar fill animation for tech stack section */
+    .animate-fill-bar {
+        animation: fillBar 2s ease-out forwards;
+        width: 0%;
+    }
+
+    /* Added dynamic text color utilities with mix functions */
+    .text-company-dynamic {
+        color: color-mix(in oklch, var(--color-company-text-base) 85%, var(--color-tech-accent-1) 15%);
+    }
+
+    .text-tech-dynamic-1 {
+        color: color-mix(in oklch, var(--color-tech-text-base) 80%, var(--color-tech-accent-1) 20%);
+    }
+
+    .text-tech-dynamic-2 {
+        color: color-mix(in oklch, var(--color-tech-text-base) 80%, var(--color-tech-accent-2) 20%);
+    }
+
+    .text-tech-dynamic-3 {
+        color: color-mix(in oklch, var(--color-tech-text-base) 80%, var(--color-tech-accent-3) 20%);
+    }
+
+    .text-tech-dynamic-4 {
+        color: color-mix(in oklch, var(--color-tech-text-base) 80%, var(--color-tech-accent-4) 20%);
+    }
+
+    .text-tech-stat-dynamic {
+        color: color-mix(in oklch, var(--color-tech-text-base) 90%, var(--color-tech-accent-1) 10%);
+    }
+
+    /* Apple-inspired services section styling for clean design */
+    .services-title {
+        color: #000000; /* Pure black for maximum readability */
+        font-size: 1.5rem;
+        font-weight: 600;
+        font-family: var(--font-sans);
+        transition: all 0.3s ease;
+        letter-spacing: -0.025em;
+    }
+
+    /* Added dark mode white text for titles and headers */
+    .dark .services-title {
+        color: #ffffff;
+    }
+
+    .services-title:hover {
+        color: var(--color-standout); /* Orange on hover */
+    }
+
+    .services-description {
+        color: #000000; /* Black text for readability */
+        font-size: 1rem;
+        font-family: var(--font-serif);
+        font-weight: 400;
+        line-height: 1.5;
+        margin-top: 0rem; /* Remove spacing between title and description */
+    }
+
+    /* Added dark mode white text for descriptions */
+    .dark .services-description {
+        color: #ffffff;
+    }
+
+    .services-feature-text {
+        color: #000000; /* Black text for readability */
+        font-size: 0.875rem;
+        font-family: var(--font-serif);
+        font-weight: 400;
+        line-height: 1.4;
+    }
+
+    /* Added dark mode white text for feature text */
+    .dark .services-feature-text {
+        color: #ffffff;
+    }
+
+    .services-bullet {
+        width: 3px;
+        height: 3px;
+        background-color: #d1d5db; /* Light gray minimal bullets */
+        border-radius: 50%;
+        margin-top: 8px;
+        flex-shrink: 0;
+    }
+
+    .services-card {
+        transition: all 0.3s ease;
+        border: 1px solid #f3f4f6;
+        background: #ffffff;
+    }
+
+    .services-card:hover {
+        background: #fafafa; /* Very subtle background change on hover */
+        border-color: #e5e7eb;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .services-button {
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        color: #6b7280;
+        border-radius: 20px;
+        padding: 0.5rem 1.25rem;
+        font-family: var(--font-serif);
+        font-weight: 400;
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+        width: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 100px;
+        text-decoration: none;
+    }
+
+    .services-button:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+        color: #374151;
+    }
+
+    .services-icon-container {
+        transition: all 0.3s ease;
+    }
+
+    .services-icon-container:hover {
+        transform: scale(1.05);
+    }
+
+    /* Updated Apple-inspired services section with blue default border, orange hover, larger icons, and closer spacing */
+    .services-card-apple {
+        background: var(--color-card, #ffffff);
+        /* Default border is blue variable */
+        border: 1px solid var(--color-primary, #3b82f6);
+    }
+
+    /* Different shade for dark mode boxes */
+    .dark .services-card-apple {
+        box-shadow: var(--elev-0);
+    } /* no resting glow */
+    .dark .services-card-apple:hover {
+        box-shadow: var(--elev-2); /* blue glow */
+        border-color: var(--color-standout); /* orange border */
+    }
+
+    .services-card-apple:hover {
+        box-shadow: var(--elev-2); /* BLUE glow */
+        border-color: var(--color-standout); /* ORANGE border only */
+        background: color-mix(in oklch, var(--color-card) 94%, var(--color-section-muted) 6%);
+        transform: translateY(-2px);
+    }
+    .shadow-apple-glow {
+        box-shadow: var(--elev-1) !important;
+    }
+    .shadow-apple-glow:hover {
+        box-shadow: var(--elev-2) !important;
+    }
+
+    /* Adding universal glow effects without orange color changes for all containers */
+    .box-universal {
+        background: var(--color-card, #ffffff);
+        border: 1px solid var(--color-primary, #3b82f6);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .box-universal:hover {
+        box-shadow: var(--elev-2);
+        border-color: var(--color-primary);
+        background: color-mix(in oklch, var(--color-card) 94%, var(--color-section-muted) 6%);
+        transform: translateY(-2px);
+    }
+
+    .dark .box-universal {
+        box-shadow: var(--elev-0);
+    }
+
+    .dark .box-universal:hover {
+        box-shadow: var(--elev-2);
+        border-color: var(--color-primary);
+    }
+
+    /* Card universal class for consistent styling */
+    .card-universal {
+        background: var(--color-card, #ffffff);
+        border: 1px solid var(--color-primary, #3b82f6);
+        border-radius: 1rem;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .card-universal:hover {
+        box-shadow: var(--elev-2);
+        border-color: var(--color-primary);
+        background: color-mix(in oklch, var(--color-card) 94%, var(--color-section-muted) 6%);
+        transform: translateY(-2px);
+    }
+
+    .dark .card-universal {
+        box-shadow: var(--elev-0);
+    }
+
+    .dark .card-universal:hover {
+        box-shadow: var(--elev-2);
+    }
+
+    /* Featured work navigation tabs styling */
+    .work-nav-tab {
+        padding: 0.75rem 1.5rem;
+        border-radius: 2rem; /* Pill-shaped buttons */
+        border: none;
+        background: color-mix(in oklch, var(--color-muted) 40%, transparent);
+        backdrop-filter: blur(10px);
+        color: var(--color-muted-foreground);
+        font-size: 0.875rem;
+        font-weight: 500;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .work-nav-tab::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s;
+    }
+
+    .work-nav-tab:hover::before {
+        left: 100%;
+    }
+
+    .work-nav-tab:hover {
+        background: color-mix(in oklch, var(--color-muted) 60%, transparent);
+        color: var(--color-foreground);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px color-mix(in oklch, var(--color-primary) 15%, transparent);
+    }
+
+    .work-nav-tab.active {
+        background: color-mix(in oklch, var(--color-standout) 85%, var(--color-muted));
+        color: white;
+        box-shadow: 0 2px 12px color-mix(in oklch, var(--color-standout) 25%, transparent);
+    }
+
+    /* Featured work card styling with modern design */
+    .featured-work-card {
+        background: var(--color-card);
+        border: 1px solid color-mix(in oklch, var(--color-border) 50%, transparent);
+        border-radius: 1.5rem; /* Larger rounded corners */
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        position: relative;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 1px 3px color-mix(in oklch, var(--color-foreground) 5%, transparent), 0 8px 32px
+        color-mix(in oklch, var(--color-foreground) 3%, transparent);
+    }
+
+    .featured-work-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+                90deg,
+                transparent,
+                color-mix(in oklch, var(--color-primary) 30%, transparent),
+                transparent
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .featured-work-card:hover {
+        box-shadow: 0 4px 12px color-mix(in oklch, var(--color-foreground) 8%, transparent), 0 16px 64px
+        color-mix(in oklch, var(--color-foreground) 6%, transparent);
+        border-color: color-mix(in oklch, var(--color-primary) 30%, transparent);
+        transform: translateY(-8px) scale(1.02);
+    }
+
+    .featured-work-card:hover::before {
+        opacity: 1;
+    }
+
+    .dark .featured-work-card {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .dark .featured-work-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 16px 64px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Tech stack tags styling */
+    .tech-tag {
+        background: color-mix(in oklch, var(--color-primary) 8%, var(--color-muted));
+        color: var(--color-primary);
+        padding: 0.375rem 0.75rem;
+        border-radius: 1rem; /* More rounded */
+        font-size: 0.75rem;
+        font-weight: 500;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+        border: 1px solid color-mix(in oklch, var(--color-primary) 15%, transparent);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+    }
+
+    .tech-tag:hover {
+        background: color-mix(in oklch, var(--color-primary) 12%, var(--color-muted));
+        transform: translateY(-1px);
+    }
+
+    /* FAQ section styling with Apple-inspired design */
+    .faq-item details {
+        border: 1.5px solid var(--color-border);
+        border-radius: 1.5rem;
+        background: var(--color-card);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        box-shadow: 0 2px 8px color-mix(in oklch, var(--color-primary) 8%, transparent);
+    }
+
+    .faq-item details:hover {
+        border-color: color-mix(in oklch, var(--color-primary) 40%, transparent);
+        box-shadow: 0 8px 25px color-mix(in oklch, var(--color-primary) 15%, transparent);
+        transform: translateY(-1px);
+    }
+
+    .faq-item details[open] {
+        border-color: color-mix(in oklch, var(--color-primary) 50%, transparent);
+        box-shadow: 0 12px 30px color-mix(in oklch, var(--color-primary) 20%, transparent);
+    }
+
+    .faq-item summary {
+        padding: 1.5rem 2rem;
+        cursor: pointer;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        transition: all 0.2s ease;
+    }
+
+    .faq-item summary:hover {
+        background: color-mix(in oklch, var(--color-muted) 30%, transparent);
+    }
+
+    .faq-item details[open] summary {
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Universal glow effects for all containers without orange color changes */
+    .universal-glow-container {
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border-radius: 1rem;
+    }
+
+    .universal-glow-container:hover {
+        box-shadow: 0 8px 25px color-mix(in oklch, var(--color-primary) 15%, transparent), 0 0 0 1px
+        color-mix(in oklch, var(--color-primary) 20%, transparent);
+        transform: translateY(-2px);
+        background: color-mix(in oklch, var(--color-card) 96%, var(--color-primary) 4%);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceSubtle {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseColor {
+    0%,
+    100% {
+        color: var(--color-standout);
+    }
+    50% {
+        color: var(--color-primary);
+    }
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes wave {
+    0%,
+    100% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateX(5px) translateY(-5px) rotate(1deg);
+    }
+    50% {
+        transform: translateX(-5px) translateY(5px) rotate(-1deg);
+    }
+    75% {
+        transform: translateX(5px) translateY(5px) rotate(1deg);
+    }
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 20px rgba(116, 185, 255, 0.2);
+    }
+    to {
+        box-shadow: 0 0 30px rgba(116, 185, 255, 0.4), 0 0 40px rgba(116, 185, 255, 0.2);
+    }
+}
+
+/* Enhanced focus states for accessibility */
+*:focus-visible {
+    outline: 3px solid var(--color-standout);
+    outline-offset: 2px;
+}
+
+/* Improved text contrast and readability */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Enhanced shader-like gradient keyframes for subtle depth and layering */
+@keyframes gradientShift {
+    0%,
+    100% {
+        background: radial-gradient(ellipse 800px 600px at 20% 50%, rgba(116, 185, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 600px 800px at 80% 20%, rgba(255, 107, 107, 0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 400px 400px at 40% 80%, rgba(116, 185, 255, 0.04) 0%, transparent 70%);
+        filter: blur(0.5px);
+    }
+    33% {
+        background: radial-gradient(ellipse 700px 500px at 70% 40%, rgba(116, 185, 255, 0.06) 0%, transparent 65%),
+        radial-gradient(ellipse 500px 700px at 20% 70%, rgba(255, 107, 107, 0.14) 0%, transparent 80%),
+        radial-gradient(ellipse 600px 300px at 90% 10%, rgba(116, 185, 255, 0.05) 0%, transparent 70%);
+        filter: blur(0.8px);
+    }
+    66% {
+        background: radial-gradient(ellipse 600px 400px at 30% 20%, rgba(116, 185, 255, 0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 800px 600px at 60% 90%, rgba(255, 107, 107, 0.09) 0%, transparent 65%),
+        radial-gradient(ellipse 300px 600px at 10% 60%, rgba(116, 185, 255, 0.07) 0%, transparent 60%);
+        filter: blur(0.3px);
+    }
+}
+
+@keyframes meshGradient {
+    0%,
+    100% {
+        background: linear-gradient(
+                45deg,
+                rgba(116, 185, 255, 0.02) 0%,
+                transparent 30%,
+                rgba(255, 107, 107, 0.015) 50%,
+                transparent 70%,
+                rgba(116, 185, 255, 0.1) 240deg,
+                transparent 300deg,
+                rgba(255, 107, 107, 0.08) 360deg
+        );
+        transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+        filter: blur(1px);
+    }
+    25% {
+        background: linear-gradient(
+                135deg,
+                rgba(255, 107, 107, 0.015) 0%,
+                transparent 30%,
+                rgba(116, 185, 255, 0.025) 50%,
+                transparent 70%,
+                rgba(255, 107, 107, 0.14) 100%
+        );
+        transform: translateX(15px) translateY(-8px) rotate(1.5deg) scale(1.02);
+        filter: blur(0.8px);
+    }
+    50% {
+        background: linear-gradient(
+                225deg,
+                rgba(116, 185, 255, 0.025) 0%,
+                transparent 30%,
+                rgba(255, 107, 107, 0.02) 50%,
+                transparent 70%,
+                rgba(116, 185, 255, 0.015) 100%
+        );
+        transform: translateX(-8px) translateY(15px) rotate(-1.5deg) scale(0.98);
+        filter: blur(1.2px);
+    }
+    75% {
+        background: linear-gradient(
+                315deg,
+                rgba(255, 107, 107, 0.02) 0%,
+                transparent 30%,
+                rgba(116, 185, 255, 0.015) 50%,
+                transparent 70%,
+                rgba(255, 107, 107, 0.025) 100%
+        );
+        transform: translateX(8px) translateY(8px) rotate(0.8deg) scale(1.01);
+        filter: blur(0.6px);
+    }
+}
+
+@keyframes waveFlow {
+    0% {
+        background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(116, 185, 255, 0.03) 20%,
+                rgba(255, 107, 107, 0.02) 50%,
+                rgba(116, 185, 255, 0.03) 80%,
+                transparent 100%
+        );
+        transform: translateX(-120%) skewX(-2deg);
+        filter: blur(0.5px);
+    }
+    50% {
+        background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 107, 107, 0.025) 20%,
+                rgba(116, 185, 255, 0.1) 50%,
+                rgba(255, 107, 107, 0.025) 80%,
+                transparent 100%
+        );
+        transform: translateX(0%) skewX(0deg);
+        filter: blur(0.8px);
+    }
+    100% {
+        background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(116, 185, 255, 0.02) 20%,
+                rgba(255, 107, 107, 0.015) 50%,
+                rgba(116, 185, 255, 0.02) 80%,
+                transparent 100%
+        );
+        transform: translateX(120%) skewX(2deg);
+        filter: blur(0.3px);
+    }
+}
+
+@keyframes depthLayer1 {
+    0%,
+    100% {
+        background: radial-gradient(circle at 30% 40%, rgba(116, 185, 255, 0.04) 0%, transparent 50%);
+        transform: translateZ(0) scale(1);
+        filter: blur(2px);
+    }
+    50% {
+        background: radial-gradient(circle at 70% 60%, rgba(116, 185, 255, 0.06) 0%, transparent 60%);
+        transform: translateZ(10px) scale(1.05);
+        filter: blur(1.5px);
+    }
+}
+
+@keyframes depthLayer2 {
+    0%,
+    100% {
+        background: radial-gradient(ellipse 400px 200px at 60% 30%, rgba(255, 107, 107, 0.03) 0%, transparent 70%);
+        transform: translateZ(0) rotateX(0deg);
+        filter: blur(1.8px);
+    }
+    50% {
+        background: radial-gradient(ellipse 500px 300px at 40% 70%, rgba(255, 107, 107, 0.05) 0%, transparent 65%);
+        transform: translateZ(5px) rotateX(1deg);
+        filter: blur(1.2px);
+    }
+}
+
+@keyframes depthLayer3 {
+    0%,
+    100% {
+        background: linear-gradient(120deg, rgba(116, 185, 255, 0.02) 0%, transparent 40%, rgba(255, 107, 107, 0.015) 100%);
+        transform: translateZ(0) perspective(1000px) rotateY(0deg);
+        filter: blur(2.5px);
+    }
+    50% {
+        background: linear-gradient(240deg, rgba(255, 107, 107, 0.025) 0%, transparent 40%, rgba(116, 185, 255, 0.02) 100%);
+        transform: translateZ(-5px) perspective(1000px) rotateY(2deg);
+        filter: blur(2px);
+    }
+}
+
+@keyframes boldGradient1 {
+    0%,
+    100% {
+        background: radial-gradient(
+                ellipse 1200px 800px at 20% 30%,
+                rgba(116, 185, 255, 0.15) 0%,
+                rgba(255, 107, 107, 0.08) 30%,
+                transparent 70%
+        ),
+        radial-gradient(
+                ellipse 800px 1000px at 80% 70%,
+                rgba(255, 107, 107, 0.12) 0%,
+                rgba(116, 185, 255, 0.06) 40%,
+                transparent 80%
+        );
+        transform: scale(1) rotate(0deg);
+        filter: blur(1px);
+    }
+    33% {
+        background: radial-gradient(
+                ellipse 1000px 600px at 60% 20%,
+                rgba(255, 107, 107, 0.18) 0%,
+                rgba(116, 185, 255, 0.1) 35%,
+                transparent 75%
+        ),
+        radial-gradient(
+                ellipse 600px 800px at 30% 80%,
+                rgba(116, 185, 255, 0.14) 0%,
+                rgba(255, 107, 107, 0.07) 45%,
+                transparent 85%
+        );
+        transform: scale(1.05) rotate(2deg);
+        filter: blur(0.8px);
+    }
+    66% {
+        background: radial-gradient(
+                ellipse 900px 700px at 80% 40%,
+                rgba(116, 185, 255, 0.16) 0%,
+                rgba(255, 107, 107, 0.09) 25%,
+                transparent 65%
+        ),
+        radial-gradient(
+                ellipse 700px 900px at 10% 60%,
+                rgba(255, 107, 107, 0.13) 0%,
+                rgba(116, 185, 255, 0.08) 50%,
+                transparent 90%
+        );
+        transform: scale(0.95) rotate(-1deg);
+        filter: blur(1.2px);
+    }
+}
+
+@keyframes boldGradient2 {
+    0%,
+    100% {
+        background: linear-gradient(
+                135deg,
+                rgba(116, 185, 255, 0.12) 0%,
+                transparent 25%,
+                rgba(255, 107, 107, 0.08) 50%,
+                transparent 75%,
+                rgba(116, 185, 255, 0.1) 100%
+        );
+        transform: translateX(0) translateY(0) skewX(0deg);
+        filter: blur(0.5px);
+    }
+    25% {
+        background: linear-gradient(
+                225deg,
+                rgba(255, 107, 107, 0.14) 0%,
+                transparent 30%,
+                rgba(116, 185, 255, 0.11) 55%,
+                transparent 80%,
+                rgba(255, 107, 107, 0.09) 100%
+        );
+        transform: translateX(30px) translateY(-15px) skewX(2deg);
+        filter: blur(0.8px);
+    }
+    50% {
+        background: linear-gradient(
+                315deg,
+                rgba(116, 185, 255, 0.16) 0%,
+                transparent 35%,
+                rgba(255, 107, 107, 0.12) 60%,
+                transparent 85%,
+                rgba(116, 185, 255, 0.08) 100%
+        );
+        transform: translateX(-20px) translateY(25px) skewX(-1deg);
+        filter: blur(1px);
+    }
+    75% {
+        background: linear-gradient(
+                45deg,
+                rgba(255, 107, 107, 0.13) 0%,
+                transparent 28%,
+                rgba(116, 185, 255, 0.15) 52%,
+                transparent 78%,
+                rgba(255, 107, 107, 0.1) 100%
+        );
+        transform: translateX(15px) translateY(10px) skewX(1deg);
+        filter: blur(0.6px);
+    }
+}
+
+@keyframes boldGradient3 {
+    0%,
+    100% {
+        background: conic-gradient(
+                from 0deg at 50% 50%,
+                rgba(116, 185, 255, 0.08) 0deg,
+                transparent 60deg,
+                rgba(255, 107, 107, 0.06) 120deg,
+                transparent 180deg,
+                rgba(116, 185, 255, 0.1) 240deg,
+                transparent 300deg,
+                rgba(255, 107, 107, 0.08) 360deg
+        );
+        transform: rotate(0deg) scale(1);
+        filter: blur(2px);
+    }
+    50% {
+        background: conic-gradient(
+                from 180deg at 50% 50%,
+                rgba(255, 107, 107, 0.12) 0deg,
+                transparent 80deg,
+                rgba(116, 185, 255, 0.09) 140deg,
+                transparent 200deg,
+                rgba(255, 107, 107, 0.07) 260deg,
+                transparent 320deg,
+                rgba(116, 185, 255, 0.11) 360deg
+        );
+        transform: rotate(180deg) scale(1.1);
+        filter: blur(1.5px);
+    }
+}
+
+@keyframes elegantFlow {
+    0% {
+        background: radial-gradient(
+                ellipse 600px 400px at 0% 50%,
+                rgba(116, 185, 255, 0.14) 0%,
+                rgba(255, 107, 107, 0.08) 50%,
+                transparent 100%
+        );
+        transform: translateX(-100%) rotate(-5deg);
+        filter: blur(1px);
+    }
+    50% {
+        background: radial-gradient(
+                ellipse 800px 500px at 50% 50%,
+                rgba(255, 107, 107, 0.16) 0%,
+                rgba(116, 185, 255, 0.1) 50%,
+                transparent 100%
+        );
+        transform: translateX(0%) rotate(0deg);
+        filter: blur(0.5px);
+    }
+    100% {
+        background: radial-gradient(
+                ellipse 600px 400px at 100% 50%,
+                rgba(116, 185, 255, 0.12) 0%,
+                rgba(255, 107, 107, 0.09) 50%,
+                transparent 100%
+        );
+        transform: translateX(100%) rotate(5deg);
+        filter: blur(1px);
+    }
+}
+
+@keyframes sleekMorph {
+    0%,
+    100% {
+        background: radial-gradient(circle at 25% 25%, rgba(116, 185, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+        linear-gradient(45deg, rgba(116, 185, 255, 0.04) 0%, rgba(255, 107, 107, 0.06) 100%);
+        transform: scale(1) rotate(0deg);
+        filter: blur(0.8px);
+    }
+    20% {
+        background: radial-gradient(circle at 75% 25%, rgba(255, 107, 107, 0.14) 0%, transparent 60%),
+        radial-gradient(circle at 25% 75%, rgba(116, 185, 255, 0.11) 0%, transparent 55%),
+        linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(116, 185, 255, 0.07) 100%);
+        transform: scale(1.02) rotate(72deg);
+        filter: blur(0.6px);
+    }
+    40% {
+        background: radial-gradient(circle at 75% 75%, rgba(116, 185, 255, 0.13) 0%, transparent 65%),
+        radial-gradient(circle at 25% 25%, rgba(255, 107, 107, 0.09) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(116, 185, 255, 0.06) 0%, rgba(255, 107, 107, 0.08) 100%);
+        transform: scale(0.98) rotate(144deg);
+        filter: blur(1px);
+    }
+    60% {
+        background: radial-gradient(circle at 25% 75%, rgba(255, 107, 107, 0.15) 0%, transparent 70%),
+        radial-gradient(circle at 75% 25%, rgba(116, 185, 255, 0.08) 0%, transparent 45%),
+        linear-gradient(315deg, rgba(255, 107, 107, 0.07) 0%, rgba(116, 185, 255, 0.09) 100%);
+        transform: scale(1.05) rotate(216deg);
+        filter: blur(0.4px);
+    }
+    80% {
+        background: radial-gradient(circle at 50% 25%, rgba(116, 185, 255, 0.11) 0%, transparent 55%),
+        radial-gradient(circle at 50% 75%, rgba(255, 107, 107, 0.12) 0%, transparent 60%),
+        linear-gradient(45deg, rgba(116, 185, 255, 0.08) 0%, rgba(255, 107, 107, 0.05) 100%);
+        transform: scale(1.01) rotate(288deg);
+        filter: blur(0.7px);
+    }
+}
+
+/* Added keyframe for Apple-style scroll animation */
+@keyframes scrollFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.92);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+}
+
+/* Added parallax reveal keyframe for depth effect */
+@keyframes parallaxReveal {
+    from {
+        opacity: 0;
+        transform: translateY(60px) translateZ(-20px) rotateX(5deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) translateZ(0) rotateX(0deg);
+    }
+}
+
+/* Added progress bar fill animation for tech stack section */
+@keyframes fillBar {
+    from {
+        width: 0%;
+    }
+    to {
+        width: var(--final-width, 100%);
+    }
+}
+
+/* Added smooth fade-in animation for portfolio cards */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Added subtle glow animation for active elements */
+@keyframes subtleGlow {
+    0%,
+    100% {
+        box-shadow: 0 0 20px color-mix(in oklch, var(--color-standout) 15%, transparent);
+    }
+    50% {
+        box-shadow: 0 0 30px color-mix(in oklch, var(--color-standout) 25%, transparent);
+    }
+}
