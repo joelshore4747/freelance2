@@ -97,7 +97,7 @@
     --standout-foreground: oklch(0.15 0.02 270); /* Dark purple text on standout */
 
     --muted: oklch(0.22 0.02 270); /* Dark purple muted elements */
-    --muted-foreground: oklch(0.65 0.01 60); /* Medium warm gray for muted text */
+    --muted-foreground: #86868b; /* Medium warm gray for muted text */
     --destructive: oklch(0.55 0.2 15); /* Warm red for errors */
     --destructive-foreground: oklch(0.95 0.01 60); /* Warm white text on red */
     --border: oklch(0.28 0.03 270); /* Dark purple borders */
@@ -1326,4 +1326,37 @@
     50% {
         box-shadow: 0 0 30px color-mix(in oklch, var(--color-standout) 25%, transparent);
     }
+}
+
+
+@keyframes bg-pan {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .hero-animated-bg { animation: none !important; }
+}
+
+@keyframes glow {
+    0%, 100% { opacity: .50; }
+    50%      { opacity: .75; }
+}
+
+
+/* Featured Work nav pill active state */
+.featured-pill-active {
+    @apply relative border-2 border-indigo-400 font-bold text-white text-lg px-7 py-3 rounded-full transition-all;
+    background: transparent;
+}
+
+.featured-pill-active::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.45);
+    z-index: -1;
 }
