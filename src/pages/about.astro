@@ -1,0 +1,334 @@
+---
+import { ArrowRight, ChevronLeft, ChevronRight, Code, Heart, Palette, Sparkles, Target, Users, Zap, MessageSquare, Calendar } from "lucide-react"
+import Layout from "@/layouts/Layout.astro"
+import Navigation from "@/components/Navigation.astro"
+import Footer from "@/components/Footer.astro"
+import Badge from "@/components/ui/Badge.astro"
+
+const TEAM_MEMBERS = [
+  {
+    name: "Alex Chen",
+    role: "Design Lead & Co-Founder",
+    bio: "Alex shapes the visual language, interaction patterns, and product feel so every release is coherent and human.",
+    strengths: ["Narrative-led UX", "Inclusive systems", "Design stewardship"],
+    tools: "Figma, Framer, After Effects",
+    image: "/professional-designer-portrait.png",
+    Icon: Palette,
+  },
+  {
+    name: "Jordan Smith",
+    role: "Engineering Lead & Co-Founder",
+    bio: "Jordan turns concepts into resilient, scalable products with an eye on performance, accessibility, and maintainability.",
+    strengths: ["Product architecture", "Edge-to-cloud", "Performance tuning"],
+    tools: "TypeScript, Next.js, AWS",
+    image: "/professional-developer-portrait.png",
+    Icon: Code,
+  },
+]
+
+const VALUES = [
+  { title: "Human-centred", description: "We obsess over clarity and comfort so interfaces feel intuitive from day one.", Icon: Users },
+  { title: "Measurable outcomes", description: "Beautiful design matters most when it moves the metrics that matter to your business.", Icon: Target },
+  { title: "Always evolving", description: "We stay curious, experiment with new tech, and ship innovations without the risk.", Icon: Zap },
+  { title: "Craft & care", description: "Details compound. We sweat the small things so the big picture sings.", Icon: Heart },
+]
+
+const GALLERY_ITEMS = [
+  { src: "/professional-designer-portrait.jpg", alt: "Brand system tiles", label: "Brand Systems" },
+  { src: "/professional-designer-portrait.jpg", alt: "Component detail", label: "Design System" },
+  { src: "/professional-designer-portrait.jpg", alt: "Analytics board", label: "Product Metrics" },
+  { src: "/professional-designer-portrait.jpg", alt: "Prototype flow", label: "Prototype" },
+]
+
+const VALUE_TONE = [
+  "text-tech-1 bg-tech-1-10",
+  "text-tech-2 bg-tech-2-10",
+  "text-tech-3 bg-tech-3-10",
+  "text-tech-4 bg-tech-4-10",
+]
+---
+
+<Layout title="About - Studio Duo" description="Meet the designer-developer duo behind Studio Duo. Our values, our team, and how we ship product.">
+  <div class="min-h-dvh bg-background text-foreground">
+    <Navigation />
+
+    <section class="relative overflow-hidden bg-section-white cv-auto">
+      <div class="pointer-events-none absolute inset-0">
+        <div class="absolute -top-32 -left-32 h-[500px] w-[500px] rounded-full bg-tech-1-10 blur-3xl opacity-80 animate-float"></div>
+        <div class="absolute top-1/3 -right-32 h-[450px] w-[450px] rounded-full bg-tech-2-10 blur-3xl opacity-80 animate-float animation-delay-300"></div>
+        <div class="absolute -bottom-32 left-6 h-[550px] w-[550px] rounded-full bg-tech-3-10 blur-3xl opacity-80 animate-float animation-delay-600"></div>
+        <div class="absolute top-1/4 left-1/4 h-72 w-72 rounded-full bg-tech-4-10 blur-2xl opacity-70 animate-float animation-delay-900"></div>
+        <div class="absolute bottom-20 right-1/3 h-64 w-64 rounded-full bg-primary/20 blur-2xl opacity-70 animate-float"></div>
+        <div class="absolute inset-0 bg-hero-glow opacity-70"></div>
+        <div class="hero-grid-overlay absolute inset-0"></div>
+        <div class="absolute -inset-8 md:-inset-12 hero-animated-bg pointer-events-none bg-gradient-to-br from-standout/10 via-transparent to-primary/60 [background-size:200%_200%] [animation:bg-pan_18s_ease-in-out_infinite]"></div>
+      </div>
+
+      <div class="relative mx-auto flex max-w-7xl flex-col items-center px-6 py-24 text-center sm:py-32 lg:py-40">
+        <Badge class="scroll-animate mb-8 border-2 border-standout/30 bg-standout/20 text-standout font-bold shadow-lg backdrop-blur-sm opacity-0 translate-y-6 hover:scale-110 transition-transform duration-300 text-sm px-6 py-2">
+          About Studio Duo
+        </Badge>
+        <h1 class="scroll-animate text-balance text-4xl font-bold tracking-tight text-section-white-foreground opacity-0 translate-y-6 sm:text-6xl lg:text-7xl">
+          A <span class="text-gradient-tech font-extrabold">designer</span> and <span class="text-gradient-tech font-extrabold">developer</span> working as one product team
+        </h1>
+        <p class="scroll-animate mt-6 max-w-2xl text-lg text-muted-foreground opacity-0 translate-y-6 sm:text-xl font-medium">
+          We help teams ship crisp interfaces and robust systems—fast, measurable, and maintainable.
+        </p>
+        <div class="scroll-animate mt-10 flex flex-wrap items-center justify-center gap-3 opacity-0 translate-y-6">
+          <a href="/contact" class="inline-flex items-center justify-center gap-2 h-10 px-8 text-lg rounded-md font-bold bg-standout hover:bg-standout/90 text-standout-foreground shadow-xl hover:scale-105 transition-all duration-300">
+            Book a call <ArrowRight className="h-5 w-5" />
+          </a>
+          <a href="#work" class="inline-flex items-center justify-center gap-2 h-10 px-8 text-lg rounded-md font-bold border-2 border-white/30 bg-white/10 hover:bg-white/20 text-foreground dark:text-white shadow-xl hover:scale-105 transition-all duration-300 backdrop-blur-sm">
+            See work <Sparkles className="h-5 w-5" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-section-muted py-24 sm:py-32 cv-auto">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="scroll-animate text-center opacity-0 translate-y-6">
+          <Badge class="border-2 border-standout/30 bg-standout/20 text-standout font-bold shadow-lg backdrop-blur-sm text-sm px-6 py-2">
+            The team
+          </Badge>
+          <h2 class="mt-6 text-balance text-3xl font-bold tracking-tight text-section-white-foreground sm:text-5xl">
+            Meet the duo leading every project
+          </h2>
+          <p class="mt-4 text-lg font-medium leading-relaxed text-muted-foreground sm:text-xl">
+            Strategy, design, and engineering move in sync so you never feel a hand-off.
+          </p>
+        </div>
+
+        <div class="mt-16 grid gap-8 md:grid-cols-2">
+          {
+            TEAM_MEMBERS.map(member => (
+              <div class="scroll-animate card-universal bg-card text-card-foreground rounded-xl border shadow-sm opacity-0 translate-y-6 p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.15)] hover:ring-2 hover:ring-white/10 hover:bg-white/5 backdrop-blur-sm">
+                <div class="flex items-start gap-6">
+                  <div class="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-border">
+                    <img src={member.image} alt={`${member.name} portrait`} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                  </div>
+                  <div class="min-w-0">
+                    <div class="truncate text-xl font-bold text-section-white-foreground leading-none">{member.name}</div>
+                    <p class="mt-1 text-sm font-semibold text-standout">{member.role}</p>
+                  </div>
+                </div>
+                <p class="mt-5 text-sm leading-relaxed text-muted-foreground font-medium">{member.bio}</p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  {member.strengths.map(s => <span class="tech-tag">{s}</span>)}
+                </div>
+                <div class="mt-5 text-sm text-muted-foreground font-medium">
+                  <span class="opacity-80">Tools:</span> {member.tools}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-section-white py-16 sm:py-24 lg:py-32 cv-auto">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="text-center">
+          <h2 class="scroll-animate text-balance text-3xl font-bold tracking-tight text-section-white-foreground opacity-0 translate-y-6 sm:text-5xl">
+            Our Values
+          </h2>
+          <p class="scroll-animate mx-auto mt-4 max-w-3xl text-lg font-medium text-muted-foreground opacity-0 translate-y-6 sm:text-xl">
+            The principles that guide everything we do and ensure exceptional results.
+          </p>
+        </div>
+
+        <div class="mt-10 md:hidden">
+          <div class="mb-4 flex items-center justify-end gap-2">
+            <button type="button" data-values-prev class="inline-flex items-center justify-center size-9 rounded-md bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80" aria-label="Previous">
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button type="button" data-values-next class="inline-flex items-center justify-center size-9 rounded-md bg-primary text-primary-foreground shadow-xs hover:bg-primary/90" aria-label="Next">
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div data-values-rail class="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 scrollbar-hide">
+            {
+              VALUES.map((value, idx) => (
+                <div class="w-72 snap-center shrink-0">
+                  <div class="card-universal bg-card/80 text-card-foreground rounded-2xl border-2 ring-2 ring-border/50 backdrop-blur-sm p-6 group hover:ring-white/20 hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.2)] hover:bg-white/10 transition-all duration-500 h-full">
+                    <div class={`mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${VALUE_TONE[idx % 4]} group-hover:rotate-6 transition-transform duration-500`}>
+                      <value.Icon className="h-7 w-7" />
+                    </div>
+                    <div class="text-xl font-bold text-section-white-foreground">{value.title}</div>
+                    <p class="text-muted-foreground text-sm mt-3 leading-relaxed font-medium">{value.description}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="scroll-animate mx-auto mt-12 hidden max-w-7xl grid-cols-4 gap-6 opacity-0 translate-y-6 md:grid">
+          {
+            VALUES.map((value, idx) => (
+              <div class="card-universal bg-card/80 text-card-foreground rounded-2xl border-2 ring-2 ring-border/50 backdrop-blur-sm p-6 group h-full transition-all duration-500 hover:translate-x-2 hover:ring-white/20 hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.2)] hover:bg-white/10">
+                <div class={`mb-5 inline-flex h-14 w-14 items-center justify-center rounded-xl ${VALUE_TONE[idx % 4]} group-hover:rotate-6 transition-transform duration-500`}>
+                  <value.Icon className="h-6 w-6" />
+                </div>
+                <div class="text-lg font-bold text-section-white-foreground">{value.title}</div>
+                <p class="text-muted-foreground text-sm mt-2 leading-relaxed font-medium">{value.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="work" aria-label="Work collage" class="relative py-24 overflow-hidden cv-auto">
+      <div class="pointer-events-none absolute inset-0">
+        <div class="absolute -inset-8 md:-inset-12 hero-animated-bg pointer-events-none bg-gradient-to-br from-primary/20 via-transparent to-standout/20 [background-size:200%_200%] [animation:bg-pan_18s_ease-in-out_infinite]"></div>
+        <div class="absolute inset-0 bg-hero-glow opacity-50"></div>
+      </div>
+
+      <div class="mx-auto max-w-7xl px-6 relative">
+        <div class="text-center mb-16">
+          <h2 class="scroll-animate text-balance text-3xl font-bold tracking-tight text-foreground opacity-0 translate-y-6 sm:text-5xl mb-4">
+            Our Work in Action
+          </h2>
+          <p class="scroll-animate text-lg font-medium text-muted-foreground opacity-0 translate-y-6 sm:text-xl">
+            A glimpse into the projects we’ve crafted with care
+          </p>
+        </div>
+
+        <div class="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)", gridAutoRows: "300px" }}>
+          <div class="rounded-2xl bg-white/10 ring-1 ring-white/10 backdrop-blur-md flex items-center justify-center text-center p-6 sm:p-8 text-white" style={{ gridRow: "span 2" }}>
+            <div class="max-w-xs">
+              <h3 class="text-lg sm:text-xl font-medium">Strategic by Design</h3>
+              <p class="mt-3 text-sm leading-relaxed opacity-90">Workshops, audit notes, and priorities mapped to outcomes.</p>
+            </div>
+          </div>
+          {
+            GALLERY_ITEMS.slice(0, 1).map(item => (
+              <div class="relative overflow-hidden rounded-2xl ring-1 ring-border bg-card" style={{ gridRow: "span 2" }}>
+                <img src={item.src} alt={item.alt} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                <div class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between p-3 text-[0.65rem] font-medium uppercase tracking-[0.35em] text-white/90">
+                  <span>Studio Duo</span><span>{item.label}</span>
+                </div>
+              </div>
+            ))
+          }
+          {
+            GALLERY_ITEMS.slice(1, 2).map(item => (
+              <div class="relative overflow-hidden rounded-2xl ring-1 ring-border bg-card">
+                <img src={item.src} alt={item.alt} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                <div class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between p-3 text-[0.65rem] font-medium uppercase tracking-[0.35em] text-white/90">
+                  <span>Studio Duo</span><span>{item.label}</span>
+                </div>
+              </div>
+            ))
+          }
+          <div class="rounded-2xl bg-white/10 ring-1 ring-white/10 backdrop-blur-md flex items-center justify-center text-center p-6 sm:p-8 text-white">
+            <div class="max-w-xs">
+              <h3 class="text-lg sm:text-xl font-medium">Built for Adoption</h3>
+              <p class="mt-3 text-sm leading-relaxed opacity-90">Clear flows, smart defaults, and onboarding that sticks.</p>
+            </div>
+          </div>
+          {
+            GALLERY_ITEMS.slice(2, 3).map(item => (
+              <div class="relative overflow-hidden rounded-2xl ring-1 ring-border bg-card" style={{ gridRow: "span 2", gridColumn: "span 2" }}>
+                <img src={item.src} alt={item.alt} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                <div class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between p-3 text-[0.65rem] font-medium uppercase tracking-[0.35em] text-white/90">
+                  <span>Studio Duo</span><span>{item.label}</span>
+                </div>
+              </div>
+            ))
+          }
+          {
+            GALLERY_ITEMS.slice(3, 4).map(item => (
+              <div class="relative overflow-hidden rounded-2xl ring-1 ring-border bg-card">
+                <img src={item.src} alt={item.alt} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                <div class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between p-3 text-[0.65rem] font-medium uppercase tracking-[0.35em] text-white/90">
+                  <span>Studio Duo</span><span>{item.label}</span>
+                </div>
+              </div>
+            ))
+          }
+          <div class="rounded-2xl bg-white/10 ring-1 ring-white/10 backdrop-blur-md flex items-center justify-center text-center p-6 sm:p-8 text-white">
+            <div class="max-w-xs">
+              <h3 class="text-lg sm:text-xl font-medium">Ready to Scale</h3>
+              <p class="mt-3 text-sm leading-relaxed opacity-90">Reusable components and tokenized systems for rapid launches.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative overflow-hidden bg-section-white py-24 sm:py-32 cv-auto">
+      <div class="pointer-events-none absolute inset-0">
+        <div class="absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-tech-1-10 blur-3xl opacity-60 animate-float"></div>
+        <div class="absolute -bottom-24 right-1/4 h-96 w-96 rounded-full bg-standout/20 blur-3xl opacity-60 animate-float animation-delay-600"></div>
+        <div class="absolute -inset-8 md:-inset-12 hero-animated-bg pointer-events-none bg-gradient-to-br from-primary/10 via-transparent to-standout/10 [background-size:200%_200%] [animation:bg-pan_20s_ease-in-out_infinite]"></div>
+      </div>
+
+      <div class="relative mx-auto max-w-7xl px-6 text-center">
+        <div class="scroll-animate opacity-0 translate-y-6">
+          <Badge class="border-2 border-standout/30 bg-standout/20 text-standout font-bold shadow-lg backdrop-blur-sm text-sm px-6 py-2 mb-8">Let’s Talk</Badge>
+          <h2 class="text-balance text-4xl font-bold tracking-tight text-section-white-foreground sm:text-6xl">
+            Ready to build something <span class="text-gradient-tech font-extrabold">exceptional</span>?
+          </h2>
+          <p class="mt-6 text-lg font-medium leading-relaxed text-muted-foreground sm:text-xl max-w-2xl mx-auto">
+            Whether you need a quick sprint or a long-term partnership, we’re here to help you ship products that users love.
+          </p>
+        </div>
+
+        <div class="scroll-animate mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 opacity-0 translate-y-6">
+          <div class="card-universal bg-card text-card-foreground rounded-xl border shadow-sm p-8 w-full sm:w-auto hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.2)] hover:ring-2 hover:ring-white/20 transition-all duration-300">
+            <div class="flex flex-col items-center text-center gap-4">
+              <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-standout/20 text-standout">
+                <Calendar className="h-8 w-8" />
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-section-white-foreground mb-2">Book a Discovery Call</h3>
+                <p class="text-sm text-muted-foreground font-medium mb-4">30 minutes to explore your goals and see if we’re a fit</p>
+                <a href="/contact" class="inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md text-sm font-bold bg-standout hover:bg-standout/90 text-standout-foreground shadow-xl hover:scale-105 transition-all duration-300">
+                  Schedule now <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-universal bg-card text-card-foreground rounded-xl border shadow-sm p-8 w-full sm:w-auto hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.2)] hover:ring-2 hover:ring-white/20 transition-all duration-300">
+            <div class="flex flex-col items-center text-center gap-4">
+              <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-tech-2-10 text-tech-2">
+                <MessageSquare className="h-8 w-8" />
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-section-white-foreground mb-2">Send Us a Message</h3>
+                <p class="text-sm text-muted-foreground font-medium mb-4">Share your project details and we’ll get back within 24 hours</p>
+                <a href="/contact" class="inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md text-sm font-bold border-2 border-white/30 bg-white/10 hover:bg-white/20 text-white shadow-xl hover:scale-105 transition-all duration-300 backdrop-blur-sm">
+                  Get in touch <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="scroll-animate mt-12 text-sm text-muted-foreground font-medium opacity-0 translate-y-6">
+          Trusted by startups and established brands to deliver quality at speed
+        </p>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>
+
+<script>
+  const rail = document.querySelector<HTMLElement>("[data-values-rail]")
+  const prev = document.querySelector<HTMLButtonElement>("[data-values-prev]")
+  const next = document.querySelector<HTMLButtonElement>("[data-values-next]")
+  if (rail) {
+    prev?.addEventListener("click", () => rail.scrollBy({ left: -320, behavior: "smooth" }))
+    next?.addEventListener("click", () => rail.scrollBy({ left: 320, behavior: "smooth" }))
+  }
+</script>
