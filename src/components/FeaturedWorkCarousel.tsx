@@ -51,9 +51,18 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
     if (!rail) return
     const card = rail.querySelector<HTMLElement>("[data-fw-card]")
     if (!card) return
-    const cardW = card.offsetWidth
-    const gap = 32
-    rail.scrollTo({ left: i * (cardW + gap), behavior: "smooth" })
+    const w = card.offsetWidth + 32
+    rail.scrollTo({ left: i * w, behavior: "smooth" })
+  }
+  const step = (dir: 1 | -1) => {
+    const rail = railRef.current
+    if (!rail) return
+    const card = rail.querySelector<HTMLElement>("[data-fw-card]")
+    if (!card) return
+    const w = card.offsetWidth + 32
+    const current = Math.round(rail.scrollLeft / w)
+    const next = Math.max(0, Math.min(current + dir, filtered.length - 1))
+    rail.scrollTo({ left: next * w, behavior: "smooth" })
   }
 
   return (
@@ -88,7 +97,7 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
             <article
               key={work.id}
               data-fw-card
-              className="featured-work-card relative snap-center flex-shrink-0 rounded-2xl overflow-hidden bg-card/80 ring-1 ring-white/10 shadow-md hover:shadow-lg transition-all w-[20rem] sm:w-[28rem] lg:w-[42rem]"
+              className="featured-work-card relative snap-start flex-shrink-0 rounded-2xl overflow-hidden bg-card/80 ring-1 ring-white/10 shadow-md hover:shadow-lg transition-all w-[20rem] sm:w-[28rem] lg:w-[42rem]"
             >
               <div className="relative" style={{ aspectRatio: "16/7" }}>
                 <img
@@ -130,7 +139,7 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
         <div className="mt-8 flex items-center justify-center gap-4">
           <button
             type="button"
-            onClick={() => scrollTo(Math.max(0, index - 1))}
+            onClick={() => step(-1)}
             disabled={index === 0}
             className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             aria-label="Previous"
@@ -153,7 +162,7 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
           </div>
           <button
             type="button"
-            onClick={() => scrollTo(Math.min(filtered.length - 1, index + 1))}
+            onClick={() => step(1)}
             disabled={index === filtered.length - 1}
             className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             aria-label="Next"

@@ -43,6 +43,16 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
     const w = card.offsetWidth + 32
     rail.scrollTo({ left: i * w, behavior: "smooth" })
   }
+  const step = (dir: 1 | -1) => {
+    const rail = railRef.current
+    if (!rail) return
+    const card = rail.querySelector<HTMLElement>("[data-spot-card]")
+    if (!card) return
+    const w = card.offsetWidth + 32
+    const current = Math.round(rail.scrollLeft / w)
+    const next = Math.max(0, Math.min(current + dir, projects.length - 1))
+    rail.scrollTo({ left: next * w, behavior: "smooth" })
+  }
 
   return (
     <div className="relative">
@@ -58,7 +68,7 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
           <article
             key={s.id}
             data-spot-card
-            className="group relative shrink-0 snap-center overflow-hidden rounded-3xl border border-border bg-card shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+            className="group relative shrink-0 snap-start overflow-hidden rounded-3xl border border-border bg-card shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
             style={{ width: "min(1000px, 90vw)", height: "500px" }}
           >
             <div className="absolute inset-0">
@@ -100,7 +110,7 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
 
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
         <div className="mt-8 flex items-center justify-center gap-4">
-          <button type="button" onClick={() => scrollTo(Math.max(0, index - 1))} disabled={index === 0} className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all" aria-label="Previous">
+          <button type="button" onClick={() => step(-1)} disabled={index === 0} className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all" aria-label="Previous">
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
@@ -108,7 +118,7 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
               <button key={i} type="button" onClick={() => scrollTo(i)} aria-label={`Go to slide ${i + 1}`} className={cn("h-2 rounded-full transition-all", i === index ? "w-8 bg-standout" : "w-2 bg-border hover:bg-standout/50")} />
             ))}
           </div>
-          <button type="button" onClick={() => scrollTo(Math.min(projects.length - 1, index + 1))} disabled={index === projects.length - 1} className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all" aria-label="Next">
+          <button type="button" onClick={() => step(1)} disabled={index === projects.length - 1} className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all" aria-label="Next">
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
