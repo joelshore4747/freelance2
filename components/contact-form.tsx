@@ -53,7 +53,7 @@ export function ContactForm() {
             <Send className="w-8 h-8 text-primary-foreground" />
           </div>
           <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-          <p className="text-muted-foreground">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+          <p className="text-muted-foreground">Thank you for reaching out. We’ll get back to you within 24 hours.</p>
         </CardContent>
       </Card>
     )
@@ -65,7 +65,7 @@ export function ContactForm() {
         <CardHeader>
           <CardTitle className="text-2xl">Get Started Today</CardTitle>
           <CardDescription>
-            Ready to bring your vision to life? Let's discuss your project and create something amazing together.
+            Ready to bring your vision to life? Let’s discuss your project and create something amazing together.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -149,7 +149,7 @@ export function ContactForm() {
         <Card>
           <CardHeader>
             <CardTitle>Contact Information</CardTitle>
-            <CardDescription>Prefer to reach out directly? Here's how you can get in touch.</CardDescription>
+            <CardDescription>Prefer to reach out directly? Here’s how you can get in touch.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center gap-3">
@@ -188,7 +188,7 @@ export function ContactForm() {
               <div>
                 <p className="font-medium">Initial Consultation</p>
                 <p className="text-sm text-muted-foreground">
-                  We'll schedule a call to discuss your project in detail.
+                  We’ll schedule a call to discuss your project in detail.
                 </p>
               </div>
             </div>

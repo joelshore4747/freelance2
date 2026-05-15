@@ -202,7 +202,7 @@ export default function Page() {
   useScrollAnimation()
   const valuesCarouselRef = useRef<HTMLDivElement>(null)
 
-  const scrollCarousel = (ref: React.RefObject<HTMLDivElement>, dir: "left" | "right") => {
+  const scrollCarousel = (ref: React.RefObject<HTMLDivElement | null>, dir: "left" | "right") => {
     if (!ref.current) return
     const amount = 320
     ref.current.scrollTo({ left: ref.current.scrollLeft + (dir === "left" ? -amount : amount), behavior: "smooth" })
@@ -423,7 +423,7 @@ export default function Page() {
               Our Work in Action
             </h2>
             <p className="scroll-animate text-lg font-medium text-muted-foreground opacity-0 translate-y-6 sm:text-xl">
-              A glimpse into the projects we've crafted with care
+              A glimpse into the projects we’ve crafted with care
             </p>
           </div>
 
@@ -460,13 +460,13 @@ export default function Page() {
         <div className="relative mx-auto max-w-7xl px-6 text-center">
           <div className="scroll-animate opacity-0 translate-y-6">
             <Badge className="border-2 border-standout/30 bg-standout/20 text-standout font-bold shadow-lg backdrop-blur-sm text-sm px-6 py-2 mb-8">
-              Let's Talk
+              Let’s Talk
             </Badge>
             <h2 className="text-balance text-4xl font-bold tracking-tight text-section-white-foreground sm:text-6xl">
               Ready to build something <span className="text-gradient-tech font-extrabold">exceptional</span>?
             </h2>
             <p className="mt-6 text-lg font-medium leading-relaxed text-muted-foreground sm:text-xl max-w-2xl mx-auto">
-              Whether you need a quick sprint or a long-term partnership, we're here to help you ship products that
+              Whether you need a quick sprint or a long-term partnership, we’re here to help you ship products that
               users love.
             </p>
           </div>
@@ -480,7 +480,7 @@ export default function Page() {
                 <div>
                   <h3 className="text-xl font-bold text-section-white-foreground mb-2">Book a Discovery Call</h3>
                   <p className="text-sm text-muted-foreground font-medium mb-4">
-                    30 minutes to explore your goals and see if we're a fit
+                    30 minutes to explore your goals and see if we’re a fit
                   </p>
                   <Link href="#contact">
                     <Button className="gap-2 bg-standout hover:bg-standout/90 text-standout-foreground font-bold shadow-xl hover:scale-105 transition-all duration-300">
@@ -499,7 +499,7 @@ export default function Page() {
                 <div>
                   <h3 className="text-xl font-bold text-section-white-foreground mb-2">Send Us a Message</h3>
                   <p className="text-sm text-muted-foreground font-medium mb-4">
-                    Share your project details and we'll get back within 24 hours
+                    Share your project details and we’ll get back within 24 hours
                   </p>
                   <Link href="#contact">
                     <Button

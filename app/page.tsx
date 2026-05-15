@@ -396,7 +396,7 @@ export default function HomePageClient() {
       cancelAnimationFrame(id)
       cancelAnimationFrame(id2)
     }
-  }, [activeWorkCategory])
+  }, [activeWorkCategory, worksCarousel])
   // === /FEATURED WORK additions ===
 
   return (

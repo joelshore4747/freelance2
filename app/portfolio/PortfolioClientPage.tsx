@@ -1250,7 +1250,7 @@ export default function PortfolioClientPage() {
                         <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                       </div>
                     </div>
-                    <p className="text-base leading-relaxed text-foreground">"{testimonial.quote}"</p>
+                    <p className="text-base leading-relaxed text-foreground">“{testimonial.quote}”</p>
                     <div className="flex items-center gap-2 text-sm font-medium text-primary">
                       <CheckCircle2 className="h-4 w-4" />
                       <span>{testimonial.outcome}</span>
@@ -1270,7 +1270,7 @@ export default function PortfolioClientPage() {
           </div>
           <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
             <Badge variant="secondary" className="mx-auto mb-6 bg-white/20 text-white border border-white/30">
-              Let's collaborate
+              Let’s collaborate
             </Badge>
             <h2 className="text-3xl font-bold sm:text-5xl">
               Ready to automate, launch your site, or ship a business system?

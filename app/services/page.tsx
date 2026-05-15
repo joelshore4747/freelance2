@@ -388,7 +388,7 @@ export default function ServicesPage() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <h4 className="font-semibold text-foreground font-sans mb-3">What's Included:</h4>
+                    <h4 className="font-semibold text-foreground font-sans mb-3">What’s Included:</h4>
                     <ul className="space-y-2">
                       {tier.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-center gap-2 text-muted-foreground font-serif text-sm">
@@ -432,7 +432,7 @@ export default function ServicesPage() {
               What Our Clients Say
             </h2>
             <p className="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
-              Don't just take our word for it. Here's what our clients have to say about working with us.
+              Don’t just take our word for it. Here’s what our clients have to say about working with us.
             </p>
           </div>
 
@@ -467,7 +467,7 @@ export default function ServicesPage() {
                       <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                     ))}
                   </div>
-                  <blockquote className="text-foreground font-serif mb-4 text-pretty">"{testimonial.quote}"</blockquote>
+                  <blockquote className="text-foreground font-serif mb-4 text-pretty">“{testimonial.quote}”</blockquote>
                   <div>
                     <div className="font-semibold text-foreground font-sans">{testimonial.author}</div>
                     <div className="text-muted-foreground font-serif text-sm">{testimonial.role}</div>
@@ -486,7 +486,7 @@ export default function ServicesPage() {
             Ready to Get Started?
           </h2>
           <p className="text-xl text-muted-foreground font-serif mb-8 text-pretty">
-            Let's discuss your project and create a custom solution that drives results for your business.
+            Let’s discuss your project and create a custom solution that drives results for your business.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <GetStartedButton size="lg" className="font-serif font-semibold" />

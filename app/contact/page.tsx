@@ -25,10 +25,10 @@ export default function ContactPage() {
       <section className="py-20 lg:py-28 px-6 sm:px-8 lg:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-foreground">
-            Let's Build Something <span className="text-standout">Amazing Together</span>
+            Let’s Build Something <span className="text-standout">Amazing Together</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Ready to transform your ideas into reality? We're here to help you create exceptional digital experiences
+            Ready to transform your ideas into reality? We’re here to help you create exceptional digital experiences
             that drive results.
           </p>
         </div>

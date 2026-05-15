@@ -180,7 +180,7 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
                                             Message Sent!
                                         </h3>
                                         <p className="text-gray-800 dark:text-white/80 mb-8 text-lg">
-                                            Thank you for reaching out. We'll get back to you soon.
+                                            Thank you for reaching out. We’ll get back to you soon.
                                         </p>
                                         <Button
                                             onClick={() => setIsSubmitted(false)}

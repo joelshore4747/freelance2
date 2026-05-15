@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 
+const ASPECT = 9 / 16
+
 type CornerVideoPlayerProps = {
   url: string
   title?: string
@@ -11,8 +13,6 @@ type CornerVideoPlayerProps = {
 export function CornerVideoPlayer({ url, title, onClose }: CornerVideoPlayerProps) {
   const ref = useRef<HTMLVideoElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
-
-  const aspect = 9 / 16
   const [width, setWidth] = useState(560)
   const [pos, setPos] = useState<{ left: number; top: number }>({ left: 24, top: 24 })
   const [dragging, setDragging] = useState(false)
@@ -34,7 +34,7 @@ export function CornerVideoPlayer({ url, title, onClose }: CornerVideoPlayerProp
     const w = typeof window !== "undefined" ? window.innerWidth : 1200
     const h = typeof window !== "undefined" ? window.innerHeight : 800
     const initialW = Math.min(720, Math.max(420, Math.floor(w * 0.35)))
-    const initialH = Math.round(initialW * aspect)
+    const initialH = Math.round(initialW * ASPECT)
     setWidth(initialW)
     setPos({ left: Math.max(16, w - initialW - 16), top: Math.max(16, h - initialH - 16) })
   }, [])
@@ -43,7 +43,7 @@ export function CornerVideoPlayer({ url, title, onClose }: CornerVideoPlayerProp
     const w = typeof window !== "undefined" ? window.innerWidth : 1200
     const h = typeof window !== "undefined" ? window.innerHeight : 800
     const curW = next.width ?? width
-    const curH = Math.round(curW * aspect)
+    const curH = Math.round(curW * ASPECT)
     const left = Math.min(Math.max(0, next.left), Math.max(0, w - curW))
     const top = Math.min(Math.max(0, next.top), Math.max(0, h - curH))
     return { left, top }
@@ -53,7 +53,7 @@ export function CornerVideoPlayer({ url, title, onClose }: CornerVideoPlayerProp
   const onDragStart = (e: React.PointerEvent) => {
     setDragging(true)
     dragStart.current = { x: e.clientX, y: e.clientY, left: pos.left, top: pos.top }
-    (e.target as Element).setPointerCapture?.(e.pointerId)
+    ;(e.target as Element).setPointerCapture?.(e.pointerId)
   }
   const onDragMove = (e: React.PointerEvent) => {
     if (!dragging || !dragStart.current) return
@@ -70,7 +70,7 @@ export function CornerVideoPlayer({ url, title, onClose }: CornerVideoPlayerProp
   // Resizing (keeps 16:9)
   const onResizeStart = (e: React.PointerEvent) => {
     setResizing(true)
-    resizeStart.current = { x: e.clientX, y: e.clientY, width, height: Math.round(width * aspect) }
+    resizeStart.current = { x: e.clientX, y: e.clientY, width, height: Math.round(width * ASPECT) }
     ;(e.target as Element).setPointerCapture?.(e.pointerId)
   }
   const onResizeMove = (e: React.PointerEvent) => {
@@ -96,7 +96,7 @@ export function CornerVideoPlayer({ url, title, onClose }: CornerVideoPlayerProp
     <aside
       ref={containerRef}
       className="corner-video"
-      style={{ left: pos.left, top: pos.top, width, height: Math.round(width * aspect) }}
+      style={{ left: pos.left, top: pos.top, width, height: Math.round(width * ASPECT) }}
     >
       <header onPointerDown={onDragStart} onPointerMove={onDragMove} onPointerUp={onDragEnd}>
         <button aria-label="Close video" onClick={onClose}>
