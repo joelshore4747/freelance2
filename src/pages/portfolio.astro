@@ -1,0 +1,417 @@
+---
+import { ArrowRight, CheckCircle2, Code2, Film, Handshake, Layers, Orbit, PenTool, Play, Rocket, Search, ShoppingBag, Sparkles, TrendingUp } from "lucide-react"
+import Layout from "@/layouts/Layout.astro"
+import Navigation from "@/components/Navigation.astro"
+import Footer from "@/components/Footer.astro"
+import Badge from "@/components/ui/Badge.astro"
+import { SpotlightCarousel } from "@/components/SpotlightCarousel"
+import { ShowcaseCarousel } from "@/components/ShowcaseCarousel"
+import { CornerVideoPlayer } from "@/components/CornerVideoPlayer"
+
+const heroStats = [
+  { label: "Automation hours saved", value: "30k+", Icon: Rocket, tone: "bg-primary/10 text-primary" },
+  { label: "Web builds shipped", value: "90+", Icon: Code2, tone: "bg-standout/10 text-standout" },
+  { label: "Avg ROI in year one", value: "4.1x", Icon: TrendingUp, tone: "bg-accent/10 text-accent" },
+  { label: "Active systems maintained", value: "70", Icon: Handshake, tone: "bg-standout-2-10 text-standout-2" },
+]
+
+const showreelHighlights = [
+  { title: "Automation that sticks", description: "Revenue, support, and ops flows with audits, alerts, and human-in-the-loop controls.", Icon: Layers, tone: "bg-primary/10 text-primary" },
+  { title: "Websites that convert", description: "Clear offers, fast pages, and analytics wired in so you see what is working every week.", Icon: ShoppingBag, tone: "bg-standout/10 text-standout" },
+  { title: "Systems people use", description: "Dashboards, CRMs, and portals that keep data legible and actions obvious.", Icon: Orbit, tone: "bg-accent/10 text-accent" },
+  { title: "One accountable partner", description: "I own strategy, design, and build so nothing gets lost between handoffs.", Icon: Handshake, tone: "bg-standout-2-10 text-standout-2" },
+]
+
+const spotlightProjects = [
+  { id: "ops-automation", category: "Automation", title: "Ops automation control room", description: "Built a single pane with approval gates, Slack alerts, and error handling for revenue and success teams.", image: "/saas-dashboard-analytics-interface.jpg", video: "/videos/atlas.mp4", outcomes: ["Cut manual updates by 72%", "Lead response now under 3 minutes", "Audit-ready logs for finance and sales"], link: "/contact?project=ops-automation" },
+  { id: "growth-site", category: "Websites", title: "Conversion-focused web rebuild", description: "Reframed the offer, shipped a landing system, and wired analytics plus experimentation from day one.", image: "/modern-ecommerce-interface.png", video: "/videos/lumos.mp4", outcomes: ["5.6% visitor-to-lead conversion", "Booked calls up 2.4x after launch", "Sub-1s LCP on primary templates"], link: "/contact?project=growth-site" },
+  { id: "customer-portal", category: "Business Systems", title: "Customer success portal", description: "Delivered self-serve onboarding, usage dashboards, and renewal workflows inside a branded portal.", image: "/mobile-fitness-app-interface-design.jpg", video: "/videos/pulse.mp4", outcomes: ["Churn reduced by 18%", "Time-to-value cut to 2 days", "CSAT improved to 4.8/5"], link: "/contact?project=customer-portal" },
+]
+
+const projects = [
+  { id: "rev-ops", title: "RevOps Automation Mesh", category: "Automation", summary: "Lead routing, enrichment, and contract workflows that update CRM, billing, and Slack in minutes.", image: "/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg", metrics: [{ label: "Response time", value: "2m" }, { label: "Pipeline coverage", value: "3.8x" }, { label: "Manual steps", value: "-70%" }], stack: ["Node.js", "Next.js", "Zapier", "HubSpot"] },
+  { id: "conversion-site", title: "Conversion-Driven Website", category: "Websites", summary: "SEO-backed marketing site with booking funnels, analytics, and experiment-ready components.", image: "/placeholder-95zgk.png", metrics: [{ label: "Conversion rate", value: "5.2%" }, { label: "Page speed", value: "95+ LCP" }, { label: "Launch window", value: "4 weeks" }], stack: ["Next.js", "Tailwind", "Vercel", "Analytics"] },
+  { id: "partner-portal", title: "Partner Operations Portal", category: "Business Systems", summary: "Role-based portal for onboarding, approvals, and payouts with audit-ready trails.", image: "/placeholder-ks40r.png", metrics: [{ label: "Onboarding time", value: "-60%" }, { label: "Support tickets", value: "-45%" }, { label: "User adoption", value: "94%" }], stack: ["Next.js", "PostgreSQL", "Prisma", "Stripe"] },
+  { id: "support-automation", title: "Support Automation Desk", category: "Automation", summary: "AI-assisted triage, SLA alerts, and human-in-the-loop resolutions inside existing tools.", image: "/placeholder-49g40.png", metrics: [{ label: "First reply", value: "3m" }, { label: "Resolution time", value: "-52%" }, { label: "Escalations", value: "-35%" }], stack: ["Node.js", "n8n", "OpenAI", "Zendesk"] },
+  { id: "inventory-system", title: "Inventory Control Dashboard", category: "Business Systems", summary: "Unified view of stock, purchase orders, and fulfillment with proactive alerts.", image: "/placeholder-7fi4h.png", metrics: [{ label: "Stockouts", value: "-68%" }, { label: "Reorder accuracy", value: "98%" }, { label: "Teams aligned", value: "Ops + Finance" }], stack: ["React", "D3.js", "Python", "PostgreSQL"] },
+  { id: "subscription-site", title: "Subscription Commerce Site", category: "Websites", summary: "Product storytelling paired with subscription flows, retention nudges, and analytics.", image: "/data-analytics-dashboard.png", metrics: [{ label: "LTV uplift", value: "2.4x" }, { label: "Churn reduction", value: "-22%" }, { label: "Launch window", value: "6 weeks" }], stack: ["Next.js", "Stripe", "Tailwind", "Headless CMS"] },
+]
+
+const categories = ["All", "Automation", "Websites", "Business Systems"]
+
+const focusAreas = [
+  { title: "Automation & ops", description: "Back-office and revenue automations with clear ownership and reporting.", Icon: Rocket, tone: "bg-primary/10 text-primary", points: ["Lead routing, enrichment, and follow-up cadences", "Support triage, SLA alerts, and knowledge automation", "Finance + inventory syncs with human approvals"] },
+  { title: "Conversion websites", description: "High-converting marketing and product sites tuned for clarity, speed, and SEO.", Icon: ShoppingBag, tone: "bg-standout/10 text-standout", points: ["Messaging, offer clarity, and funnel design", "Headless builds with analytics and experimentation", "Speed, accessibility, and content workflows"] },
+  { title: "Business systems", description: "Custom portals, dashboards, and CRMs that align teams and make data usable.", Icon: Layers, tone: "bg-accent/10 text-accent", points: ["Role-based portals for customers or partners", "Operational dashboards with actionable metrics", "Secure integrations across your existing stack"] },
+]
+
+const processSteps = [
+  { title: "Discovery + audit", description: "Understand current tools, manual steps, and where automation helps fastest.", detail: "System audit, metric targets, risk checks", Icon: Search, tone: "bg-primary/10 text-primary" },
+  { title: "Plan the flows", description: "Map user journeys, data contracts, and approvals so automation and UI stay aligned.", detail: "Flow mapping, UX wireframes, acceptance criteria", Icon: PenTool, tone: "bg-standout/10 text-standout" },
+  { title: "Build + integrate", description: "Ship production-ready web experiences and automations with monitoring and tests.", detail: "Next.js, Node, Zapier/Make, API integrations", Icon: Code2, tone: "bg-accent/10 text-accent" },
+  { title: "Launch + iterate", description: "Measure usage, tighten edge cases, and leave you with clear runbooks.", detail: "Instrumentation, training, iteration sprints", Icon: Rocket, tone: "bg-standout-2-10 text-standout" },
+]
+
+const toolkit = ["Next.js", "TypeScript", "Node.js", "NestJS", "React Native", "Tailwind", "Prisma", "PostgreSQL", "Supabase", "Stripe", "Clerk / Auth0", "Zapier", "n8n", "Make", "HubSpot", "Figma", "AWS", "Vercel"]
+const TOOLKIT_TONE = ["border-primary bg-primary/10 text-primary", "border-standout bg-standout/10 text-standout", "border-accent bg-accent/10 text-accent", "border-standout-2 bg-standout-2-10 text-standout-2"]
+
+const galleryShots = [
+  { title: "Automation control board", category: "Automation", description: "Approval gates, alerts, and error handling surfaced in one view.", image: "/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg" },
+  { title: "Offer-led homepage", category: "Websites", description: "Clarity-first landing with social proof, pricing, and frictionless booking.", image: "/placeholder-ks40r.png" },
+  { title: "Customer portal mobile", category: "Business Systems", description: "Self-serve onboarding, usage stats, and support built for handheld use.", image: "/placeholder-49g40.png" },
+  { title: "Inventory & fulfillment view", category: "Business Systems", description: "Real-time stock status, alerts, and reconciliation for operations teams.", image: "/placeholder-95zgk.png" },
+]
+
+const testimonials = [
+  { name: "Lisa Patel", role: "COO, CargoLine", quote: "He automated the messy handoffs between sales, ops, and finance. We finally see the entire order lifecycle without chasing spreadsheets.", outcome: "Manual billing time down 60% and response times under 3 minutes", avatar: "/professional-woman-portrait.png" },
+  { name: "Andre Miller", role: "Founder, Northbeam Analytics", quote: "Our marketing site now speaks clearly to the right buyers and tracks every step. The rebuild paid for itself within the first quarter.", outcome: "Pipeline velocity up 2.4x with a faster, clearer website", avatar: "/professional-man-portrait.png" },
+  { name: "Rachel Gomez", role: "Head of CS, Brevity", quote: "The custom portal and automation flows mean my team finally works from one place. Onboarding, renewals, and support all run smoother.", outcome: "Churn down 18% and CSAT at 4.8/5 within two months", avatar: "/professional-woman-portrait.png" },
+]
+---
+
+<Layout title="Portfolio - Studio Duo" description="Automation, websites, and business systems built end-to-end. See real client outcomes, project metrics, and live demos.">
+  <div class="min-h-screen bg-background">
+    <Navigation />
+
+    <main>
+      <section class="relative overflow-hidden bg-section-white py-24 sm:py-32 text-section-white-foreground">
+        <div class="absolute inset-0">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_transparent_70%)]"></div>
+          <div class="absolute -bottom-24 left-1/2 h-80 w-[36rem] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl"></div>
+        </div>
+        <div class="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <Badge variant="secondary" class="mb-6 inline-flex items-center gap-2 bg-standout/20 text-standout border border-standout/30">
+            <Sparkles className="h-4 w-4" /> Automation • Websites • Systems
+          </Badge>
+          <h1 class="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            Automation, websites, and business systems built end-to-end by one product-minded developer.
+          </h1>
+          <p class="mt-6 max-w-3xl text-lg text-muted-foreground sm:text-xl leading-relaxed">
+            I design, build, and ship automations, conversion-ready sites, and internal tools that run without babysitting. Clear offers, measurable outcomes, and production-quality delivery in weeks—not quarters.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="/contact" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium bg-standout text-white hover:bg-standout/90 shadow-lg">
+              Start a build <ArrowRight className="h-5 w-5" />
+            </a>
+          </div>
+
+          <div class="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {
+              heroStats.map(stat => (
+                <div class="card-universal border border-border bg-card/50 backdrop-blur hover:shadow-lg transition-all rounded-xl py-6">
+                  <div class="flex items-start gap-4 px-6">
+                    <div class={`flex h-11 w-11 items-center justify-center rounded-full ${stat.tone}`}>
+                      <stat.Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p class="text-sm uppercase tracking-wider text-muted-foreground">{stat.label}</p>
+                      <p class="mt-2 text-3xl font-bold text-foreground">{stat.value}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-border bg-section-muted py-20 sm:py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div class="space-y-8">
+              <div class="space-y-4">
+                <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Workflow demos</Badge>
+                <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
+                  See the automations, sites, and systems <span class="text-primary">in motion</span>
+                </h2>
+                <p class="max-w-xl text-base text-muted-foreground leading-relaxed">
+                  Watch the real flows I ship—approvals, dashboards, booking funnels, and automation monitors—so you know exactly what shows up in production.
+                </p>
+              </div>
+              <div class="grid gap-4 sm:grid-cols-2">
+                {
+                  showreelHighlights.map(item => (
+                    <div class="card-universal border border-border bg-card/80 backdrop-blur hover:shadow-md transition-all rounded-xl py-6">
+                      <div class="flex gap-4 px-5">
+                        <div class={`flex h-12 w-12 items-center justify-center rounded-full ${item.tone}`}>
+                          <item.Icon className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <p class="text-sm font-semibold text-foreground">{item.title}</p>
+                          <p class="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+              <a href="/contact?demo=showreel" class="inline-flex items-center gap-2 h-10 px-6 rounded-md font-medium bg-standout text-white hover:bg-standout/90 shadow-lg">
+                Request the private reel
+              </a>
+            </div>
+            <div class="relative">
+              <div class="relative overflow-hidden rounded-3xl border border-border bg-card shadow-xl">
+                <video class="h-full w-full object-cover opacity-80" autoplay loop muted playsinline preload="none" poster="/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg">
+                  <source src="/background-video.mp4" type="video/mp4" />
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-tr from-black/50 via-black/20 to-transparent pointer-events-none z-0"></div>
+                <div class="absolute top-6 right-6 z-10">
+                  <button type="button" data-open-reel class="group inline-flex items-center gap-2 rounded-2xl bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur transition hover:bg-white hover:text-foreground dark:hover:text-gray-900">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white text-foreground dark:text-gray-900">
+                      <Play className="h-3 w-3" />
+                    </span>
+                    Watch reel
+                  </button>
+                </div>
+                <div class="absolute bottom-6 left-6 right-6">
+                  <div class="flex items-center gap-3 text-sm uppercase tracking-wider text-white/80 mb-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white">
+                      <Film className="h-4 w-4" />
+                    </div>
+                    In motion
+                  </div>
+                  <p class="text-xl font-semibold text-white">
+                    Automations with safeguards, fast UIs, and clear paths to action on every surface.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-section-white py-20 sm:py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
+            <div>
+              <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Spotlight builds</Badge>
+              <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
+                Automations, websites, and systems built for real teams
+              </h2>
+              <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
+                Each build pairs automation, web, and internal tooling so teams see value quickly without juggling multiple vendors.
+              </p>
+            </div>
+            <a href="/contact?request=build-walkthrough" class="inline-flex items-center gap-2 h-10 px-6 rounded-md font-medium text-base border-2 border-primary text-primary hover:bg-primary/10 bg-transparent">
+              Book a tailored walkthrough
+            </a>
+          </div>
+        </div>
+        <SpotlightCarousel client:visible projects={spotlightProjects} />
+      </section>
+
+      <section class="border-b border-border bg-section-muted py-20 sm:py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div class="flex flex-wrap items-center justify-between gap-6">
+            <div>
+              <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Project library</Badge>
+              <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
+                Featured <span class="text-primary">outcomes</span> across automation, web, and systems
+              </h2>
+              <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
+                Filter by the type of build you need. Every project includes discovery, build, analytics, and safeguards so you get production-ready outcomes.
+              </p>
+            </div>
+          </div>
+        </div>
+        <ShowcaseCarousel client:visible projects={projects} categories={categories} />
+      </section>
+
+      <section class="bg-section-white py-20 sm:py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div class="text-center">
+            <Badge variant="secondary" class="mx-auto mb-6 bg-standout/20 text-standout border border-standout/30">Areas of focus</Badge>
+            <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
+              Builds aligned to <span class="text-primary">automation</span>, websites, and business systems
+            </h2>
+            <p class="mt-4 max-w-3xl mx-auto text-base text-muted-foreground leading-relaxed">
+              I join as a hands-on partner, mapping the workflows, designing the experience, and shipping the code that keeps your team moving without extra headcount.
+            </p>
+          </div>
+          <div class="mt-14 grid gap-8 md:grid-cols-3">
+            {
+              focusAreas.map(a => (
+                <div class="card-universal h-full border border-border bg-card/80 backdrop-blur hover:shadow-lg transition-all rounded-xl py-6">
+                  <div class="px-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 space-y-4">
+                    <div class={`flex h-12 w-12 items-center justify-center rounded-full ${a.tone}`}>
+                      <a.Icon className="h-6 w-6" />
+                    </div>
+                    <div class="text-xl text-foreground leading-none font-semibold">{a.title}</div>
+                    <div class="text-base text-muted-foreground leading-relaxed">{a.description}</div>
+                  </div>
+                  <div class="px-6 space-y-3">
+                    {a.points.map(p => (
+                      <div class="flex items-start gap-3 text-sm text-muted-foreground">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary flex-shrink-0" />
+                        <span>{p}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-section-muted py-20 sm:py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div class="grid gap-10 lg:grid-cols-2">
+            <div class="card-universal border border-border bg-card/80 backdrop-blur shadow-lg hover:shadow-xl transition-all rounded-xl py-6">
+              <div class="px-6 space-y-3">
+                <Badge variant="secondary" class="w-fit bg-standout/20 text-standout border border-standout/30">Process</Badge>
+                <div class="text-2xl text-foreground leading-none font-semibold">
+                  From <span class="text-primary">audit</span> to live automations and web launches
+                </div>
+                <div class="text-base text-muted-foreground leading-relaxed">
+                  Clear milestones, shared notes, and weekly demos so you always know what shipped and what is next.
+                </div>
+              </div>
+              <div class="px-6 space-y-6 mt-6">
+                {
+                  processSteps.map((step, i) => (
+                    <div class="flex gap-4">
+                      <div class={`flex h-12 w-12 items-center justify-center rounded-full font-semibold flex-shrink-0 ${step.tone}`}>
+                        {String(i + 1).padStart(2, "0")}
+                      </div>
+                      <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                          <step.Icon className="h-5 w-5 text-primary" />
+                          <h3 class="text-lg font-semibold text-foreground">{step.title}</h3>
+                        </div>
+                        <p class="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                        <p class="text-xs uppercase tracking-wider text-primary">{step.detail}</p>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div class="card-universal border border-border bg-card/80 backdrop-blur shadow-lg hover:shadow-xl transition-all rounded-xl py-6">
+              <div class="px-6 space-y-3">
+                <Badge variant="secondary" class="w-fit bg-standout/20 text-standout border border-standout/30">Toolkit</Badge>
+                <div class="text-2xl text-foreground leading-none font-semibold">
+                  Tools I <span class="text-primary">reach for</span> often
+                </div>
+                <div class="text-base text-muted-foreground leading-relaxed">
+                  A flexible stack that covers automation, web, and system builds with maintainable handoffs.
+                </div>
+              </div>
+              <div class="px-6 mt-6">
+                <div class="flex flex-wrap gap-3">
+                  {toolkit.map((item, i) => (
+                    <span class={`rounded-full border px-4 py-1 text-sm font-medium transition-colors ${TOOLKIT_TONE[i % TOOLKIT_TONE.length]}`}>{item}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-t border-border bg-section-white py-20 sm:py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div class="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Visual gallery</Badge>
+              <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
+                Screens from <span class="text-primary">recent automation</span>, website, and system builds
+              </h2>
+              <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
+                A quick look at the interfaces, dashboards, and flows clients use to run their day-to-day.
+              </p>
+            </div>
+            <a href="/contact?request=portfolio-deck" class="inline-flex items-center gap-2 h-10 px-6 rounded-md font-medium text-base border-2 border-primary text-primary hover:bg-primary/10 bg-transparent">
+              Request full deck
+            </a>
+          </div>
+          <div class="mt-14 grid gap-6 lg:grid-cols-3">
+            {
+              galleryShots.map((shot, i) => (
+                <div class={`group relative overflow-hidden rounded-3xl border border-border bg-muted hover:shadow-xl transition-all ${i === 0 ? "lg:row-span-2" : ""}`}>
+                  <img src={shot.image} alt={shot.title} loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-700 group-hover:opacity-95"></div>
+                  <div class="absolute bottom-6 left-6 right-6 text-white">
+                    <p class="text-xs uppercase tracking-wider text-white/60">{shot.category}</p>
+                    <p class="mt-2 text-xl font-semibold leading-tight">{shot.title}</p>
+                    <p class="mt-3 text-sm text-white/80 leading-relaxed">{shot.description}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-section-muted py-20 sm:py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div class="text-center">
+            <Badge variant="secondary" class="mx-auto mb-6 bg-standout/20 text-standout border border-standout/30">Client reflections</Badge>
+            <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
+              Teams work with me when <span class="text-primary">outcomes</span> matter more than headcount
+            </h2>
+            <p class="mt-4 max-w-3xl mx-auto text-base text-muted-foreground leading-relaxed">
+              Highlights from leaders who needed automation, web, and internal tools shipped by one accountable partner.
+            </p>
+          </div>
+          <div class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {
+              testimonials.map(t => (
+                <div class="card-universal border border-border bg-card/80 backdrop-blur shadow-lg hover:shadow-xl transition-all rounded-xl py-6">
+                  <div class="space-y-6 p-6">
+                    <div class="flex items-center gap-4">
+                      <img src={t.avatar} alt={t.name} loading="lazy" class="h-12 w-12 rounded-full border border-primary/30 object-cover" />
+                      <div>
+                        <p class="font-semibold text-foreground">{t.name}</p>
+                        <p class="text-sm text-muted-foreground">{t.role}</p>
+                      </div>
+                    </div>
+                    <p class="text-base leading-relaxed text-foreground">“{t.quote}”</p>
+                    <div class="flex items-center gap-2 text-sm font-medium text-primary">
+                      <CheckCircle2 className="h-4 w-4" />
+                      <span>{t.outcome}</span>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="relative overflow-hidden bg-section-primary py-20 sm:py-24 text-section-primary-foreground">
+        <div class="absolute inset-0">
+          <div class="absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl"></div>
+          <div class="absolute -bottom-40 right-0 h-80 w-80 rounded-full bg-standout/30 blur-3xl"></div>
+        </div>
+        <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
+          <Badge variant="secondary" class="mx-auto mb-6 bg-white/20 text-white border border-white/30">Let’s collaborate</Badge>
+          <h2 class="text-3xl font-bold sm:text-5xl">
+            Ready to automate, launch your site, or ship a business system?
+          </h2>
+          <p class="mt-5 text-lg text-section-primary-foreground/90 leading-relaxed">
+            Share the workflows, pages, or tools that need to run better. I will map the plan, build it, and launch it with instrumentation so you see the impact quickly.
+          </p>
+          <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <a href="/contact" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium bg-white text-foreground hover:bg-white/90 dark:text-gray-900 shadow-lg">Plan my build</a>
+            <a href="/contact" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium border border-white/30 bg-transparent text-white hover:bg-white/10">
+              Get a tailored plan <ArrowRight className="h-5 w-5" />
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <CornerVideoPlayer client:visible />
+    <Footer />
+  </div>
+</Layout>
+
+<script>
+  document.querySelector("[data-open-reel]")?.addEventListener("click", () => {
+    window.dispatchEvent(
+      new CustomEvent("portfolio:open-video", { detail: { url: "/background-video.mp4", title: "Showreel" } }),
+    )
+  })
+</script>
