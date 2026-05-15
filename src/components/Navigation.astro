@@ -1,0 +1,144 @@
+---
+import { Menu, X } from "lucide-react"
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/contact", label: "Contact" },
+]
+---
+
+<nav
+  data-nav
+  class="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <a href="/" class="flex items-center space-x-2">
+        <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+          <span class="text-primary-foreground font-bold text-lg font-sans">SD</span>
+        </div>
+        <span class="font-bold text-xl font-sans text-foreground">Studio Duo</span>
+      </a>
+
+      <div class="hidden md:flex items-center space-x-8">
+        {
+          navItems.map(item => (
+            <a
+              href={item.href}
+              class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="hidden md:flex items-center space-x-4">
+        <button
+          data-theme-toggle
+          type="button"
+          class="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-all duration-300 border border-border hover:scale-105 active:scale-95"
+          aria-label="Toggle theme"
+        >
+          <span data-theme-icon class="text-lg filter grayscale leading-none w-5 h-5 flex items-center justify-center">🌙</span>
+        </button>
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center h-9 px-4 rounded-full font-medium text-sm bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+        >
+          Get Started
+        </a>
+      </div>
+
+      <div class="md:hidden">
+        <button
+          data-mobile-toggle
+          type="button"
+          class="inline-flex items-center justify-center size-9 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors text-foreground"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <span data-mobile-icon="menu"><Menu className="h-6 w-6" /></span>
+          <span data-mobile-icon="close" class="hidden"><X className="h-6 w-6" /></span>
+        </button>
+      </div>
+    </div>
+
+    <div data-mobile-menu class="md:hidden mt-2 hidden">
+      <div class="px-3 pt-3 pb-4 bg-card rounded-lg shadow-lg space-y-2">
+        {
+          navItems.map(item => (
+            <a
+              href={item.href}
+              class="block px-3 py-2 rounded-md text-sm font-medium text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <div class="flex items-center justify-between px-3 pt-3 border-t border-border">
+          <button
+            data-theme-toggle
+            type="button"
+            class="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-all duration-300 border border-border hover:scale-105 active:scale-95"
+            aria-label="Toggle theme"
+          >
+            <span data-theme-icon class="text-lg filter grayscale leading-none w-5 h-5 flex items-center justify-center">🌙</span>
+          </button>
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center h-9 px-4 w-1/2 rounded-full font-medium text-sm bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+          >
+            Get Started
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const root = document.documentElement
+  const savedTheme = localStorage.getItem("theme")
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+  const initialDark = savedTheme === "dark" || (!savedTheme && prefersDark)
+  root.classList.toggle("dark", initialDark)
+
+  const syncThemeIcons = () => {
+    const dark = root.classList.contains("dark")
+    document.querySelectorAll<HTMLElement>("[data-theme-icon]").forEach(el => {
+      el.textContent = dark ? "☀️" : "🌙"
+    })
+  }
+  syncThemeIcons()
+
+  document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const next = !root.classList.contains("dark")
+      root.classList.toggle("dark", next)
+      localStorage.setItem("theme", next ? "dark" : "light")
+      syncThemeIcons()
+    })
+  })
+
+  const mobileToggle = document.querySelector<HTMLButtonElement>("[data-mobile-toggle]")
+  const mobileMenu = document.querySelector<HTMLElement>("[data-mobile-menu]")
+  const iconMenu = document.querySelector<HTMLElement>('[data-mobile-icon="menu"]')
+  const iconClose = document.querySelector<HTMLElement>('[data-mobile-icon="close"]')
+
+  const setMobileOpen = (open: boolean) => {
+    if (!mobileToggle || !mobileMenu || !iconMenu || !iconClose) return
+    mobileToggle.setAttribute("aria-expanded", String(open))
+    mobileMenu.classList.toggle("hidden", !open)
+    iconMenu.classList.toggle("hidden", open)
+    iconClose.classList.toggle("hidden", !open)
+  }
+
+  mobileToggle?.addEventListener("click", () => {
+    setMobileOpen(mobileToggle.getAttribute("aria-expanded") !== "true")
+  })
+
+  mobileMenu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMobileOpen(false)))
+</script>
