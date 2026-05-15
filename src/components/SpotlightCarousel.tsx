@@ -48,7 +48,7 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
     <div className="relative">
       <div
         ref={railRef}
-        className="flex snap-x snap-mandatory gap-8 overflow-x-auto pb-8 scroll-smooth scrollbar-hide px-6 sm:px-8 lg:px-12"
+        className="carousel-bleed flex snap-x snap-mandatory gap-8 overflow-x-auto pb-8 scroll-smooth scrollbar-hide"
         style={{ scrollbarWidth: "none" }}
         role="region"
         aria-roledescription="carousel"

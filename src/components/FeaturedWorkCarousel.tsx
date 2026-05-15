@@ -76,10 +76,10 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
         ))}
       </div>
 
-      <div className="-mx-4 sm:-mx-6 lg:-mx-8 relative">
+      <div className="relative">
         <div
           ref={railRef}
-          className="flex gap-8 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-4 sm:px-6 lg:px-8 scroll-smooth"
+          className="carousel-bleed flex gap-8 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth"
           role="region"
           aria-roledescription="carousel"
           aria-label="Featured work"

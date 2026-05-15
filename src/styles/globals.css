@@ -1743,3 +1743,25 @@ html[data-env="development"] body,
 html[data-env="development"] .bg-standout-subtle {
   background-attachment: scroll !important;
 }
+
+/* Apple-style bleed carousel: first card aligns to the container's left
+ * gutter; cards run off the right viewport edge. Pure CSS — no
+ * ResizeObserver or JS measurement. The rail must be a full-bleed
+ * sibling of the container (no max-width parent constraining it). */
+.carousel-bleed {
+  --carousel-max: 80rem;
+  --carousel-pad: 1.5rem;
+  padding-left: max(var(--carousel-pad), calc((100vw - var(--carousel-max)) / 2 + var(--carousel-pad)));
+  padding-right: var(--carousel-pad);
+  scroll-padding-left: max(var(--carousel-pad), calc((100vw - var(--carousel-max)) / 2 + var(--carousel-pad)));
+}
+@media (min-width: 640px) {
+  .carousel-bleed {
+    --carousel-pad: 2rem;
+  }
+}
+@media (min-width: 1024px) {
+  .carousel-bleed {
+    --carousel-pad: 3rem;
+  }
+}

@@ -56,7 +56,7 @@ export function ShowcaseCarousel({ projects, categories }: { projects: Project[]
 
   return (
     <div>
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 flex flex-wrap gap-3 justify-end mb-6">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 flex flex-wrap gap-3 justify-end mb-6 mt-6">
         {categories.map(c => (
           <button
             key={c}
@@ -75,7 +75,7 @@ export function ShowcaseCarousel({ projects, categories }: { projects: Project[]
       <div className="relative mt-8">
         <div
           ref={railRef}
-          className="flex snap-x snap-mandatory gap-8 overflow-x-auto pb-8 scroll-smooth scrollbar-hide px-6 sm:px-8 lg:px-12"
+          className="carousel-bleed flex snap-x snap-mandatory gap-8 overflow-x-auto pb-8 scroll-smooth scrollbar-hide"
           style={{ scrollbarWidth: "none" }}
           role="region"
           aria-roledescription="carousel"
