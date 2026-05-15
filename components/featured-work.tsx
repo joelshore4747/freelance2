@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
+import OptimizedImage from "@/components/ui/optimized-image"
 
 interface WorkItem {
     id: number
@@ -213,10 +214,12 @@ export default function FeaturedWork({ works = defaultWorks, categories = defaul
                                 }}
                             >
                                 <div className="aspect-video bg-muted overflow-hidden relative rounded-t-xl">
-                                    <img
+                                    <OptimizedImage
                                         src={work.image || "/placeholder.svg"}
                                         alt={work.title}
-                                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                                        fill
+                                        className="object-cover transition-transform duration-700 hover:scale-110"
+                                        sizes="(max-width: 1024px) 100vw, 800px"
                                     />
                                     <div className="absolute top-6 left-6">
                     <span
@@ -349,10 +352,12 @@ export default function FeaturedWork({ works = defaultWorks, categories = defaul
                         {filteredWorks.map((work) => (
                             <div key={work.id} className="featured-work-card flex-shrink-0 w-80 snap-center">
                                 <div className="aspect-video bg-muted overflow-hidden relative rounded-t-xl">
-                                    <img
+                                    <OptimizedImage
                                         src={work.image || "/placeholder.svg"}
                                         alt={work.title}
-                                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                        fill
+                                        className="object-cover transition-transform duration-500 hover:scale-105"
+                                        sizes="(max-width: 1024px) 100vw, 800px"
                                     />
                                     <div className="absolute top-4 left-4">
                     <span

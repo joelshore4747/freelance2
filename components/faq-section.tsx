@@ -46,7 +46,7 @@ const defaultFAQs: FAQItem[] = [
             "Yes, we specialize in e-commerce solutions using platforms like Shopify, WooCommerce, and custom solutions. We focus on conversion optimization and creating seamless shopping experiences.",
     },
     {
-        question: "What makes Studio Dust different from other agencies?",
+        question: "What makes Studio Duo different from other agencies?",
         answer:
             "Our unique combination of strategic thinking, cutting-edge design, and technical expertise sets us apart. We focus on measurable results and long-term partnerships rather than just delivering projects.",
     },
@@ -65,7 +65,7 @@ const defaultFAQs: FAQItem[] = [
 export default function FAQSection({
                                        faqs = defaultFAQs,
                                        title = "Frequently Asked Questions",
-                                       subtitle = "Everything you need to know about working with Studio Dust. Can't find what you're looking for? Get in touch with our team.",
+                                       subtitle = "Everything you need to know about working with Studio Duo. Can't find what you're looking for? Get in touch with our team.",
                                        ctaTitle = "Still Have Questions?",
                                        ctaDescription = "Our team is here to help. Schedule a free consultation to discuss your project and get all your questions answered.",
                                        scheduleCallUrl = "#",

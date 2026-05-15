@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   },
 }
 
+// Statically prerender and revalidate daily
+export const revalidate = 86400
+
 export default function PortfolioPage() {
   return <PortfolioClientPage />
 }

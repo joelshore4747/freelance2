@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -112,47 +112,79 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
         { name: "Telegram", href: "https://telegram.org" },
     ]
 
+    // Lazy-load video when section is near viewport
+    const sectionRef = useRef<HTMLDivElement | null>(null)
+    const [shouldPlay, setShouldPlay] = useState(false)
+
+    useEffect(() => {
+        const el = sectionRef.current
+        if (!el) return
+        const io = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0]
+                if (entry.isIntersecting) {
+                    setShouldPlay(true)
+                    io.disconnect()
+                }
+            },
+            { rootMargin: "200px 0px", threshold: 0.01 },
+        )
+        io.observe(el)
+        return () => io.disconnect()
+    }, [])
+
     return (
-        <div className={`w-full ${className}`}>
+        <div className={`w-full ${className}`} ref={sectionRef}>
             {/* Video Background */}
             <div className="relative h-[100vh] max-h-[800px]">
                 <div className="absolute left-0 right-0 top-0 bottom-0">
-                    <video
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="w-full h-full object-cover"
-                        style={{ filter: "brightness(0.7)" }}
-                    >
-                        <source src="/background-video.mp4" type="video/mp4" />
-                        {/* Fallback gradient background if video fails to load */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-blue-400 via-blue-500 to-blue-600 -z-10" />
-                    </video>
+                    {shouldPlay ? (
+                        <video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            preload="none"
+                            poster="/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg"
+                            className="w-full h-full object-cover"
+                            style={{ filter: "brightness(0.7)" }}
+                        >
+                            <source src="/background-video.mp4" type="video/mp4" />
+                            {/* Fallback gradient background if video fails to load */}
+                        </video>
+                    ) : (
+                        <div className="w-full h-full bg-gradient-to-b from-blue-400 via-blue-500 to-blue-600" aria-hidden />
+                    )}
 
                     {/* Optional overlay for better text contrast */}
-                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute inset-0 bg-white/70 dark:bg-black/25" />
 
                     <div className="absolute inset-0 flex items-center justify-center p-4">
                         <div className="w-full max-w-lg space-y-8">
-                            <div className="glass-card rounded-2xl p-8 shadow-2xl">
+                            <div className="glass-card rounded-2xl p-8 shadow-2xl text-gray-900 dark:text-white">
                                 <div className="text-center mb-8">
-                                    <h2 className="text-4xl font-bold text-white mb-3 tracking-tight">Get In Touch</h2>
-                                    <p className="text-white/80 text-lg">{"Let's create something amazing together"}</p>
+                                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
+                                        Get In Touch
+                                    </h2>
+                                    <p className="text-gray-800 dark:text-white/80 text-lg">
+                                        {"Let's create something amazing together"}
+                                    </p>
                                 </div>
 
                                 {isSubmitted ? (
                                     <div className="text-center py-8">
                                         <div className="w-20 h-20 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 border border-primary/30">
-                                            <Mail className="w-10 h-10 text-white" />
+                                            <Mail className="w-10 h-10 text-gray-900 dark:text-white" />
                                         </div>
-                                        <h3 className="text-2xl font-semibold text-white mb-3">Message Sent!</h3>
-                                        <p className="text-white/80 mb-8 text-lg">
+                                        <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
+                                            Message Sent!
+                                        </h3>
+                                        <p className="text-gray-800 dark:text-white/80 mb-8 text-lg">
                                             Thank you for reaching out. We'll get back to you soon.
                                         </p>
                                         <Button
                                             onClick={() => setIsSubmitted(false)}
-                                            className="glass-button text-white font-semibold px-8 py-3 rounded-xl"
+                                            className="glass-button text-gray-900 dark:text-white font-semibold px-8 py-3 rounded-xl"
                                         >
                                             Send Another Message
                                         </Button>
@@ -161,7 +193,10 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
-                                                <label htmlFor="name" className="text-sm font-semibold text-white uppercase tracking-wide">
+                                                <label
+                                                    htmlFor="name"
+                                                    className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wide"
+                                                >
                                                     Name
                                                 </label>
                                                 <Input
@@ -170,13 +205,18 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
                                                     placeholder="Your full name"
                                                     value={formData.name}
                                                     onChange={(e) => handleInputChange("name", e.target.value)}
-                                                    className={`glass-input text-white placeholder:text-white/60 focus:border-primary/50 rounded-xl py-3 ${errors.name ? "border-red-400" : ""}`}
+                                                    className={`glass-input text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 focus:border-primary/50 rounded-xl py-3 ${errors.name ? "border-red-400" : ""}`}
                                                 />
-                                                {errors.name && <p className="text-sm text-red-300">{errors.name}</p>}
+                                                {errors.name && (
+                                                    <p className="text-sm text-red-600 dark:text-red-300">{errors.name}</p>
+                                                )}
                                             </div>
 
                                             <div className="space-y-2">
-                                                <label htmlFor="email" className="text-sm font-semibold text-white uppercase tracking-wide">
+                                                <label
+                                                    htmlFor="email"
+                                                    className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wide"
+                                                >
                                                     Email
                                                 </label>
                                                 <Input
@@ -185,14 +225,19 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
                                                     placeholder="your.email@example.com"
                                                     value={formData.email}
                                                     onChange={(e) => handleInputChange("email", e.target.value)}
-                                                    className={`glass-input text-white placeholder:text-white/60 focus:border-primary/50 rounded-xl py-3 ${errors.email ? "border-red-400" : ""}`}
+                                                    className={`glass-input text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 focus:border-primary/50 rounded-xl py-3 ${errors.email ? "border-red-400" : ""}`}
                                                 />
-                                                {errors.email && <p className="text-sm text-red-300">{errors.email}</p>}
+                                                {errors.email && (
+                                                    <p className="text-sm text-red-600 dark:text-red-300">{errors.email}</p>
+                                                )}
                                             </div>
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label htmlFor="subject" className="text-sm font-semibold text-white uppercase tracking-wide">
+                                            <label
+                                                htmlFor="subject"
+                                                className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wide"
+                                            >
                                                 Subject
                                             </label>
                                             <Input
@@ -201,13 +246,18 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
                                                 placeholder="What's this about?"
                                                 value={formData.subject}
                                                 onChange={(e) => handleInputChange("subject", e.target.value)}
-                                                className={`glass-input text-white placeholder:text-white/60 focus:border-primary/50 rounded-xl py-3 ${errors.subject ? "border-red-400" : ""}`}
+                                                className={`glass-input text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 focus:border-primary/50 rounded-xl py-3 ${errors.subject ? "border-red-400" : ""}`}
                                             />
-                                            {errors.subject && <p className="text-sm text-red-300">{errors.subject}</p>}
+                                            {errors.subject && (
+                                                <p className="text-sm text-red-600 dark:text-red-300">{errors.subject}</p>
+                                            )}
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label htmlFor="message" className="text-sm font-semibold text-white uppercase tracking-wide">
+                                            <label
+                                                htmlFor="message"
+                                                className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wide"
+                                            >
                                                 Message
                                             </label>
                                             <Textarea
@@ -216,19 +266,21 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
                                                 rows={5}
                                                 value={formData.message}
                                                 onChange={(e) => handleInputChange("message", e.target.value)}
-                                                className={`glass-input text-white placeholder:text-white/60 focus:border-primary/50 rounded-xl resize-none ${errors.message ? "border-red-400" : ""}`}
+                                                className={`glass-input text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 focus:border-primary/50 rounded-xl resize-none ${errors.message ? "border-red-400" : ""}`}
                                             />
-                                            {errors.message && <p className="text-sm text-red-300">{errors.message}</p>}
+                                            {errors.message && (
+                                                <p className="text-sm text-red-600 dark:text-red-300">{errors.message}</p>
+                                            )}
                                         </div>
 
                                         <Button
                                             type="submit"
-                                            className="w-full glass-button text-white font-bold py-4 text-lg rounded-xl flex items-center justify-center gap-3 mt-8"
+                                            className="w-full glass-button text-gray-900 dark:text-white font-bold py-4 text-lg rounded-xl flex items-center justify-center gap-3 mt-8"
                                             disabled={isSubmitting}
                                         >
                                             {isSubmitting ? (
                                                 <>
-                                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                    <div className="w-5 h-5 border-2 border-gray-900/30 border-t-gray-900 dark:border-white/30 dark:border-t-white rounded-full animate-spin" />
                                                     Sending...
                                                 </>
                                             ) : (
@@ -251,7 +303,7 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
                                             href={social.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="glass-card p-4 rounded-xl text-white/80 hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/20"
+                                            className="glass-card p-4 rounded-xl text-gray-900 dark:text-white/80 hover:text-gray-900 dark:hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/20"
                                             aria-label={social.name}
                                         >
                                             <Icon className="w-6 h-6" />
@@ -263,20 +315,23 @@ export function EmailSignup({ className = "", onSubmit }: ContactFormProps) {
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <button
-                                            className="glass-card p-4 rounded-xl text-white/80 hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/20"
+                                            className="glass-card p-4 rounded-xl text-gray-900 dark:text-white/80 hover:text-gray-900 dark:hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/20"
                                             aria-label="More social links"
                                         >
                                             <MoreHorizontal className="w-6 h-6" />
                                         </button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="center" className="w-48 glass-dropdown border-white/20">
+                                    <DropdownMenuContent
+                                        align="center"
+                                        className="w-48 glass-dropdown border-border dark:border-white/20"
+                                    >
                                         {additionalLinks.map((link) => (
                                             <DropdownMenuItem key={link.name} asChild>
                                                 <a
                                                     href={link.href}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="flex items-center justify-between w-full text-white hover:text-white/80"
+                                                    className="flex items-center justify-between w-full text-gray-900 dark:text-white hover:text-gray-900/80 dark:hover:text-white/80"
                                                 >
                                                     {link.name}
                                                     <ExternalLink className="w-4 h-4" />

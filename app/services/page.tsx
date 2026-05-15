@@ -37,24 +37,27 @@ export const metadata: Metadata = {
   },
 }
 
+// Statically prerender and revalidate daily
+export const revalidate = 86400
+
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="py-20 lg:py-32 bg-standout">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 lg:py-32 bg-section-white text-section-white-foreground">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Title and Key Points */}
             <div>
-              <Badge variant="secondary" className="mb-6 font-serif bg-primary/10 text-primary border-primary/20">
+              <Badge className="mb-6 font-serif border-2 border-standout/30 bg-standout/20 text-standout font-semibold">
                 Premium Digital Services
               </Badge>
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 font-sans mb-6 text-balance">
-                Everything You Need to <span className="text-primary">Succeed Online</span>
+              <h1 className="text-4xl md:text-6xl font-bold text-foreground font-sans mb-6 text-balance">
+                Everything You Need to <span className="text-standout">Succeed Online</span>
               </h1>
-              <p className="text-xl text-gray-600 font-serif mb-8 text-pretty">
+              <p className="text-xl text-muted-foreground font-serif mb-8 text-pretty">
                 From initial concept to ongoing optimization, we provide comprehensive digital solutions that drive
                 growth and deliver measurable results.
               </p>
@@ -69,7 +72,7 @@ export default function ServicesPage() {
                 ].map((point, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700 font-serif">{point}</span>
+                    <span className="text-muted-foreground font-serif">{point}</span>
                   </div>
                 ))}
               </div>
@@ -107,15 +110,15 @@ export default function ServicesPage() {
               ].map((metric, index) => (
                 <Card
                   key={index}
-                  className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 p-6"
+                  className="bg-card/80 border-border/80 shadow-md hover:shadow-xl transition-all duration-300"
                 >
                   <div className="text-center">
                     <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 mx-auto">
                       {metric.icon}
                     </div>
-                    <div className="text-3xl font-bold text-gray-900 font-sans mb-1">{metric.number}</div>
-                    <div className="text-sm font-semibold text-gray-900 font-sans mb-1">{metric.label}</div>
-                    <div className="text-xs text-gray-500 font-serif">{metric.description}</div>
+                    <div className="text-3xl font-bold text-foreground font-sans mb-1">{metric.number}</div>
+                    <div className="text-sm font-semibold text-foreground font-sans mb-1">{metric.label}</div>
+                    <div className="text-xs text-muted-foreground font-serif">{metric.description}</div>
                   </div>
                 </Card>
               ))}
@@ -125,11 +128,11 @@ export default function ServicesPage() {
       </section>
 
       {/* Service Cards Grid */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-section-muted">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 font-sans mb-6 text-balance">Core Services</h2>
-            <p className="text-xl text-gray-600 font-serif max-w-2xl mx-auto text-pretty">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Core Services</h2>
+            <p className="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
               Our primary offerings designed to transform your digital presence and accelerate business growth.
             </p>
           </div>
@@ -175,19 +178,19 @@ export default function ServicesPage() {
             ].map((service, index) => (
               <Card
                 key={index}
-                className="bg-white border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 group"
+                className="bg-card/90 border-border/80 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
               >
                 <CardHeader>
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 group-hover:bg-primary/20 transition-colors">
                     {service.icon}
                   </div>
-                  <CardTitle className="font-sans text-gray-900">{service.title}</CardTitle>
-                  <CardDescription className="font-serif text-gray-600">{service.description}</CardDescription>
+                  <CardTitle className="font-sans text-foreground">{service.title}</CardTitle>
+                  <CardDescription className="font-serif text-muted-foreground">{service.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
                     {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center gap-2 text-gray-600 font-serif text-sm">
+                      <li key={featureIndex} className="flex items-center gap-2 text-muted-foreground font-serif text-sm">
                         <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
                         {feature}
                       </li>
@@ -201,11 +204,11 @@ export default function ServicesPage() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 lg:py-32 bg-section-white">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 font-sans mb-6 text-balance">Why Choose Us</h2>
-            <p className="text-xl text-gray-600 font-serif max-w-2xl mx-auto text-pretty">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Why Choose Us</h2>
+            <p className="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
               What sets us apart from other agencies and freelancers in the industry.
             </p>
           </div>
@@ -233,33 +236,33 @@ export default function ServicesPage() {
                 description: "Direct access to the team, no account managers or middlemen.",
               },
             ].map((reason, index) => (
-              <div key={index} className="text-center">
+              <Card key={index} className="text-center bg-card/80 border-border/80 p-6 shadow-sm hover:shadow-lg transition-all">
                 <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-4 mx-auto">
                   {reason.icon}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 font-sans mb-3">{reason.title}</h3>
-                <p className="text-gray-600 font-serif text-pretty">{reason.description}</p>
-              </div>
+                <h3 className="text-xl font-bold text-foreground font-sans mb-3">{reason.title}</h3>
+                <p className="text-muted-foreground font-serif text-pretty">{reason.description}</p>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* 4-Stage Process Section */}
-      <section className="py-20 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 lg:py-32 bg-section-muted">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 font-sans mb-6 text-balance">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">
               Our 4-Stage Process
             </h2>
-            <p className="text-xl text-gray-600 font-serif max-w-2xl mx-auto text-pretty">
+            <p className="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
               A proven methodology that ensures your project is delivered on time, on budget, and exceeds expectations.
             </p>
           </div>
 
           <div className="relative">
             {/* Process line */}
-            <div className="hidden lg:block absolute top-8 left-0 right-0 h-0.5 bg-gray-200"></div>
+            <div className="hidden lg:block absolute top-8 left-0 right-0 h-0.5 bg-border"></div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
@@ -292,8 +295,8 @@ export default function ServicesPage() {
                   <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground font-bold text-xl font-sans mb-4 mx-auto relative z-10 shadow-lg">
                     {process.step}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 font-sans mb-3">{process.title}</h3>
-                  <p className="text-gray-600 font-serif text-pretty">{process.description}</p>
+                  <h3 className="text-xl font-bold text-foreground font-sans mb-3">{process.title}</h3>
+                  <p className="text-muted-foreground font-serif text-pretty">{process.description}</p>
                 </div>
               ))}
             </div>
@@ -302,13 +305,13 @@ export default function ServicesPage() {
       </section>
 
       {/* Transparent Pricing Section */}
-      <section className="py-20 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 lg:py-32 bg-section-white">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 font-sans mb-6 text-balance">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">
               Transparent Pricing
             </h2>
-            <p className="text-xl text-gray-600 font-serif max-w-2xl mx-auto text-pretty">
+            <p className="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
               Choose the package that best fits your needs. All packages include our signature attention to detail and
               ongoing support.
             </p>
@@ -371,7 +374,7 @@ export default function ServicesPage() {
             ].map((tier, index) => (
               <Card
                 key={index}
-                className={`relative ${tier.popular ? "border-primary shadow-lg scale-105" : "border-gray-200"} bg-white`}
+                className={`relative ${tier.popular ? "border-primary shadow-lg scale-105" : "border-border/80"} bg-card/90`}
               >
                 {tier.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -379,16 +382,16 @@ export default function ServicesPage() {
                   </div>
                 )}
                 <CardHeader className="text-center pb-8">
-                  <CardTitle className="font-sans text-2xl text-gray-900">{tier.name}</CardTitle>
+                  <CardTitle className="font-sans text-2xl text-foreground">{tier.name}</CardTitle>
                   <div className="text-4xl font-bold text-primary font-sans">{tier.price}</div>
-                  <CardDescription className="font-serif text-gray-600">{tier.description}</CardDescription>
+                  <CardDescription className="font-serif text-muted-foreground">{tier.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <h4 className="font-semibold text-gray-900 font-sans mb-3">What's Included:</h4>
+                    <h4 className="font-semibold text-foreground font-sans mb-3">What's Included:</h4>
                     <ul className="space-y-2">
                       {tier.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center gap-2 text-gray-600 font-serif text-sm">
+                        <li key={featureIndex} className="flex items-center gap-2 text-muted-foreground font-serif text-sm">
                           <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
                           {feature}
                         </li>
@@ -398,11 +401,11 @@ export default function ServicesPage() {
 
                   {tier.notIncluded.length > 0 && (
                     <div>
-                      <h4 className="font-semibold text-gray-900 font-sans mb-3">Not Included:</h4>
+                      <h4 className="font-semibold text-foreground font-sans mb-3">Not Included:</h4>
                       <ul className="space-y-2">
                         {tier.notIncluded.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center gap-2 text-gray-600 font-serif text-sm">
-                            <X className="h-4 w-4 text-gray-600 flex-shrink-0" />
+                          <li key={featureIndex} className="flex items-center gap-2 text-muted-foreground font-serif text-sm">
+                            <X className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
@@ -422,13 +425,13 @@ export default function ServicesPage() {
       </section>
 
       {/* What Our Clients Say Section */}
-      <section className="py-20 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 lg:py-32 bg-section-muted">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 font-sans mb-6 text-balance">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">
               What Our Clients Say
             </h2>
-            <p className="text-xl text-gray-600 font-serif max-w-2xl mx-auto text-pretty">
+            <p className="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
               Don't just take our word for it. Here's what our clients have to say about working with us.
             </p>
           </div>
@@ -457,17 +460,17 @@ export default function ServicesPage() {
                 rating: 5,
               },
             ].map((testimonial, index) => (
-              <Card key={index} className="bg-gray-50 border-gray-200">
+              <Card key={index} className="bg-card/90 border-border/80">
                 <CardContent className="pt-6">
                   <div className="flex mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                     ))}
                   </div>
-                  <blockquote className="text-gray-900 font-serif mb-4 text-pretty">"{testimonial.quote}"</blockquote>
+                  <blockquote className="text-foreground font-serif mb-4 text-pretty">"{testimonial.quote}"</blockquote>
                   <div>
-                    <div className="font-semibold text-gray-900 font-sans">{testimonial.author}</div>
-                    <div className="text-gray-600 font-serif text-sm">{testimonial.role}</div>
+                    <div className="font-semibold text-foreground font-sans">{testimonial.author}</div>
+                    <div className="text-muted-foreground font-serif text-sm">{testimonial.role}</div>
                   </div>
                 </CardContent>
               </Card>
@@ -477,12 +480,12 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 lg:py-32 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 font-sans mb-6 text-balance">
+      <section className="py-20 lg:py-32 bg-section-white">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">
             Ready to Get Started?
           </h2>
-          <p className="text-xl text-gray-600 font-serif mb-8 text-pretty">
+          <p className="text-xl text-muted-foreground font-serif mb-8 text-pretty">
             Let's discuss your project and create a custom solution that drives results for your business.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

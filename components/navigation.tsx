@@ -12,18 +12,17 @@ export function Navigation() {
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "/services", label: "Services" },
     { href: "/portfolio", label: "Portfolio" },
+    { href: "/contact", label: "Contact" },
   ]
 
   return (
-      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b-2 border-gray-300 dark:border-gray-700 shadow-sm">
-
+    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center shadow-sm">
               <span className="text-primary-foreground font-bold text-lg font-sans">SD</span>
             </div>
             <span className="font-bold text-xl font-sans text-foreground">Studio Duo</span>
@@ -35,33 +34,31 @@ export function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-foreground hover:text-primary transition-colors duration-200 font-serif font-medium"
+                prefetch={item.href === "/portfolio" ? false : true}
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
               >
                 {item.label}
               </Link>
             ))}
           </div>
-            <ThemeToggle />
 
+          {/* Theme + CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            {/*<Button*/}
-            {/*  variant="outline"*/}
-            {/*  asChild*/}
-            {/*  className="border-slate-800 text-slate-800 hover:bg-slate-700 hover:text-primary-foreground font-serif font-semibold bg-transparent"*/}
-            {/*>*/}
-            {/*  <Link href="/contact">Contact Us</Link>*/}
-            {/*</Button>*/}
-              <Button
-                  asChild
-                  className="bg-slate-800 hover:bg-slate-700 text-white font-serif font-semibold"
-              >
-                  <Link href="/contact">Get Started</Link>
-              </Button>
+            <ThemeToggle />
+            <Button asChild className="rounded-full font-medium shadow-sm transition-colors">
+              <Link href="/contact">Get Started</Link>
+            </Button>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button variant="ghost" size="sm" onClick={() => setIsOpen(!isOpen)} className="text-foreground">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-foreground"
+              aria-label="Toggle menu"
+            >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
@@ -69,31 +66,27 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-card rounded-lg mt-2 shadow-lg">
+          <div className="md:hidden mt-2 animate-in fade-in-50 slide-in-from-top-2 duration-200">
+            <div className="px-3 pt-3 pb-4 bg-card rounded-lg shadow-lg space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="block px-3 py-2 text-card-foreground hover:text-primary transition-colors duration-200 font-serif font-medium"
+                  className="block px-3 py-2 rounded-md text-sm font-medium text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="px-3 py-2 space-y-2">
-                {/*<Button*/}
-                {/*  variant="outline"*/}
-                {/*  asChild*/}
-                {/*  className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground font-serif font-semibold bg-transparent"*/}
-                {/*>*/}
-                {/*  <Link href="/contact">Contact Us</Link>*/}
-                {/*</Button>*/}
-                  <Button
-                      asChild
-                      className="w-full bg-slate-800 hover:bg-slate-700 text-white font-serif font-semibold"
-                  >
-                      <Link href="/contact">Get Started</Link>
+              <div className="flex items-center justify-between px-3 pt-3 border-t border-border">
+                <ThemeToggle />
+                <Button
+                  asChild
+                  className="w-1/2 rounded-full font-medium shadow-sm transition-colors"
+                >
+                  <Link href="/contact" onClick={() => setIsOpen(false)}>
+                    Get Started
+                  </Link>
                 </Button>
               </div>
             </div>
