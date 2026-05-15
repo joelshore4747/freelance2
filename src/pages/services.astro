@@ -1,5 +1,5 @@
 ---
-import { Palette, Code, Smartphone, Zap, Database, Shield, Users, CheckCircle, ArrowRight, Star, Clock, Award, TrendingUp, X, Target, Headphones, Calendar } from "lucide-react"
+import { ShoppingBag, CalendarCheck, Workflow, Sparkles, CheckCircle, ArrowRight, Clock, Award, TrendingUp, Users, Target, Headphones, Calendar } from "lucide-react"
 import Layout from "@/layouts/Layout.astro"
 import Navigation from "@/components/Navigation.astro"
 import Footer from "@/components/Footer.astro"
@@ -7,79 +7,116 @@ import Badge from "@/components/ui/Badge.astro"
 import GetStartedButton from "@/components/GetStartedButton.astro"
 
 const heroPoints = [
-  "Custom web design & development tailored to your brand",
-  "Mobile-first approach ensuring perfect performance on all devices",
-  "SEO optimization and performance monitoring included",
-  "Ongoing support and maintenance for peace of mind",
+  "Premium websites tailored to your brand and audience",
+  "Ecommerce stores built for clarity, trust and checkout speed",
+  "Booking pages that turn enquiries into confirmed customers",
+  "n8n + AI automations that remove repetitive admin",
 ]
 
 const heroMetrics = [
-  { Icon: Target, number: "150+", label: "Projects Delivered", description: "Successfully completed" },
+  { Icon: Target, number: "150+", label: "Projects Delivered", description: "Across web, ecommerce, automation" },
   { Icon: Users, number: "98%", label: "Client Satisfaction", description: "Happy clients rate" },
-  { Icon: Calendar, number: "5+", label: "Years Experience", description: "In web development" },
-  { Icon: Headphones, number: "24/7", label: "Support", description: "Always available" },
+  { Icon: Calendar, number: "5+", label: "Years Experience", description: "In web + automation" },
+  { Icon: Headphones, number: "24/7", label: "Support", description: "Always reachable" },
 ]
 
-const coreServices = [
-  { Icon: Palette, title: "UI/UX Design", description: "Beautiful, intuitive interfaces that users love and convert visitors into customers.", features: ["User Research", "Wireframing", "Visual Design", "Prototyping"] },
-  { Icon: Code, title: "Web Development", description: "Fast, secure, and scalable websites built with modern technologies and best practices.", features: ["Custom Development", "CMS Integration", "API Development", "Database Design"] },
-  { Icon: Smartphone, title: "Mobile-First Design", description: "Responsive designs that work perfectly across all devices and screen sizes.", features: ["Responsive Design", "Mobile Optimization", "Touch Interfaces", "Cross-Browser Testing"] },
-  { Icon: Zap, title: "Performance Optimization", description: "Lightning-fast websites optimized for Core Web Vitals and search engine rankings.", features: ["Speed Optimization", "Image Compression", "Code Splitting", "CDN Setup"] },
-  { Icon: Database, title: "Full-Stack Development", description: "Complete web applications with robust backends and seamless user experiences.", features: ["Backend Development", "Database Architecture", "API Integration", "Cloud Deployment"] },
-  { Icon: Shield, title: "Security & Maintenance", description: "Ongoing support, security updates, and performance monitoring for peace of mind.", features: ["Security Audits", "Regular Updates", "Backup Systems", "24/7 Monitoring"] },
+const offers = [
+  {
+    id: "ecommerce",
+    Icon: ShoppingBag,
+    badge: "Ecommerce",
+    title: "Ecommerce Stores",
+    subtitle: "Premium ecommerce websites built to sell products clearly, quickly and professionally.",
+    price: "from £3,500",
+    forWhom: "Clothing, beauty, hair, supplement, food & drink, handmade and small online brands.",
+    includes: [
+      "Shopify or WooCommerce setup",
+      "Homepage, collection & product pages",
+      "Cart and checkout polish",
+      "Payment + shipping setup",
+      "Reviews and trust sections",
+      "Email capture",
+      "Analytics + basic SEO",
+    ],
+    examples: ["Hair & beauty store", "Fitness supplement store", "Fashion brand storefront", "Local artisan shop"],
+  },
+  {
+    id: "booking",
+    Icon: CalendarCheck,
+    badge: "Bookings",
+    title: "Booking Websites",
+    subtitle: "Clean booking pages for service businesses that want customers to book without calling, messaging or waiting for a reply.",
+    price: "from £2,500",
+    forWhom: "Barbers, salons, spas, yoga studios, gyms, golf clubs, restaurants, clinics, coaches, activity venues.",
+    includes: [
+      "Booking page design",
+      "Appointment, class or reservation flow",
+      "Deposit / payment setup",
+      "Calendar integration",
+      "Confirmation + reminder emails",
+      "Enquiry forms",
+      "Admin view for bookings",
+    ],
+    examples: ["Golf tee-time booking", "Yoga class booking", "Spa treatment booking", "Restaurant reservations"],
+  },
+  {
+    id: "automation",
+    Icon: Workflow,
+    badge: "Automation",
+    title: "Workflow Automation",
+    subtitle: "Automations that connect your apps, reduce repetitive admin and keep your business moving without manual copy-paste work.",
+    price: "from £1,200",
+    forWhom: "Businesses taking lots of enquiries, ecommerce stores, agencies, trades, clinics, appointment-based businesses.",
+    includes: [
+      "Workflow audit",
+      "n8n automation build",
+      "App integrations (Shopify, Stripe, Calendly, Slack, Sheets, Notion, Airtable, CRMs)",
+      "Test runs against real data",
+      "Documentation",
+      "30 days of support",
+    ],
+    examples: ["Form → CRM → Slack alert", "Booking → confirmation → calendar event", "Order → fulfilment alert → customer email", "Abandoned enquiry chaser"],
+    cta: { label: "See automation examples", href: "/automation" },
+  },
+  {
+    id: "ai",
+    Icon: Sparkles,
+    badge: "AI",
+    title: "AI Business Tools",
+    subtitle: "Practical AI tools that help businesses answer questions, process enquiries, create content and save time.",
+    price: "from £900",
+    forWhom: "Ecommerce brands, service businesses, agencies, consultants — anyone with repeated customer questions or messy admin.",
+    includes: [
+      "AI website chatbot / FAQ assistant",
+      "AI enquiry summariser",
+      "AI quote / proposal helper",
+      "AI email reply drafts",
+      "AI lead qualification",
+      "AI product description generator",
+      "AI internal knowledge assistant",
+    ],
+    examples: ["Chatbot trained on your FAQs", "Lead qualification + summary", "Bulk product description generator", "AI-drafted customer replies"],
+  },
 ]
 
 const reasons = [
-  { Icon: Award, title: "Award-Winning Design", description: "Recognized for excellence in web design and user experience." },
-  { Icon: Clock, title: "Fast Delivery", description: "Most projects completed within 2-4 weeks without compromising quality." },
-  { Icon: TrendingUp, title: "Proven Results", description: "Average 150% increase in conversion rates for our clients." },
-  { Icon: Users, title: "Personal Attention", description: "Direct access to the team, no account managers or middlemen." },
+  { Icon: Award, title: "Focused Scope", description: "Four services we ship every week — not a long list of side hustles." },
+  { Icon: Clock, title: "Fast Delivery", description: "Most projects launch in 4–8 weeks. Automations often in days." },
+  { Icon: TrendingUp, title: "Outcome-Led", description: "Bookings, sales and time saved are the metrics we design for." },
+  { Icon: Users, title: "Direct Access", description: "You work with the team building it — no account managers." },
 ]
 
 const stages = [
-  { step: "01", title: "Discovery & Planning", description: "We start with a comprehensive discovery session to understand your goals, target audience, and project requirements." },
-  { step: "02", title: "Design & Strategy", description: "We create wireframes, mockups, and a detailed project strategy that aligns with your business objectives." },
-  { step: "03", title: "Development & Testing", description: "We build your project using modern technologies, with regular testing and quality assurance throughout." },
-  { step: "04", title: "Launch & Support", description: "We deploy your project and provide ongoing support, training, and optimization to ensure continued success." },
-]
-
-const pricingTiers = [
-  {
-    name: "Starter",
-    price: "$5,000",
-    description: "Perfect for small businesses and startups",
-    features: ["5-page responsive website", "Mobile-first design", "Basic SEO optimization", "Contact form integration", "2 rounds of revisions", "30 days support"],
-    notIncluded: ["E-commerce functionality", "Custom animations", "Advanced integrations"],
-    popular: false,
-  },
-  {
-    name: "Professional",
-    price: "$12,000",
-    description: "Ideal for growing businesses",
-    features: ["10-page responsive website", "Custom UI/UX design", "Advanced SEO optimization", "CMS integration", "E-commerce functionality", "Performance optimization", "Analytics setup", "3 rounds of revisions", "90 days support"],
-    notIncluded: ["Custom backend development", "Third-party integrations"],
-    popular: true,
-  },
-  {
-    name: "Enterprise",
-    price: "$25,000+",
-    description: "For complex projects and large organizations",
-    features: ["Unlimited pages", "Custom web application", "Full-stack development", "Advanced integrations", "Custom animations", "Security implementation", "Performance monitoring", "Team training", "Unlimited revisions", "6 months support"],
-    notIncluded: [],
-    popular: false,
-  },
-]
-
-const testimonials = [
-  { quote: "The team delivered exactly what we needed. Our new website has increased our lead generation by 200% and the design is absolutely stunning.", author: "Sarah Johnson", role: "CEO, TechStart Inc.", rating: 5 },
-  { quote: "Professional, responsive, and incredibly talented. They understood our vision perfectly and brought it to life better than we imagined.", author: "Michael Chen", role: "Founder, GrowthLab", rating: 5 },
-  { quote: "Outstanding work on our e-commerce platform. The attention to detail and user experience has significantly improved our conversion rates.", author: "Emily Rodriguez", role: "Marketing Director, RetailPro", rating: 5 },
+  { step: "01", title: "Plan", description: "Audit the offer, current tools and the workflows you want to fix or build. Agree what success looks like." },
+  { step: "02", title: "Design", description: "Wireframes and visual designs for every page or screen before any code." },
+  { step: "03", title: "Build", description: "Production-ready websites and stores with payments, SEO and analytics wired in." },
+  { step: "04", title: "Automate", description: "n8n flows and AI assistants that handle the repetitive parts after launch." },
 ]
 ---
 
 <Layout
-  title="Services - Studio Duo | Web Design & Development Services"
-  description="Comprehensive web design and development services including UI/UX design, full-stack development, mobile optimization, and ongoing support."
+  title="Services — Studio Duo | Ecommerce, Bookings, Automation, AI"
+  description="Ecommerce stores, booking websites, n8n workflow automation and practical AI business tools. Four focused services that work together."
 >
   <div class="min-h-screen bg-background text-foreground">
     <Navigation />
@@ -89,13 +126,13 @@ const testimonials = [
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <Badge class="mb-6 font-serif border-2 border-standout/30 bg-standout/20 text-standout font-semibold">
-              Premium Digital Services
+              Websites • Ecommerce • Automation • AI
             </Badge>
             <h1 class="text-4xl md:text-6xl font-bold text-foreground font-sans mb-6 text-balance">
-              Everything You Need to <span class="text-standout">Succeed Online</span>
+              Everything You Need to <span class="text-standout">Sell, Book & Automate</span>
             </h1>
             <p class="text-xl text-muted-foreground font-serif mb-8 text-pretty">
-              From initial concept to ongoing optimization, we provide comprehensive digital solutions that drive growth and deliver measurable results.
+              Four focused services that help businesses get more bookings, more sales and less manual admin.
             </p>
             <div class="space-y-4 mb-8">
               {
@@ -130,28 +167,44 @@ const testimonials = [
       </div>
     </section>
 
-    <section class="py-20 bg-section-muted">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Core Services</h2>
-          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
-            Our primary offerings designed to transform your digital presence and accelerate business growth.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {
-            coreServices.map(s => (
-              <div class="card-universal bg-card/90 text-card-foreground rounded-xl border border-border/80 shadow-sm py-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-                <div class="px-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5">
-                  <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 group-hover:bg-primary/20 transition-colors">
-                    <s.Icon className="h-8 w-8" />
+    {
+      offers.map((o, i) => (
+        <section id={o.id} class={`py-20 lg:py-28 ${i % 2 === 0 ? "bg-section-muted" : "bg-section-white"}`}>
+          <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="grid lg:grid-cols-5 gap-12 items-start">
+              <div class="lg:col-span-2">
+                <Badge class="mb-4 font-serif border-2 border-standout/30 bg-standout/20 text-standout font-semibold">{o.badge}</Badge>
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                    <o.Icon className="h-7 w-7" />
                   </div>
-                  <div class="font-sans text-foreground leading-none font-semibold">{s.title}</div>
-                  <div class="font-serif text-muted-foreground text-sm">{s.description}</div>
+                  <h2 class="text-3xl md:text-4xl font-bold text-foreground font-sans">{o.title}</h2>
                 </div>
-                <div class="px-6">
-                  <ul class="space-y-2">
-                    {s.features.map(f => (
+                <p class="text-lg text-muted-foreground font-serif mb-6 text-pretty leading-relaxed">{o.subtitle}</p>
+                <div class="rounded-2xl border border-border/70 bg-card/60 backdrop-blur p-5 mb-6">
+                  <p class="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-1">Starts</p>
+                  <p class="text-2xl font-bold text-foreground font-sans">{o.price}</p>
+                </div>
+                <p class="text-sm text-muted-foreground font-serif">
+                  <span class="font-semibold text-foreground">Best for:</span> {o.forWhom}
+                </p>
+                <div class="flex flex-wrap gap-3 mt-6">
+                  <GetStartedButton size="lg" class="font-serif font-semibold" />
+                  {o.cta && (
+                    <a href={o.cta.href} class="inline-flex items-center gap-2 h-10 px-6 rounded-md text-base font-serif font-semibold border bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors">
+                      {o.cta.label} <ArrowRight className="h-4 w-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <div class="lg:col-span-3 grid md:grid-cols-2 gap-6">
+                <div class="card-universal bg-card text-card-foreground rounded-xl border border-border/80 shadow-sm py-6">
+                  <div class="px-6 mb-4">
+                    <h3 class="font-semibold text-foreground font-sans">What's included</h3>
+                  </div>
+                  <ul class="px-6 space-y-2">
+                    {o.includes.map(f => (
                       <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
                         <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
                         {f}
@@ -159,19 +212,32 @@ const testimonials = [
                     ))}
                   </ul>
                 </div>
+                <div class="card-universal bg-card text-card-foreground rounded-xl border border-border/80 shadow-sm py-6">
+                  <div class="px-6 mb-4">
+                    <h3 class="font-semibold text-foreground font-sans">Example use cases</h3>
+                  </div>
+                  <ul class="px-6 space-y-2">
+                    {o.examples.map(f => (
+                      <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
+                        <span class="w-1.5 h-1.5 bg-standout rounded-full flex-shrink-0"></span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
+            </div>
+          </div>
+        </section>
+      ))
+    }
 
     <section class="py-20 lg:py-32 bg-section-white">
       <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div class="text-center mb-16">
           <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Why Choose Us</h2>
           <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
-            What sets us apart from other agencies and freelancers in the industry.
+            A small team that owns strategy, design, build and automation so nothing gets lost between handoffs.
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -193,9 +259,9 @@ const testimonials = [
     <section class="py-20 lg:py-32 bg-section-muted">
       <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Our 4-Stage Process</h2>
+          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">How We Work</h2>
           <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
-            A proven methodology that ensures your project is delivered on time, on budget, and exceeds expectations.
+            Plan, design, build, automate. Same process whether you need a store, a booking page or a workflow.
           </p>
         </div>
         <div class="relative">
@@ -218,102 +284,14 @@ const testimonials = [
     </section>
 
     <section class="py-20 lg:py-32 bg-section-white">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Transparent Pricing</h2>
-          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
-            Choose the package that best fits your needs. All packages include our signature attention to detail and ongoing support.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {
-            pricingTiers.map(tier => (
-              <div class={`card-universal relative bg-card/90 text-card-foreground rounded-xl shadow-sm py-6 ${tier.popular ? "border-primary border shadow-lg scale-105" : "border border-border/80"}`}>
-                {tier.popular && (
-                  <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <Badge class="bg-primary text-primary-foreground font-serif">Most Popular</Badge>
-                  </div>
-                )}
-                <div class="text-center pb-8 px-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5">
-                  <div class="font-sans text-2xl text-foreground leading-none font-semibold">{tier.name}</div>
-                  <div class="text-4xl font-bold text-primary font-sans">{tier.price}</div>
-                  <div class="font-serif text-muted-foreground text-sm">{tier.description}</div>
-                </div>
-                <div class="px-6 space-y-6">
-                  <div>
-                    <h4 class="font-semibold text-foreground font-sans mb-3">What’s Included:</h4>
-                    <ul class="space-y-2">
-                      {tier.features.map(f => (
-                        <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
-                          <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  {tier.notIncluded.length > 0 && (
-                    <div>
-                      <h4 class="font-semibold text-foreground font-sans mb-3">Not Included:</h4>
-                      <ul class="space-y-2">
-                        {tier.notIncluded.map(f => (
-                          <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
-                            <X className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  <GetStartedButton variant={tier.popular ? "default" : "outline"} class="w-full font-serif font-semibold" />
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section class="py-20 lg:py-32 bg-section-muted">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">What Our Clients Say</h2>
-          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
-            Don’t just take our word for it. Here’s what our clients have to say about working with us.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {
-            testimonials.map(t => (
-              <div class="card-universal bg-card/90 text-card-foreground rounded-xl border border-border/80 shadow-sm py-6">
-                <div class="px-6 pt-0">
-                  <div class="flex mb-4">
-                    {Array.from({ length: t.rating }).map(() => <Star className="h-4 w-4 fill-primary text-primary" />)}
-                  </div>
-                  <blockquote class="text-foreground font-serif mb-4 text-pretty">“{t.quote}”</blockquote>
-                  <div>
-                    <div class="font-semibold text-foreground font-sans">{t.author}</div>
-                    <div class="text-muted-foreground font-serif text-sm">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section class="py-20 lg:py-32 bg-section-white">
       <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
-        <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Ready to Get Started?</h2>
+        <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Ready to ship something?</h2>
         <p class="text-xl text-muted-foreground font-serif mb-8 text-pretty">
-          Let’s discuss your project and create a custom solution that drives results for your business.
+          Tell us what you want to build — store, booking page, automation or AI tool — and we'll come back with a plan.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <GetStartedButton size="lg" class="font-serif font-semibold" />
-          <a
-            href="/portfolio"
-            class="inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md text-base font-serif font-semibold border bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors"
-          >
+          <a href="/work" class="inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md text-base font-serif font-semibold border bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors">
             View Our Work <ArrowRight className="ml-2 h-4 w-4" />
           </a>
         </div>

@@ -12,6 +12,7 @@ const ContactSchema = z.object({
   budget: z.string().trim().max(40).optional().default(""),
   subject: z.string().trim().max(200).optional().default("New contact form submission"),
   website: z.string().max(500).optional().default(""),
+  services: z.array(z.string().max(40)).max(10).optional().default([]),
 })
 
 type RateState = { count: number; resetAt: number }
@@ -97,12 +98,14 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return Response.json({ ok: false, error: "Inbox not configured" }, { status: 500 })
   }
 
-  const { name, email, message, company, budget, subject } = parsed.data
+  const { name, email, message, company, budget, subject, services } = parsed.data
+  const servicesLabel = services.length ? services.join(", ") : ""
   const html = `
     <h2>${escapeHtml(subject)}</h2>
     <p><strong>From:</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;</p>
     ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ""}
     ${budget ? `<p><strong>Budget:</strong> ${escapeHtml(budget)}</p>` : ""}
+    ${servicesLabel ? `<p><strong>Interested in:</strong> ${escapeHtml(servicesLabel)}</p>` : ""}
     <hr />
     <pre style="white-space: pre-wrap; font-family: inherit;">${escapeHtml(message)}</pre>
   `
@@ -113,7 +116,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       to,
       replyTo: `${name} <${email}>`,
       subject,
-      text: `From: ${name} <${email}>\nCompany: ${company || "—"}\nBudget: ${budget || "—"}\n\n${message}`,
+      text: `From: ${name} <${email}>\nCompany: ${company || "—"}\nBudget: ${budget || "—"}\nInterested in: ${servicesLabel || "—"}\n\n${message}`,
       html,
     })
   } catch (err) {

@@ -9,67 +9,67 @@ import { ShowcaseCarousel } from "@/components/ShowcaseCarousel"
 import { CornerVideoPlayer } from "@/components/CornerVideoPlayer"
 
 const heroStats = [
-  { label: "Automation hours saved", value: "30k+", Icon: Rocket, tone: "bg-primary/10 text-primary" },
-  { label: "Web builds shipped", value: "90+", Icon: Code2, tone: "bg-standout/10 text-standout" },
-  { label: "Avg ROI in year one", value: "4.1x", Icon: TrendingUp, tone: "bg-accent/10 text-accent" },
-  { label: "Active systems maintained", value: "70", Icon: Handshake, tone: "bg-standout-2-10 text-standout-2" },
+  { label: "Bookings handled", value: "120k+", Icon: Rocket, tone: "bg-primary/10 text-primary" },
+  { label: "Ecommerce builds shipped", value: "60+", Icon: ShoppingBag, tone: "bg-standout/10 text-standout" },
+  { label: "Hours saved per month", value: "1.4k", Icon: TrendingUp, tone: "bg-accent/10 text-accent" },
+  { label: "Automations running", value: "200+", Icon: Handshake, tone: "bg-standout-2-10 text-standout-2" },
 ]
 
 const showreelHighlights = [
-  { title: "Automation that sticks", description: "Revenue, support, and ops flows with audits, alerts, and human-in-the-loop controls.", Icon: Layers, tone: "bg-primary/10 text-primary" },
-  { title: "Websites that convert", description: "Clear offers, fast pages, and analytics wired in so you see what is working every week.", Icon: ShoppingBag, tone: "bg-standout/10 text-standout" },
-  { title: "Systems people use", description: "Dashboards, CRMs, and portals that keep data legible and actions obvious.", Icon: Orbit, tone: "bg-accent/10 text-accent" },
-  { title: "One accountable partner", description: "I own strategy, design, and build so nothing gets lost between handoffs.", Icon: Handshake, tone: "bg-standout-2-10 text-standout-2" },
+  { title: "Booking pages that convert", description: "Clean flows for golf, yoga, spa, gym and restaurant reservations — designed to remove the back-and-forth.", Icon: Layers, tone: "bg-primary/10 text-primary" },
+  { title: "Ecommerce that sells", description: "Premium product pages, trust signals, frictionless checkout, and email capture wired in from day one.", Icon: ShoppingBag, tone: "bg-standout/10 text-standout" },
+  { title: "Automation that pays back", description: "n8n flows that remove copy-paste admin and chase leads while you sleep.", Icon: Orbit, tone: "bg-accent/10 text-accent" },
+  { title: "AI where it earns its keep", description: "Chatbots, summaries, drafts and qualification — scoped, not sprayed across every page.", Icon: Handshake, tone: "bg-standout-2-10 text-standout-2" },
 ]
 
 const spotlightProjects = [
-  { id: "ops-automation", category: "Automation", title: "Ops automation control room", description: "Built a single pane with approval gates, Slack alerts, and error handling for revenue and success teams.", image: "/saas-dashboard-analytics-interface.jpg", video: "/videos/atlas.mp4", outcomes: ["Cut manual updates by 72%", "Lead response now under 3 minutes", "Audit-ready logs for finance and sales"], link: "/contact?project=ops-automation" },
-  { id: "growth-site", category: "Websites", title: "Conversion-focused web rebuild", description: "Reframed the offer, shipped a landing system, and wired analytics plus experimentation from day one.", image: "/modern-ecommerce-interface.png", video: "/videos/lumos.mp4", outcomes: ["5.6% visitor-to-lead conversion", "Booked calls up 2.4x after launch", "Sub-1s LCP on primary templates"], link: "/contact?project=growth-site" },
-  { id: "customer-portal", category: "Business Systems", title: "Customer success portal", description: "Delivered self-serve onboarding, usage dashboards, and renewal workflows inside a branded portal.", image: "/mobile-fitness-app-interface-design.jpg", video: "/videos/pulse.mp4", outcomes: ["Churn reduced by 18%", "Time-to-value cut to 2 days", "CSAT improved to 4.8/5"], link: "/contact?project=customer-portal" },
+  { id: "golf-booking", category: "Booking", title: "Golf tee-time booking", description: "Member rates, weather-aware availability, deposit-on-book and instant confirmations. Includes a clean admin view for the pro shop.", image: "/saas-dashboard-analytics-interface.jpg", video: "/videos/atlas.mp4", outcomes: ["Tee-time bookings up 3.2×", "Phone enquiries down 70%", "Deposits captured at the point of booking"], link: "/contact?project=golf-booking" },
+  { id: "beauty-store", category: "Ecommerce", title: "Hair & beauty product store", description: "Premium product storytelling, reviews, subscription flow, and a fast one-page checkout on Shopify.", image: "/modern-ecommerce-interface.png", video: "/videos/lumos.mp4", outcomes: ["4.1% visitor-to-purchase", "Subscriptions on 28% of orders", "Repeat purchase rate up 35%"], link: "/contact?project=beauty-store" },
+  { id: "enquiry-automation", category: "Automation", title: "Enquiry → CRM automation", description: "Every form submission enriched, summarised by AI, scored, and pushed to the right person on Slack within 60 seconds.", image: "/mobile-fitness-app-interface-design.jpg", video: "/videos/pulse.mp4", outcomes: ["Lead response time: 47s avg", "Manual data entry eliminated", "Pipeline visibility per-channel"], link: "/contact?project=enquiry-automation" },
 ]
 
 const projects = [
-  { id: "rev-ops", title: "RevOps Automation Mesh", category: "Automation", summary: "Lead routing, enrichment, and contract workflows that update CRM, billing, and Slack in minutes.", image: "/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg", metrics: [{ label: "Response time", value: "2m" }, { label: "Pipeline coverage", value: "3.8x" }, { label: "Manual steps", value: "-70%" }], stack: ["Node.js", "Next.js", "Zapier", "HubSpot"] },
-  { id: "conversion-site", title: "Conversion-Driven Website", category: "Websites", summary: "SEO-backed marketing site with booking funnels, analytics, and experiment-ready components.", image: "/placeholder-95zgk.png", metrics: [{ label: "Conversion rate", value: "5.2%" }, { label: "Page speed", value: "95+ LCP" }, { label: "Launch window", value: "4 weeks" }], stack: ["Next.js", "Tailwind", "Vercel", "Analytics"] },
-  { id: "partner-portal", title: "Partner Operations Portal", category: "Business Systems", summary: "Role-based portal for onboarding, approvals, and payouts with audit-ready trails.", image: "/placeholder-ks40r.png", metrics: [{ label: "Onboarding time", value: "-60%" }, { label: "Support tickets", value: "-45%" }, { label: "User adoption", value: "94%" }], stack: ["Next.js", "PostgreSQL", "Prisma", "Stripe"] },
-  { id: "support-automation", title: "Support Automation Desk", category: "Automation", summary: "AI-assisted triage, SLA alerts, and human-in-the-loop resolutions inside existing tools.", image: "/placeholder-49g40.png", metrics: [{ label: "First reply", value: "3m" }, { label: "Resolution time", value: "-52%" }, { label: "Escalations", value: "-35%" }], stack: ["Node.js", "n8n", "OpenAI", "Zendesk"] },
-  { id: "inventory-system", title: "Inventory Control Dashboard", category: "Business Systems", summary: "Unified view of stock, purchase orders, and fulfillment with proactive alerts.", image: "/placeholder-7fi4h.png", metrics: [{ label: "Stockouts", value: "-68%" }, { label: "Reorder accuracy", value: "98%" }, { label: "Teams aligned", value: "Ops + Finance" }], stack: ["React", "D3.js", "Python", "PostgreSQL"] },
-  { id: "subscription-site", title: "Subscription Commerce Site", category: "Websites", summary: "Product storytelling paired with subscription flows, retention nudges, and analytics.", image: "/data-analytics-dashboard.png", metrics: [{ label: "LTV uplift", value: "2.4x" }, { label: "Churn reduction", value: "-22%" }, { label: "Launch window", value: "6 weeks" }], stack: ["Next.js", "Stripe", "Tailwind", "Headless CMS"] },
+  { id: "yoga-booking", title: "Yoga studio class booking", category: "Booking", summary: "Class schedule with capacity, waitlists, member passes, drop-in payments and email reminders.", image: "/mobile-fitness-app-interface-design.jpg", metrics: [{ label: "No-shows", value: "-40%" }, { label: "Class fill rate", value: "92%" }, { label: "Pass renewals", value: "+22%" }], stack: ["Astro", "Stripe", "Calendly", "n8n"] },
+  { id: "fashion-store", title: "Fashion brand storefront", category: "Ecommerce", summary: "Clean collection navigation, lookbook product pages, reviews, email capture, and a one-page checkout.", image: "/placeholder-95zgk.png", metrics: [{ label: "Conversion rate", value: "3.8%" }, { label: "AOV", value: "+18%" }, { label: "Launch", value: "5 weeks" }], stack: ["Shopify", "Klaviyo", "Tailwind", "Analytics"] },
+  { id: "spa-booking", title: "Spa treatment booking", category: "Booking", summary: "Treatment picker with stylist preferences, deposits, gift cards, and SMS reminders the morning of.", image: "/placeholder-ks40r.png", metrics: [{ label: "Bookings online", value: "78%" }, { label: "Phone calls", value: "-60%" }, { label: "Gift cards", value: "+£18k/mo" }], stack: ["Astro", "Stripe", "Twilio", "Sheets"] },
+  { id: "order-automation", title: "Ecommerce order automation", category: "Automation", summary: "Order placed → fulfilment alert → label printed → branded receipt → review request 7 days later. All visible in n8n.", image: "/placeholder-49g40.png", metrics: [{ label: "Order handling", value: "Fully auto" }, { label: "Review requests", value: "100%" }, { label: "Manual steps", value: "0" }], stack: ["Shopify", "n8n", "ShipStation", "Klaviyo"] },
+  { id: "fitness-supplements", title: "Fitness supplement store", category: "Ecommerce", summary: "Bundle builder, subscription flow, ingredient transparency, and trust signals tuned for repeat purchase.", image: "/placeholder-7fi4h.png", metrics: [{ label: "Subscription rate", value: "31%" }, { label: "AOV", value: "+24%" }, { label: "Returning", value: "44%" }], stack: ["Shopify", "Recharge", "Klaviyo", "PostgreSQL"] },
+  { id: "ai-support", title: "AI customer support assistant", category: "AI", summary: "Chatbot trained on FAQs, products, returns policy and order data. Hands off to a human with full context when needed.", image: "/data-analytics-dashboard.png", metrics: [{ label: "Auto-resolved", value: "62%" }, { label: "First reply", value: "Instant" }, { label: "CSAT", value: "4.7/5" }], stack: ["OpenAI", "Pinecone", "n8n", "Zendesk"] },
 ]
 
-const categories = ["All", "Automation", "Websites", "Business Systems"]
+const categories = ["All", "Booking", "Ecommerce", "Automation", "AI"]
 
 const focusAreas = [
-  { title: "Automation & ops", description: "Back-office and revenue automations with clear ownership and reporting.", Icon: Rocket, tone: "bg-primary/10 text-primary", points: ["Lead routing, enrichment, and follow-up cadences", "Support triage, SLA alerts, and knowledge automation", "Finance + inventory syncs with human approvals"] },
-  { title: "Conversion websites", description: "High-converting marketing and product sites tuned for clarity, speed, and SEO.", Icon: ShoppingBag, tone: "bg-standout/10 text-standout", points: ["Messaging, offer clarity, and funnel design", "Headless builds with analytics and experimentation", "Speed, accessibility, and content workflows"] },
-  { title: "Business systems", description: "Custom portals, dashboards, and CRMs that align teams and make data usable.", Icon: Layers, tone: "bg-accent/10 text-accent", points: ["Role-based portals for customers or partners", "Operational dashboards with actionable metrics", "Secure integrations across your existing stack"] },
+  { title: "Booking websites", description: "Clean booking flows for service businesses that want customers to book without calling.", Icon: Layers, tone: "bg-primary/10 text-primary", points: ["Appointment / class / reservation flows", "Deposit & gift-card payment setup", "Calendar + email/SMS confirmations"] },
+  { title: "Ecommerce stores", description: "Shopify and WooCommerce builds tuned for trust, clarity and checkout speed.", Icon: ShoppingBag, tone: "bg-standout/10 text-standout", points: ["Product, collection and cart polish", "Reviews, trust and email capture", "Subscriptions, bundles, lifecycle emails"] },
+  { title: "Automation + AI", description: "n8n workflows and practical AI tools that remove repetitive admin and chase leads.", Icon: Sparkles, tone: "bg-accent/10 text-accent", points: ["Form → CRM → Slack alerts", "AI chatbots and enquiry summaries", "Order, booking and email automations"] },
 ]
 
 const processSteps = [
-  { title: "Discovery + audit", description: "Understand current tools, manual steps, and where automation helps fastest.", detail: "System audit, metric targets, risk checks", Icon: Search, tone: "bg-primary/10 text-primary" },
-  { title: "Plan the flows", description: "Map user journeys, data contracts, and approvals so automation and UI stay aligned.", detail: "Flow mapping, UX wireframes, acceptance criteria", Icon: PenTool, tone: "bg-standout/10 text-standout" },
-  { title: "Build + integrate", description: "Ship production-ready web experiences and automations with monitoring and tests.", detail: "Next.js, Node, Zapier/Make, API integrations", Icon: Code2, tone: "bg-accent/10 text-accent" },
-  { title: "Launch + iterate", description: "Measure usage, tighten edge cases, and leave you with clear runbooks.", detail: "Instrumentation, training, iteration sprints", Icon: Rocket, tone: "bg-standout-2-10 text-standout" },
+  { title: "Plan", description: "Understand the offer, current tools and the workflows you want to fix or build.", detail: "Audit + scope + success metrics", Icon: Search, tone: "bg-primary/10 text-primary" },
+  { title: "Design", description: "Clear pages, simple flows, and visual examples before any code.", detail: "Wireframes, UI mocks, copy direction", Icon: PenTool, tone: "bg-standout/10 text-standout" },
+  { title: "Build", description: "Production-ready websites and stores with analytics, SEO and payment wiring.", detail: "Astro, Shopify, Next.js, Stripe", Icon: Code2, tone: "bg-accent/10 text-accent" },
+  { title: "Automate", description: "n8n flows and AI assistants that handle the repetitive parts after launch.", detail: "n8n, OpenAI, integrations, monitoring", Icon: Rocket, tone: "bg-standout-2-10 text-standout" },
 ]
 
-const toolkit = ["Next.js", "TypeScript", "Node.js", "NestJS", "React Native", "Tailwind", "Prisma", "PostgreSQL", "Supabase", "Stripe", "Clerk / Auth0", "Zapier", "n8n", "Make", "HubSpot", "Figma", "AWS", "Vercel"]
+const toolkit = ["Shopify", "WooCommerce", "Astro", "Next.js", "Tailwind", "TypeScript", "Stripe", "Klaviyo", "Calendly", "Cal.com", "n8n", "OpenAI", "Anthropic", "Notion", "Airtable", "Google Sheets", "Slack", "HubSpot", "Pipedrive", "PostgreSQL", "Resend", "Twilio"]
 const TOOLKIT_TONE = ["border-primary bg-primary/10 text-primary", "border-standout bg-standout/10 text-standout", "border-accent bg-accent/10 text-accent", "border-standout-2 bg-standout-2-10 text-standout-2"]
 
 const galleryShots = [
-  { title: "Automation control board", category: "Automation", description: "Approval gates, alerts, and error handling surfaced in one view.", image: "/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg" },
-  { title: "Offer-led homepage", category: "Websites", description: "Clarity-first landing with social proof, pricing, and frictionless booking.", image: "/placeholder-ks40r.png" },
-  { title: "Customer portal mobile", category: "Business Systems", description: "Self-serve onboarding, usage stats, and support built for handheld use.", image: "/placeholder-49g40.png" },
-  { title: "Inventory & fulfillment view", category: "Business Systems", description: "Real-time stock status, alerts, and reconciliation for operations teams.", image: "/placeholder-95zgk.png" },
+  { title: "Golf tee-time booking", category: "Booking", description: "Member rates, deposit-on-book, weather-aware availability.", image: "/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg" },
+  { title: "Premium product page", category: "Ecommerce", description: "Lookbook imagery, reviews, trust signals, fast checkout.", image: "/placeholder-ks40r.png" },
+  { title: "Booking admin view", category: "Booking", description: "All bookings, statuses, and payments at a glance for staff.", image: "/placeholder-49g40.png" },
+  { title: "Automation flow in n8n", category: "Automation", description: "Real workflow visible — triggers, AI step, branching, alerts.", image: "/placeholder-95zgk.png" },
 ]
 
 const testimonials = [
-  { name: "Lisa Patel", role: "COO, CargoLine", quote: "He automated the messy handoffs between sales, ops, and finance. We finally see the entire order lifecycle without chasing spreadsheets.", outcome: "Manual billing time down 60% and response times under 3 minutes", avatar: "/professional-woman-portrait.png" },
-  { name: "Andre Miller", role: "Founder, Northbeam Analytics", quote: "Our marketing site now speaks clearly to the right buyers and tracks every step. The rebuild paid for itself within the first quarter.", outcome: "Pipeline velocity up 2.4x with a faster, clearer website", avatar: "/professional-man-portrait.png" },
-  { name: "Rachel Gomez", role: "Head of CS, Brevity", quote: "The custom portal and automation flows mean my team finally works from one place. Onboarding, renewals, and support all run smoother.", outcome: "Churn down 18% and CSAT at 4.8/5 within two months", avatar: "/professional-woman-portrait.png" },
+  { name: "Lisa Patel", role: "Owner, CargoLine Spa", quote: "Our new booking page took the phone calls down to almost zero. Customers love being able to pick a treatment and stylist in 30 seconds.", outcome: "Online bookings now 78% of total revenue", avatar: "/professional-woman-portrait.png" },
+  { name: "Andre Miller", role: "Founder, Northbeam Apparel", quote: "The Shopify rebuild repositioned the brand and turned the homepage into a sales engine. Subscriptions are now our biggest channel.", outcome: "Conversion up 2.4× and AOV up 18% in the first quarter", avatar: "/professional-man-portrait.png" },
+  { name: "Rachel Gomez", role: "Director, Brevity Yoga", quote: "The automations they built handle every booking confirmation, reminder and renewal email. I genuinely don't think about it anymore.", outcome: "No-shows down 40% and pass renewals up 22%", avatar: "/professional-woman-portrait.png" },
 ]
 ---
 
-<Layout title="Portfolio - Studio Duo" description="Automation, websites, and business systems built end-to-end. See real client outcomes, project metrics, and live demos.">
+<Layout title="Work — Studio Duo | Booking pages, ecommerce stores, automations" description="Selected work across booking pages, ecommerce stores, automation flows and AI tools — with the outcomes they produced.">
   <div class="min-h-screen bg-background">
     <Navigation />
 
@@ -81,17 +81,17 @@ const testimonials = [
         </div>
         <div class="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <Badge variant="secondary" class="mb-6 inline-flex items-center gap-2 bg-standout/20 text-standout border border-standout/30">
-            <Sparkles className="h-4 w-4" /> Automation • Websites • Systems
+            <Sparkles className="h-4 w-4" /> Bookings • Ecommerce • Automation • AI
           </Badge>
           <h1 class="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Automation, websites, and business systems built end-to-end by one product-minded developer.
+            Booking pages, ecommerce stores and automations — built to drive bookings, sales and time saved.
           </h1>
           <p class="mt-6 max-w-3xl text-lg text-muted-foreground sm:text-xl leading-relaxed">
-            I design, build, and ship automations, conversion-ready sites, and internal tools that run without babysitting. Clear offers, measurable outcomes, and production-quality delivery in weeks—not quarters.
+            Every project below pairs design with a measurable outcome. Filter by what you're after — appointments, products, automations or AI assistants.
           </p>
           <div class="mt-10 flex flex-wrap gap-4">
             <a href="/contact" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium bg-standout text-white hover:bg-standout/90 shadow-lg">
-              Start a build <ArrowRight className="h-5 w-5" />
+              Start a project <ArrowRight className="h-5 w-5" />
             </a>
           </div>
 
@@ -120,12 +120,12 @@ const testimonials = [
           <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div class="space-y-8">
               <div class="space-y-4">
-                <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Workflow demos</Badge>
+                <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Showreel</Badge>
                 <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
-                  See the automations, sites, and systems <span class="text-primary">in motion</span>
+                  Booking, ecommerce and automation — <span class="text-primary">in motion</span>
                 </h2>
                 <p class="max-w-xl text-base text-muted-foreground leading-relaxed">
-                  Watch the real flows I ship—approvals, dashboards, booking funnels, and automation monitors—so you know exactly what shows up in production.
+                  Watch the actual flows we ship — booking funnels, checkout pages and live n8n automations — so you know exactly what shows up in production.
                 </p>
               </div>
               <div class="grid gap-4 sm:grid-cols-2">
@@ -186,7 +186,7 @@ const testimonials = [
             <div>
               <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Spotlight builds</Badge>
               <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
-                Automations, websites, and systems built for real teams
+                Bookings, stores and automations — built for real businesses
               </h2>
               <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
                 Each build pairs automation, web, and internal tooling so teams see value quickly without juggling multiple vendors.
@@ -206,7 +206,7 @@ const testimonials = [
             <div>
               <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Project library</Badge>
               <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
-                Featured <span class="text-primary">outcomes</span> across automation, web, and systems
+                Featured <span class="text-primary">outcomes</span> across bookings, ecommerce, automation and AI
               </h2>
               <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
                 Filter by the type of build you need. Every project includes discovery, build, analytics, and safeguards so you get production-ready outcomes.
@@ -222,10 +222,10 @@ const testimonials = [
           <div class="text-center">
             <Badge variant="secondary" class="mx-auto mb-6 bg-standout/20 text-standout border border-standout/30">Areas of focus</Badge>
             <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
-              Builds aligned to <span class="text-primary">automation</span>, websites, and business systems
+              Three focused areas: <span class="text-primary">bookings, ecommerce, and automation + AI</span>
             </h2>
             <p class="mt-4 max-w-3xl mx-auto text-base text-muted-foreground leading-relaxed">
-              I join as a hands-on partner, mapping the workflows, designing the experience, and shipping the code that keeps your team moving without extra headcount.
+              We join as a hands-on partner — mapping the workflows, designing the experience, and shipping the code so your team moves faster without extra headcount.
             </p>
           </div>
           <div class="mt-14 grid gap-8 md:grid-cols-3">
@@ -316,7 +316,7 @@ const testimonials = [
             <div>
               <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Visual gallery</Badge>
               <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
-                Screens from <span class="text-primary">recent automation</span>, website, and system builds
+                Screens from <span class="text-primary">recent booking pages</span>, stores, and automation builds
               </h2>
               <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
                 A quick look at the interfaces, dashboards, and flows clients use to run their day-to-day.
@@ -349,7 +349,7 @@ const testimonials = [
           <div class="text-center">
             <Badge variant="secondary" class="mx-auto mb-6 bg-standout/20 text-standout border border-standout/30">Client reflections</Badge>
             <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
-              Teams work with me when <span class="text-primary">outcomes</span> matter more than headcount
+              Businesses pick us when <span class="text-primary">outcomes</span> matter more than headcount
             </h2>
             <p class="mt-4 max-w-3xl mx-auto text-base text-muted-foreground leading-relaxed">
               Highlights from leaders who needed automation, web, and internal tools shipped by one accountable partner.
@@ -388,10 +388,10 @@ const testimonials = [
         <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <Badge variant="secondary" class="mx-auto mb-6 bg-white/20 text-white border border-white/30">Let’s collaborate</Badge>
           <h2 class="text-3xl font-bold sm:text-5xl">
-            Ready to automate, launch your site, or ship a business system?
+            Ready to take more bookings, sell more products or kill more admin?
           </h2>
           <p class="mt-5 text-lg text-section-primary-foreground/90 leading-relaxed">
-            Share the workflows, pages, or tools that need to run better. I will map the plan, build it, and launch it with instrumentation so you see the impact quickly.
+            Share the workflows, pages, or tools that need to run better. We'll map the plan, build it, and launch it with instrumentation so you see the impact fast.
           </p>
           <div class="mt-8 flex flex-wrap justify-center gap-4">
             <a href="/contact" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium bg-white text-foreground hover:bg-white/90 dark:text-gray-900 shadow-lg">Plan my build</a>

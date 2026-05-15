@@ -13,9 +13,18 @@ type FormState = {
   budget: string
   message: string
   website: string
+  services: string[]
 }
 
-const empty: FormState = { name: "", email: "", company: "", budget: "", message: "", website: "" }
+const empty: FormState = { name: "", email: "", company: "", budget: "", message: "", website: "", services: [] }
+
+const SERVICE_OPTIONS = [
+  { id: "ecommerce", label: "Ecommerce website" },
+  { id: "booking", label: "Booking website" },
+  { id: "automation", label: "Workflow automation" },
+  { id: "ai", label: "AI assistant or tool" },
+  { id: "unsure", label: "Not sure yet" },
+]
 
 export function ContactForm() {
   const [formData, setFormData] = useState<FormState>(empty)
@@ -24,6 +33,13 @@ export function ContactForm() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const toggleService = (id: string) => {
+    setFormData(prev => ({
+      ...prev,
+      services: prev.services.includes(id) ? prev.services.filter(s => s !== id) : [...prev.services, id],
+    }))
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -121,6 +137,29 @@ export function ContactForm() {
                 <option value="25k-50k">$25,000 - $50,000</option>
                 <option value="50k+">$50,000+</option>
               </select>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <Label>What do you need? (Pick any that fit)</Label>
+            <div className="grid sm:grid-cols-2 gap-2">
+              {SERVICE_OPTIONS.map(opt => {
+                const checked = formData.services.includes(opt.id)
+                return (
+                  <label
+                    key={opt.id}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-colors ${checked ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"}`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => toggleService(opt.id)}
+                      className="size-4 rounded border-border accent-primary"
+                    />
+                    <span className="text-sm font-medium">{opt.label}</span>
+                  </label>
+                )
+              })}
             </div>
           </div>
 
