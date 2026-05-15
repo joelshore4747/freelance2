@@ -1,0 +1,133 @@
+---
+import { Mail, Phone, MapPin } from "lucide-react"
+import Layout from "@/layouts/Layout.astro"
+import Navigation from "@/components/Navigation.astro"
+import Footer from "@/components/Footer.astro"
+import { ContactForm } from "@/components/ContactForm"
+
+const faqs = [
+  {
+    title: "How long does a typical project take?",
+    body: "Project timelines vary based on complexity, but most websites take 4-8 weeks from start to launch.",
+  },
+  {
+    title: "Do you work with international clients?",
+    body: "We work with clients worldwide and are experienced in remote collaboration.",
+  },
+  {
+    title: "What’s included in your services?",
+    body: "We provide end-to-end services including design, development, testing, and post-launch support.",
+  },
+  {
+    title: "Do you offer ongoing maintenance?",
+    body: "Yes, we offer maintenance packages to keep your website secure, updated, and performing optimally.",
+  },
+]
+
+const steps = [
+  { n: 1, title: "Initial Consultation", body: "We’ll schedule a call to discuss your project in detail." },
+  { n: 2, title: "Proposal & Timeline", body: "Receive a detailed proposal with timeline and pricing." },
+  { n: 3, title: "Project Kickoff", body: "Start building your vision with regular updates." },
+]
+---
+
+<Layout
+  title="Contact - Studio Duo | Start Your Project"
+  description="Ready to bring your vision to life? Contact Studio Duo for a free consultation. We design and build web experiences, automations, and digital systems that drive results."
+>
+  <main class="min-h-screen bg-background">
+    <Navigation />
+
+    <section class="py-20 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-balance text-foreground">
+          Let’s Build Something <span class="text-standout">Amazing Together</span>
+        </h1>
+        <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
+          Ready to transform your ideas into reality? We’re here to help you create exceptional digital experiences that drive results.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-16 px-6 sm:px-8 lg:px-12">
+      <div class="max-w-7xl mx-auto">
+        <div class="w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-8">
+          <ContactForm client:load />
+
+          <div class="space-y-6">
+            <div class="card-universal bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
+              <div class="px-6">
+                <h2 class="leading-none font-semibold text-lg">Contact Information</h2>
+                <p class="text-muted-foreground text-sm mt-1.5">Prefer to reach out directly? Here’s how you can get in touch.</p>
+              </div>
+              <div class="px-6 space-y-4">
+                <div class="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-primary" />
+                  <div>
+                    <p class="font-medium">Email</p>
+                    <p class="text-sm text-muted-foreground">inquire@shoremail.cc</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-primary" />
+                  <div>
+                    <p class="font-medium">Phone</p>
+                    <p class="text-sm text-muted-foreground">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-primary" />
+                  <div>
+                    <p class="font-medium">Location</p>
+                    <p class="text-sm text-muted-foreground">San Francisco, CA</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-universal bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
+              <div class="px-6">
+                <h2 class="leading-none font-semibold text-lg">What Happens Next?</h2>
+              </div>
+              <div class="px-6 space-y-4">
+                {
+                  steps.map(s => (
+                    <div class="flex gap-3">
+                      <div class="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                        {s.n}
+                      </div>
+                      <div>
+                        <p class="font-medium">{s.title}</p>
+                        <p class="text-sm text-muted-foreground">{s.body}</p>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 px-6 sm:px-8 lg:px-12 bg-section-muted">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12 text-foreground">Frequently Asked Questions</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          {
+            faqs.map(item => (
+              <div class="card-universal bg-card/90 text-card-foreground flex flex-col gap-6 rounded-xl border border-border/80 py-6 shadow-sm">
+                <div class="px-6">
+                  <h3 class="text-lg font-semibold mb-2 text-foreground">{item.title}</h3>
+                  <p class="text-muted-foreground">{item.body}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>
