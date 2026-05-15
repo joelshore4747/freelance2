@@ -1,0 +1,327 @@
+---
+import { Palette, Code, Smartphone, Zap, Database, Shield, Users, CheckCircle, ArrowRight, Star, Clock, Award, TrendingUp, X, Target, Headphones, Calendar } from "lucide-react"
+import Layout from "@/layouts/Layout.astro"
+import Navigation from "@/components/Navigation.astro"
+import Footer from "@/components/Footer.astro"
+import Badge from "@/components/ui/Badge.astro"
+import GetStartedButton from "@/components/GetStartedButton.astro"
+
+const heroPoints = [
+  "Custom web design & development tailored to your brand",
+  "Mobile-first approach ensuring perfect performance on all devices",
+  "SEO optimization and performance monitoring included",
+  "Ongoing support and maintenance for peace of mind",
+]
+
+const heroMetrics = [
+  { Icon: Target, number: "150+", label: "Projects Delivered", description: "Successfully completed" },
+  { Icon: Users, number: "98%", label: "Client Satisfaction", description: "Happy clients rate" },
+  { Icon: Calendar, number: "5+", label: "Years Experience", description: "In web development" },
+  { Icon: Headphones, number: "24/7", label: "Support", description: "Always available" },
+]
+
+const coreServices = [
+  { Icon: Palette, title: "UI/UX Design", description: "Beautiful, intuitive interfaces that users love and convert visitors into customers.", features: ["User Research", "Wireframing", "Visual Design", "Prototyping"] },
+  { Icon: Code, title: "Web Development", description: "Fast, secure, and scalable websites built with modern technologies and best practices.", features: ["Custom Development", "CMS Integration", "API Development", "Database Design"] },
+  { Icon: Smartphone, title: "Mobile-First Design", description: "Responsive designs that work perfectly across all devices and screen sizes.", features: ["Responsive Design", "Mobile Optimization", "Touch Interfaces", "Cross-Browser Testing"] },
+  { Icon: Zap, title: "Performance Optimization", description: "Lightning-fast websites optimized for Core Web Vitals and search engine rankings.", features: ["Speed Optimization", "Image Compression", "Code Splitting", "CDN Setup"] },
+  { Icon: Database, title: "Full-Stack Development", description: "Complete web applications with robust backends and seamless user experiences.", features: ["Backend Development", "Database Architecture", "API Integration", "Cloud Deployment"] },
+  { Icon: Shield, title: "Security & Maintenance", description: "Ongoing support, security updates, and performance monitoring for peace of mind.", features: ["Security Audits", "Regular Updates", "Backup Systems", "24/7 Monitoring"] },
+]
+
+const reasons = [
+  { Icon: Award, title: "Award-Winning Design", description: "Recognized for excellence in web design and user experience." },
+  { Icon: Clock, title: "Fast Delivery", description: "Most projects completed within 2-4 weeks without compromising quality." },
+  { Icon: TrendingUp, title: "Proven Results", description: "Average 150% increase in conversion rates for our clients." },
+  { Icon: Users, title: "Personal Attention", description: "Direct access to the team, no account managers or middlemen." },
+]
+
+const stages = [
+  { step: "01", title: "Discovery & Planning", description: "We start with a comprehensive discovery session to understand your goals, target audience, and project requirements." },
+  { step: "02", title: "Design & Strategy", description: "We create wireframes, mockups, and a detailed project strategy that aligns with your business objectives." },
+  { step: "03", title: "Development & Testing", description: "We build your project using modern technologies, with regular testing and quality assurance throughout." },
+  { step: "04", title: "Launch & Support", description: "We deploy your project and provide ongoing support, training, and optimization to ensure continued success." },
+]
+
+const pricingTiers = [
+  {
+    name: "Starter",
+    price: "$5,000",
+    description: "Perfect for small businesses and startups",
+    features: ["5-page responsive website", "Mobile-first design", "Basic SEO optimization", "Contact form integration", "2 rounds of revisions", "30 days support"],
+    notIncluded: ["E-commerce functionality", "Custom animations", "Advanced integrations"],
+    popular: false,
+  },
+  {
+    name: "Professional",
+    price: "$12,000",
+    description: "Ideal for growing businesses",
+    features: ["10-page responsive website", "Custom UI/UX design", "Advanced SEO optimization", "CMS integration", "E-commerce functionality", "Performance optimization", "Analytics setup", "3 rounds of revisions", "90 days support"],
+    notIncluded: ["Custom backend development", "Third-party integrations"],
+    popular: true,
+  },
+  {
+    name: "Enterprise",
+    price: "$25,000+",
+    description: "For complex projects and large organizations",
+    features: ["Unlimited pages", "Custom web application", "Full-stack development", "Advanced integrations", "Custom animations", "Security implementation", "Performance monitoring", "Team training", "Unlimited revisions", "6 months support"],
+    notIncluded: [],
+    popular: false,
+  },
+]
+
+const testimonials = [
+  { quote: "The team delivered exactly what we needed. Our new website has increased our lead generation by 200% and the design is absolutely stunning.", author: "Sarah Johnson", role: "CEO, TechStart Inc.", rating: 5 },
+  { quote: "Professional, responsive, and incredibly talented. They understood our vision perfectly and brought it to life better than we imagined.", author: "Michael Chen", role: "Founder, GrowthLab", rating: 5 },
+  { quote: "Outstanding work on our e-commerce platform. The attention to detail and user experience has significantly improved our conversion rates.", author: "Emily Rodriguez", role: "Marketing Director, RetailPro", rating: 5 },
+]
+---
+
+<Layout
+  title="Services - Studio Duo | Web Design & Development Services"
+  description="Comprehensive web design and development services including UI/UX design, full-stack development, mobile optimization, and ongoing support."
+>
+  <div class="min-h-screen bg-background text-foreground">
+    <Navigation />
+
+    <section class="py-20 lg:py-32 bg-section-white text-section-white-foreground">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <Badge class="mb-6 font-serif border-2 border-standout/30 bg-standout/20 text-standout font-semibold">
+              Premium Digital Services
+            </Badge>
+            <h1 class="text-4xl md:text-6xl font-bold text-foreground font-sans mb-6 text-balance">
+              Everything You Need to <span class="text-standout">Succeed Online</span>
+            </h1>
+            <p class="text-xl text-muted-foreground font-serif mb-8 text-pretty">
+              From initial concept to ongoing optimization, we provide comprehensive digital solutions that drive growth and deliver measurable results.
+            </p>
+            <div class="space-y-4 mb-8">
+              {
+                heroPoints.map(point => (
+                  <div class="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span class="text-muted-foreground font-serif">{point}</span>
+                  </div>
+                ))
+              }
+            </div>
+            <GetStartedButton size="lg" class="font-serif font-semibold" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-6">
+            {
+              heroMetrics.map(m => (
+                <div class="card-universal bg-card/80 text-card-foreground rounded-xl border border-border/80 shadow-md py-6 hover:shadow-xl transition-all duration-300">
+                  <div class="text-center px-6">
+                    <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 mx-auto">
+                      <m.Icon className="h-8 w-8" />
+                    </div>
+                    <div class="text-3xl font-bold text-foreground font-sans mb-1">{m.number}</div>
+                    <div class="text-sm font-semibold text-foreground font-sans mb-1">{m.label}</div>
+                    <div class="text-xs text-muted-foreground font-serif">{m.description}</div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-section-muted">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Core Services</h2>
+          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
+            Our primary offerings designed to transform your digital presence and accelerate business growth.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {
+            coreServices.map(s => (
+              <div class="card-universal bg-card/90 text-card-foreground rounded-xl border border-border/80 shadow-sm py-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                <div class="px-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5">
+                  <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 group-hover:bg-primary/20 transition-colors">
+                    <s.Icon className="h-8 w-8" />
+                  </div>
+                  <div class="font-sans text-foreground leading-none font-semibold">{s.title}</div>
+                  <div class="font-serif text-muted-foreground text-sm">{s.description}</div>
+                </div>
+                <div class="px-6">
+                  <ul class="space-y-2">
+                    {s.features.map(f => (
+                      <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
+                        <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 lg:py-32 bg-section-white">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Why Choose Us</h2>
+          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
+            What sets us apart from other agencies and freelancers in the industry.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {
+            reasons.map(r => (
+              <div class="card-universal text-center bg-card/80 text-card-foreground border border-border/80 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-4 mx-auto">
+                  <r.Icon className="h-8 w-8" />
+                </div>
+                <h3 class="text-xl font-bold text-foreground font-sans mb-3">{r.title}</h3>
+                <p class="text-muted-foreground font-serif text-pretty">{r.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 lg:py-32 bg-section-muted">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Our 4-Stage Process</h2>
+          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
+            A proven methodology that ensures your project is delivered on time, on budget, and exceeds expectations.
+          </p>
+        </div>
+        <div class="relative">
+          <div class="hidden lg:block absolute top-8 left-0 right-0 h-0.5 bg-border"></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {
+              stages.map(p => (
+                <div class="text-center relative">
+                  <div class="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground font-bold text-xl font-sans mb-4 mx-auto relative z-10 shadow-lg">
+                    {p.step}
+                  </div>
+                  <h3 class="text-xl font-bold text-foreground font-sans mb-3">{p.title}</h3>
+                  <p class="text-muted-foreground font-serif text-pretty">{p.description}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 lg:py-32 bg-section-white">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Transparent Pricing</h2>
+          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
+            Choose the package that best fits your needs. All packages include our signature attention to detail and ongoing support.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {
+            pricingTiers.map(tier => (
+              <div class={`card-universal relative bg-card/90 text-card-foreground rounded-xl shadow-sm py-6 ${tier.popular ? "border-primary border shadow-lg scale-105" : "border border-border/80"}`}>
+                {tier.popular && (
+                  <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <Badge class="bg-primary text-primary-foreground font-serif">Most Popular</Badge>
+                  </div>
+                )}
+                <div class="text-center pb-8 px-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5">
+                  <div class="font-sans text-2xl text-foreground leading-none font-semibold">{tier.name}</div>
+                  <div class="text-4xl font-bold text-primary font-sans">{tier.price}</div>
+                  <div class="font-serif text-muted-foreground text-sm">{tier.description}</div>
+                </div>
+                <div class="px-6 space-y-6">
+                  <div>
+                    <h4 class="font-semibold text-foreground font-sans mb-3">What’s Included:</h4>
+                    <ul class="space-y-2">
+                      {tier.features.map(f => (
+                        <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
+                          <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  {tier.notIncluded.length > 0 && (
+                    <div>
+                      <h4 class="font-semibold text-foreground font-sans mb-3">Not Included:</h4>
+                      <ul class="space-y-2">
+                        {tier.notIncluded.map(f => (
+                          <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
+                            <X className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <GetStartedButton variant={tier.popular ? "default" : "outline"} class="w-full font-serif font-semibold" />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 lg:py-32 bg-section-muted">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">What Our Clients Say</h2>
+          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
+            Don’t just take our word for it. Here’s what our clients have to say about working with us.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {
+            testimonials.map(t => (
+              <div class="card-universal bg-card/90 text-card-foreground rounded-xl border border-border/80 shadow-sm py-6">
+                <div class="px-6 pt-0">
+                  <div class="flex mb-4">
+                    {Array.from({ length: t.rating }).map(() => <Star className="h-4 w-4 fill-primary text-primary" />)}
+                  </div>
+                  <blockquote class="text-foreground font-serif mb-4 text-pretty">“{t.quote}”</blockquote>
+                  <div>
+                    <div class="font-semibold text-foreground font-sans">{t.author}</div>
+                    <div class="text-muted-foreground font-serif text-sm">{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 lg:py-32 bg-section-white">
+      <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+        <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Ready to Get Started?</h2>
+        <p class="text-xl text-muted-foreground font-serif mb-8 text-pretty">
+          Let’s discuss your project and create a custom solution that drives results for your business.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <GetStartedButton size="lg" class="font-serif font-semibold" />
+          <a
+            href="/portfolio"
+            class="inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md text-base font-serif font-semibold border bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
+            View Our Work <ArrowRight className="ml-2 h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+
+    <GetStartedButton variant="sticky" />
+  </div>
+</Layout>
