@@ -1791,15 +1791,80 @@ html[data-env="development"] .bg-standout-subtle {
   background-attachment: scroll !important;
 }
 
-/* Container-aligned carousel: the leading spacer (added in JSX) aligns the
- * first card to the same vertical line as headings and nav above. Driven
- * entirely by the shared --site-container-* tokens so every carousel on
- * every page matches. Pure CSS — no JS measurement of the offset. */
-.carousel-bleed {
-  padding-left: 0;
-  padding-right: var(--site-container-pad);
-  scroll-padding-left: 0;
+/* ============================================================
+ * SHARED RAIL — every carousel on the site uses .rail + .lead + .tail.
+ * Snap is mandatory. JS drives smooth animation via .scrolling class;
+ * native trackpad/touch fall back to browser snap.
+ * Ported from /Smooth Carousels.html (motion study in repo root).
+ * ============================================================ */
+.rail {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 24px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: auto;
+  overscroll-behavior-x: contain;
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-left: max(
+    var(--site-container-pad),
+    calc((100vw - var(--site-container-max)) / 2 + var(--site-container-pad))
+  );
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+  scrollbar-width: none;
 }
+.rail::-webkit-scrollbar { display: none; }
+.rail.scrolling { scroll-snap-type: none !important; }
+.rail:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.rail .lead,
+.rail .tail {
+  flex: 0 0 max(0px, calc((100vw - var(--site-container-max)) / 2 + var(--site-container-pad) - 24px));
+}
+.rail .tail { margin-left: -24px; min-width: var(--site-container-pad); }
+.rail > [data-card] {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  flex: 0 0 auto;
+}
+
+.arrow {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--hair); background: var(--surface); color: var(--ink);
+  display: grid; place-items: center; cursor: pointer; padding: 0;
+  transition: transform .25s cubic-bezier(.32,.72,0,1),
+              background .25s cubic-bezier(.32,.72,0,1),
+              box-shadow .25s cubic-bezier(.32,.72,0,1),
+              opacity .25s;
+  box-shadow: 0 1px 2px rgba(17,16,13,.04);
+}
+.arrow:hover { background: var(--bg-2); transform: translateY(-1px); box-shadow: 0 6px 14px -8px rgba(17,16,13,.25); }
+.arrow:active { transform: translateY(0); }
+.arrow[disabled] { opacity: .25; cursor: default; transform: none; box-shadow: none; }
+.arrow svg { width: 18px; height: 18px; }
+.arrow-row { display: flex; gap: 12px; align-items: center; }
+
+.index-strip {
+  max-width: var(--site-container-max);
+  margin: 14px auto 0;
+  padding: 0 var(--site-container-pad);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim);
+}
+.index-strip .progress {
+  flex: 1; height: 1px; margin: 0 12px;
+  background: var(--hair); position: relative; overflow: hidden;
+}
+.index-strip .progress::after {
+  content: ""; position: absolute; left: 0; top: 0; height: 100%;
+  background: var(--ink);
+  width: var(--p, 0%);
+  transition: width .45s cubic-bezier(.32,.72,0,1);
+}
+.index-strip a { color: var(--ink); text-decoration: none; }
 
 /* ============================================================
    STUDIO DUO design system (preview.html port, prefixed .sd-*)
@@ -2569,34 +2634,8 @@ html[data-env="development"] .bg-standout-subtle {
 .sd-pill:hover { color: var(--ink); }
 .sd-pill.active { background: var(--ink); color: var(--surface); }
 
-.sd-car-rail {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  overscroll-behavior-x: contain;
-  padding: 8px 0 24px;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  width: 100vw;
-  scrollbar-width: none;
-  scroll-padding-left: 0;
-}
-@media (prefers-reduced-motion: reduce) {
-  .sd-car-rail { scroll-behavior: auto; }
-}
-.sd-car-rail::-webkit-scrollbar { display: none; }
-.sd-car-rail:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.sd-car-arrows {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
 .sd-work-card {
   flex: 0 0 auto;
-  scroll-snap-align: start;
   width: min(560px, 86vw);
   background: var(--surface);
   border-radius: var(--r-lg);
@@ -2736,37 +2775,6 @@ html[data-env="development"] .bg-standout-subtle {
 }
 .sd-work-foot a { display: inline-flex; align-items: center; gap: 6px; color: var(--brand); font-size: 13px; font-weight: 500; text-decoration: none; }
 
-.sd-car-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; gap: 16px; }
-.sd-car-dots { display: flex; gap: 6px; align-items: center; }
-.sd-car-dots .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 99px;
-  background: var(--hair);
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  transition: all .2s ease;
-}
-.sd-car-dots .dot.active { width: 24px; background: var(--ink); }
-.sd-arrowbtn {
-  width: 52px;
-  height: 52px;
-  border-radius: 999px;
-  border: 1.5px solid var(--ink);
-  background: var(--ink);
-  color: var(--surface);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-  box-shadow: var(--shadow-md);
-}
-.sd-arrowbtn:hover { background: var(--brand); border-color: var(--brand); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
-.sd-arrowbtn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.sd-arrowbtn:disabled { opacity: .25; cursor: not-allowed; transform: none; box-shadow: var(--shadow-sm); }
-.sd-arrowbtn svg { width: 22px; height: 22px; }
 
 /* ============== PROCESS ============== */
 .sd-proc-band {
@@ -2840,37 +2848,8 @@ html[data-env="development"] .bg-standout-subtle {
 }
 
 /* ============== TESTIMONIALS ============== */
-.sd-quote-rail {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  overscroll-behavior-x: contain;
-  padding: 8px 0 24px;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  width: 100vw;
-  scrollbar-width: none;
-  scroll-padding-left: 0;
-}
-@media (prefers-reduced-motion: reduce) {
-  .sd-quote-rail { scroll-behavior: auto; }
-}
-.sd-quote-rail::-webkit-scrollbar { display: none; }
-
-/* Shared leading spacer for every carousel — drives first-card alignment
- * to the same vertical line as headings/nav, using site container tokens. */
-.carousel-lead, .sd-car-lead, .sd-quote-lead {
-  flex: 0 0 auto;
-  width: max(
-    var(--site-container-pad),
-    calc((100vw - var(--site-container-max)) / 2 + var(--site-container-pad))
-  );
-}
 .sd-quote {
   flex: 0 0 auto;
-  scroll-snap-align: start;
   width: min(460px, 84vw);
   background: var(--surface);
   color: var(--ink);

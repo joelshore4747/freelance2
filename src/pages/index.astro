@@ -276,10 +276,21 @@ const faqs = [
       </div>
     </div>
 
-    <div class="sd-quote-rail" id="sd-quote-rail">
-      <div class="sd-quote-lead" aria-hidden="true"></div>
+    <div class="sd-wrap" style="display:flex;justify-content:flex-end;margin-bottom:24px">
+      <div class="arrow-row">
+        <button class="arrow" id="sd-quote-prev" type="button" aria-label="Previous testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="arrow" id="sd-quote-next" type="button" aria-label="Next testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="rail" id="sd-quote-rail" role="region" aria-roledescription="carousel" aria-label="Testimonials carousel" tabindex="0">
+      <div class="lead" aria-hidden="true"></div>
       {testimonials.map(t => (
-        <article class="sd-quote">
+        <article class="sd-quote" data-card>
           <div class="stars">
             <Star className="sd-ic" style={{ width: 14, height: 14, fill: "currentColor" }} />
             <Star className="sd-ic" style={{ width: 14, height: 14, fill: "currentColor" }} />
@@ -297,16 +308,13 @@ const faqs = [
           </div>
         </article>
       ))}
+      <div class="tail" aria-hidden="true"></div>
     </div>
 
-    <div class="sd-wrap">
-      <div class="sd-car-controls" style="margin-top:24px">
-        <div class="sd-mono" style="font-size:12px;color:var(--muted-dim)">{testimonials.length} of 42 testimonials</div>
-        <div class="sd-car-dots" id="sd-quote-dots"></div>
-        <button class="sd-arrowbtn" id="sd-quote-next" type="button" aria-label="Next">
-          <ArrowRight className="sd-ic" />
-        </button>
-      </div>
+    <div class="index-strip">
+      <span id="sd-quote-meta">01 / {String(testimonials.length).padStart(2, "0")}</span>
+      <div class="progress" id="sd-quote-progress"></div>
+      <a href="/contact">More words →</a>
     </div>
   </section>
 
@@ -367,61 +375,45 @@ const faqs = [
   )
   document.querySelectorAll("[data-sd-reveal]").forEach(el => io.observe(el))
 
-  const qrail = document.getElementById("sd-quote-rail")
-  const qdots = document.getElementById("sd-quote-dots")
-  const qnext = document.getElementById("sd-quote-next")
-  if (qrail && qdots && qnext) {
-    const quotes = qrail.querySelectorAll(".sd-quote")
-    qdots.innerHTML = Array.from(quotes)
-      .map((_, i) => `<button class="dot ${i === 0 ? "active" : ""}" data-i="${i}" aria-label="Go to slide ${i + 1}"></button>`)
-      .join("")
+  import { measureRail, railStep, railGoTo, railSettleIdx } from "@/lib/carouselRail"
 
-    const stepW = () => {
-      const card = qrail.querySelector<HTMLElement>(".sd-quote")
-      if (!card) return 0
-      const gap = parseFloat(getComputedStyle(qrail).columnGap || "0") || 0
-      return card.offsetWidth + gap
+  const qrail = document.getElementById("sd-quote-rail") as HTMLElement | null
+  const qprev = document.getElementById("sd-quote-prev") as HTMLButtonElement | null
+  const qnext = document.getElementById("sd-quote-next") as HTMLButtonElement | null
+  const qmeta = document.getElementById("sd-quote-meta")
+  const qprog = document.getElementById("sd-quote-progress")
+  if (qrail && qprev && qnext && qmeta && qprog) {
+    const pad = (n: number) => String(n).padStart(2, "0")
+    const refresh = () => {
+      const s = measureRail(qrail)
+      qprev.disabled = !s.canPrev
+      qnext.disabled = !s.canNext
+      qmeta.textContent = `${pad(s.index + 1)} / ${pad(s.total)}`
+      const pct = s.total > 1 ? (s.index / (s.total - 1)) * 100 : 0
+      qprog.style.setProperty("--p", `${pct}%`)
     }
-
-    const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const clamp = (n: number) => Math.max(0, Math.min(n, qrail.scrollWidth - qrail.clientWidth))
-
-    const activeIndex = () => {
-      const w = stepW()
-      if (!w) return 0
-      const epsilon = 4
-      const atEnd = qrail.scrollLeft + qrail.clientWidth >= qrail.scrollWidth - epsilon
-      if (atEnd) return quotes.length - 1
-      const lead = qrail.querySelector<HTMLElement>(".sd-quote-lead")
-      const railRect = qrail.getBoundingClientRect()
-      const targetX = lead ? lead.getBoundingClientRect().right : railRect.left
-      let best = 0
-      let bestDelta = Infinity
-      quotes.forEach((q, i) => {
-        const delta = Math.abs((q as HTMLElement).getBoundingClientRect().left - targetX)
-        if (delta < bestDelta) { bestDelta = delta; best = i }
-      })
-      return best
-    }
-
-    qnext.addEventListener("click", () => {
-      const w = stepW()
-      if (!w) return
-      const perView = Math.max(1, Math.floor(qrail.clientWidth / w))
-      qrail.scrollTo({ left: clamp(qrail.scrollLeft + perView * w), behavior: reducedMotion() ? "auto" : "smooth" })
-    })
-
+    qprev.addEventListener("click", () => { railStep(qrail, -1); refresh() })
+    qnext.addEventListener("click", () => { railStep(qrail, 1); refresh() })
+    let settle: number | undefined
     qrail.addEventListener("scroll", () => {
-      const i = activeIndex()
-      qdots.querySelectorAll<HTMLElement>(".dot").forEach((d, di) => d.classList.toggle("active", di === i))
+      if (qrail.__animId != null) return
+      if (settle) window.clearTimeout(settle)
+      settle = window.setTimeout(() => {
+        if (qrail.__animId == null) railSettleIdx(qrail)
+        refresh()
+      }, 140)
     }, { passive: true })
-
-    qdots.addEventListener("click", (e) => {
-      const b = (e.target as HTMLElement).closest<HTMLElement>("button[data-i]")
-      if (!b) return
-      const w = stepW()
-      if (!w) return
-      qrail.scrollTo({ left: clamp(w * Number(b.dataset.i)), behavior: reducedMotion() ? "auto" : "smooth" })
+    qrail.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); railStep(qrail, -1); refresh() }
+      else if (e.key === "ArrowRight") { e.preventDefault(); railStep(qrail, 1); refresh() }
+      else if (e.key === "Home") { e.preventDefault(); railGoTo(qrail, 0); refresh() }
+      else if (e.key === "End") {
+        e.preventDefault()
+        railGoTo(qrail, qrail.querySelectorAll("[data-card]").length - 1)
+        refresh()
+      }
     })
+    new ResizeObserver(refresh).observe(qrail)
+    refresh()
   }
 </script>

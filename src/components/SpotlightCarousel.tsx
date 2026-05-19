@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Play } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { measureRail, scrollRailToIndex, stepRail, type RailState } from "@/lib/carouselRail"
+import { measureRail, railGoTo, railSettleIdx, railStep, type RailState } from "@/lib/carouselRail"
 
 type Spotlight = {
   id: string
@@ -14,7 +13,7 @@ type Spotlight = {
   link: string
 }
 
-const CARD_SELECTOR = "[data-spot-card]"
+const pad = (n: number) => String(n).padStart(2, "0")
 
 const openVideo = (detail: { url: string; title: string }) => {
   window.dispatchEvent(new CustomEvent("portfolio:open-video", { detail }))
@@ -26,53 +25,81 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
     index: 0,
     canPrev: false,
     canNext: projects.length > 1,
+    total: projects.length,
   })
 
   const refresh = useCallback(() => {
-    if (railRef.current) setState(measureRail(railRef.current, CARD_SELECTOR))
+    if (railRef.current) setState(measureRail(railRef.current))
   }, [])
 
   useEffect(() => {
     const rail = railRef.current
     if (!rail) return
-    const onScroll = () => refresh()
+    let settle: number | undefined
+    const onScroll = () => {
+      if (rail.__animId != null) return
+      if (settle) window.clearTimeout(settle)
+      settle = window.setTimeout(() => {
+        if (rail.__animId == null) railSettleIdx(rail)
+        refresh()
+      }, 140)
+    }
     rail.addEventListener("scroll", onScroll, { passive: true })
     const ro = new ResizeObserver(refresh)
     ro.observe(rail)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); railStep(rail, -1); refresh() }
+      else if (e.key === "ArrowRight") { e.preventDefault(); railStep(rail, 1); refresh() }
+      else if (e.key === "Home") { e.preventDefault(); railGoTo(rail, 0); refresh() }
+      else if (e.key === "End") { e.preventDefault(); railGoTo(rail, projects.length - 1); refresh() }
+    }
+    rail.addEventListener("keydown", onKey)
     refresh()
     return () => {
       rail.removeEventListener("scroll", onScroll)
+      rail.removeEventListener("keydown", onKey)
       ro.disconnect()
+      if (settle) window.clearTimeout(settle)
     }
-  }, [refresh])
+  }, [refresh, projects.length])
 
-  const step = (dir: 1 | -1) => {
-    if (railRef.current) stepRail(railRef.current, CARD_SELECTOR, dir)
-  }
-  const scrollToIndex = (i: number) => {
-    if (railRef.current) scrollRailToIndex(railRef.current, CARD_SELECTOR, i)
+  const onArrow = (dir: 1 | -1) => {
+    const rail = railRef.current
+    if (!rail) return
+    railStep(rail, dir)
+    refresh()
   }
 
-  const { index, canPrev, canNext } = state
-  const arrowClass = "inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground border-2 border-primary shadow-lg hover:bg-primary/90 hover:shadow-xl hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-standout transition-all"
+  const { index, canPrev, canNext, total } = state
+  const progress = total > 1 ? (index / (total - 1)) * 100 : 0
 
   return (
-    <div className="relative">
+    <div>
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 flex justify-end mb-6">
+        <div className="arrow-row">
+          <button type="button" className="arrow" disabled={!canPrev} onClick={() => onArrow(-1)} aria-label="Previous spotlight">
+            <ChevronLeft />
+          </button>
+          <button type="button" className="arrow" disabled={!canNext} onClick={() => onArrow(1)} aria-label="Next spotlight">
+            <ChevronRight />
+          </button>
+        </div>
+      </div>
+
       <div
         ref={railRef}
-        className="carousel-bleed flex snap-x snap-mandatory gap-8 overflow-x-auto pb-8 scrollbar-hide"
-        style={{ scrollbarWidth: "none" }}
+        className="rail"
         role="region"
         aria-roledescription="carousel"
         aria-label="Spotlight builds carousel"
         tabIndex={0}
       >
-        <div className="carousel-lead" aria-hidden="true" />
+        <div className="lead" aria-hidden="true" />
         {projects.map(s => (
           <article
             key={s.id}
-            data-spot-card
-            className="group relative shrink-0 snap-start overflow-hidden rounded-3xl border border-border bg-card shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+            data-card
+            className="group relative overflow-hidden rounded-3xl border border-border bg-card shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
             style={{ width: "min(1000px, 90vw)", height: "500px" }}
           >
             <div className="absolute inset-0">
@@ -110,38 +137,13 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
             </div>
           </article>
         ))}
+        <div className="tail" aria-hidden="true" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-        <div className="mt-8 flex items-center justify-center gap-4">
-          <div className="flex gap-3 items-center" aria-hidden={!canPrev && !canNext}>
-            {canPrev && (
-              <button type="button" onClick={() => step(-1)} className={arrowClass} aria-label="Previous spotlight" style={{ width: 52, height: 52 }}>
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-            )}
-          </div>
-          <div className="flex items-center gap-2" role="tablist" aria-label="Slide selector">
-            {projects.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                role="tab"
-                onClick={() => scrollToIndex(i)}
-                aria-label={`Go to spotlight ${i + 1} of ${projects.length}`}
-                aria-current={i === index}
-                className={cn("h-2 rounded-full transition-all", i === index ? "w-8 bg-primary" : "w-2 bg-border hover:bg-primary/50")}
-              />
-            ))}
-          </div>
-          <div className="flex gap-3 items-center" aria-hidden={!canPrev && !canNext}>
-            {canNext && (
-              <button type="button" onClick={() => step(1)} className={arrowClass} aria-label="Next spotlight" style={{ width: 52, height: 52 }}>
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            )}
-          </div>
-        </div>
+      <div className="index-strip">
+        <span aria-live="polite">{pad(index + 1)} / {pad(total)}</span>
+        <div className="progress" style={{ ["--p" as string]: `${progress}%` }} />
+        <a href="/contact">View all →</a>
       </div>
     </div>
   )

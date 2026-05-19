@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Smooth Carousels — Motion study</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F0E6;
+    --bg-2: #E7DED2;
+    --surface: #FFFDF7;
+    --ink: #11100D;
+    --ink-2: #28231F;
+    --muted-ink: #766A61;
+    --muted-dim: #AA9B90;
+    --hair: rgba(17,16,13,.11);
+    --hair-2: rgba(17,16,13,.065);
+    --brand: #A55E3E;
+    --brand-soft: #ECD8CC;
+    --peach: #C7754E;
+    --accent-blue: #4D5668;
+    --site-pad: 1.5rem;
+    --site-max: 80rem;
+  }
+  @media (min-width: 640px) { :root { --site-pad: 2rem; } }
+  @media (min-width: 1024px) { :root { --site-pad: 3rem; } }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hanken Grotesk", system-ui, sans-serif;
+    font-feature-settings: "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.002em;
+    line-height: 1.5;
+  }
+  h1, h2, h3 { font-family: "Gloock", Georgia, serif; font-weight: 400; letter-spacing: -0.01em; }
+  .mono { font-family: "Fragment Mono", ui-monospace, monospace; }
+
+  /* Page header */
+  .page-head { padding: 56px var(--site-pad) 12px; max-width: var(--site-max); margin: 0 auto; }
+  .page-head .eyebrow {
+    font-family: "Fragment Mono", monospace; font-size: 12px;
+    text-transform: uppercase; letter-spacing: .12em;
+    color: var(--muted-ink);
+  }
+  .page-head h1 { font-size: clamp(36px, 5vw, 56px); margin: 12px 0 8px; line-height: 1.05; }
+  .page-head p { color: var(--muted-ink); max-width: 60ch; margin: 0; font-size: 16px; }
+
+  /* Mode toggle */
+  .mode-row {
+    max-width: var(--site-max); margin: 32px auto 0; padding: 0 var(--site-pad);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .mode-toggle {
+    display: inline-flex; padding: 4px; gap: 4px;
+    background: var(--bg-2); border-radius: 999px; border: 1px solid var(--hair);
+  }
+  .mode-toggle button {
+    border: 0; background: transparent; color: var(--muted-ink);
+    padding: 8px 16px; border-radius: 999px; cursor: pointer;
+    font: inherit; font-weight: 600; font-size: 13px; letter-spacing: -0.005em;
+    transition: color .25s, background .25s, box-shadow .25s;
+  }
+  .mode-toggle button.active {
+    background: var(--ink); color: var(--surface);
+    box-shadow: 0 1px 2px rgba(17,16,13,.18), 0 4px 12px rgba(17,16,13,.08);
+  }
+  .legend { font-size: 13px; color: var(--muted-ink); }
+  .legend code { font-family: "Fragment Mono", monospace; background: var(--bg-2); padding: 2px 6px; border-radius: 6px; color: var(--ink-2); }
+
+  /* Section heads */
+  .sec-head {
+    max-width: var(--site-max); margin: 80px auto 0; padding: 0 var(--site-pad);
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  }
+  .sec-head .eyebrow {
+    font-family: "Fragment Mono", monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: .12em; color: var(--brand);
+    margin-bottom: 8px; display: block;
+  }
+  .sec-head h2 { font-size: clamp(28px, 3.6vw, 40px); margin: 0; }
+  .sec-head .arrows { display: flex; gap: 12px; }
+
+  /* Arrow buttons — consistent across all rails */
+  .arrow {
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--hair);
+    background: var(--surface); color: var(--ink);
+    display: grid; place-items: center; cursor: pointer; padding: 0;
+    transition: transform .25s cubic-bezier(.32,.72,0,1),
+                background .25s cubic-bezier(.32,.72,0,1),
+                box-shadow .25s cubic-bezier(.32,.72,0,1),
+                opacity .25s;
+    box-shadow: 0 1px 2px rgba(17,16,13,.04);
+  }
+  .arrow:hover { background: var(--bg-2); transform: translateY(-1px); box-shadow: 0 6px 14px -8px rgba(17,16,13,.25); }
+  .arrow:active { transform: translateY(0); }
+  .arrow[disabled] { opacity: .25; cursor: default; transform: none; box-shadow: none; }
+  .arrow svg { width: 18px; height: 18px; }
+
+  /* Pill filters */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    border: 1px solid var(--hair); background: transparent; color: var(--muted-ink);
+    padding: 8px 16px; border-radius: 999px; font: inherit; font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    transition: background .25s cubic-bezier(.32,.72,0,1),
+                color .25s cubic-bezier(.32,.72,0,1),
+                border-color .25s cubic-bezier(.32,.72,0,1);
+  }
+  .pill:hover { color: var(--ink); border-color: var(--ink); }
+  .pill.active { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+
+  /* ============================================================
+   * THE RAIL — single set of rules used by every carousel below.
+   * ============================================================ */
+  .rail {
+    margin-top: 28px;
+    display: flex; gap: 24px;
+    overflow-x: auto; overflow-y: hidden;
+    padding-bottom: 24px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: auto;            /* JS drives animation */
+    overscroll-behavior-x: contain;
+    will-change: scroll-position;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: max(var(--site-pad), calc((100vw - var(--site-max)) / 2 + var(--site-pad)));
+    scrollbar-width: none;
+  }
+  .rail::-webkit-scrollbar { display: none; }
+
+  /* When the JS toggles into "native" mode for comparison, snap stays but
+   * smoothness is given back to the browser. */
+  .rail.native { scroll-behavior: smooth; }
+  /* Snap is suspended while our rAF animation is running so the snap engine
+   * doesn't fight the in-flight scroll. A class beats any inline timing race. */
+  .rail.scrolling { scroll-snap-type: none !important; }
+
+  .rail .lead,
+  .rail .tail {
+    flex: 0 0 max(0px, calc((100vw - var(--site-max)) / 2 + var(--site-pad) - 24px));
+  }
+  /* Tail gives the last card breathing room AND lets it reach the snap line.
+   * Without this, scrollLeft caps before the last card's left edge hits the
+   * scroll-padding line, so the prev arrow has nowhere to step back to. */
+  .rail .tail { margin-left: -24px; min-width: var(--site-pad); }
+  .rail > [data-card] {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    flex: 0 0 auto;
+  }
+
+  /* Index strip (just the card numerator + a thin progress line — no dots) */
+  .index-strip {
+    max-width: var(--site-max); margin: 14px auto 0; padding: 0 var(--site-pad);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim);
+  }
+  .index-strip .progress {
+    flex: 1; height: 1px; margin: 0 12px;
+    background: var(--hair); position: relative; overflow: hidden;
+  }
+  .index-strip .progress::after {
+    content: ""; position: absolute; left: 0; top: 0; height: 100%;
+    background: var(--ink);
+    width: var(--p, 0%);
+    transition: width .45s cubic-bezier(.32,.72,0,1);
+  }
+  .index-strip a { color: var(--ink); text-decoration: none; }
+
+  /* ====== Featured Work card (small/medium) ====== */
+  .fw-card {
+    width: min(360px, 78vw);
+    background: var(--surface); color: var(--ink);
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--hair);
+    text-decoration: none;
+    display: flex; flex-direction: column;
+    transition: transform .5s cubic-bezier(.32,.72,0,1), box-shadow .5s cubic-bezier(.32,.72,0,1);
+  }
+  .fw-card:hover { transform: translateY(-4px); box-shadow: 0 24px 40px -24px rgba(17,16,13,.25); }
+  .fw-card .media {
+    position: relative; height: 220px; overflow: hidden;
+    background: var(--bg-2);
+  }
+  .fw-card .media .mark {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-family: "Gloock", serif;
+    font-size: 64px; color: var(--ink); opacity: .12;
+    letter-spacing: -0.04em;
+    transition: transform .9s cubic-bezier(.32,.72,0,1), opacity .5s;
+  }
+  .fw-card:hover .media .mark { transform: scale(1.06); opacity: .18; }
+  .fw-card .tag-top, .fw-card .num-corner {
+    position: absolute; top: 14px;
+    font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .04em;
+    color: var(--muted-ink);
+  }
+  .fw-card .tag-top { left: 18px; }
+  .fw-card .num-corner { right: 18px; }
+  .fw-card .body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .fw-card .meta { display: flex; justify-content: space-between; font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-dim); text-transform: uppercase; letter-spacing: .08em; }
+  .fw-card h3 { font-size: 22px; margin: 0; line-height: 1.15; }
+  .fw-card p { color: var(--muted-ink); font-size: 14px; margin: 0; }
+  .fw-card .foot { padding: 16px 20px; border-top: 1px solid var(--hair-2); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .fw-card .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .fw-card .t { font-family: "Fragment Mono", monospace; font-size: 10px; color: var(--muted-ink); padding: 2px 8px; border-radius: 999px; border: 1px solid var(--hair); }
+  .fw-card .cta { font-size: 12px; color: var(--ink); display: inline-flex; align-items: center; gap: 4px; }
+
+  /* ====== Spotlight card (large, edge-to-edge) ====== */
+  .sp-card {
+    position: relative;
+    width: min(1000px, 88vw); height: 520px;
+    border-radius: 28px; overflow: hidden;
+    background: var(--ink-2); color: white;
+    border: 1px solid var(--hair);
+    transition: transform .55s cubic-bezier(.32,.72,0,1), box-shadow .55s cubic-bezier(.32,.72,0,1);
+  }
+  .sp-card:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -30px rgba(17,16,13,.45); }
+  .sp-card .bg {
+    position: absolute; inset: 0;
+    transition: transform 1s cubic-bezier(.32,.72,0,1);
+  }
+  .sp-card:hover .bg { transform: scale(1.03); }
+  .sp-card .bg .mark {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-family: "Gloock", serif;
+    font-size: 180px; color: white; opacity: .08;
+    letter-spacing: -0.04em;
+  }
+  .sp-card::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,.55) 80%, rgba(0,0,0,.85));
+  }
+  .sp-card .pad-tag {
+    position: absolute; top: 26px; left: 28px;
+    font-family: "Fragment Mono", monospace; font-size: 11px;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,.85);
+    z-index: 2;
+  }
+  .sp-card .pad-tag::before {
+    content: ""; display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--brand); margin-right: 8px; vertical-align: middle;
+  }
+  .sp-card .info {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 32px;
+    z-index: 2;
+  }
+  .sp-card h3 { font-size: clamp(28px, 3.4vw, 40px); margin: 0 0 8px; color: white; }
+  .sp-card p { color: rgba(255,255,255,.86); max-width: 60ch; margin: 0; font-size: 15px; }
+  .sp-card .outcomes { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .sp-card .outcome {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 999px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25);
+    font-size: 12px; color: rgba(255,255,255,.92);
+    backdrop-filter: blur(6px);
+  }
+
+  /* ====== Showcase card (project metrics, vertical) ====== */
+  .sh-card {
+    width: min(420px, 84vw);
+    background: var(--surface); color: var(--ink);
+    border-radius: 24px; overflow: hidden;
+    border: 1px solid var(--hair);
+    display: flex; flex-direction: column;
+    min-height: 620px;
+    transition: transform .5s cubic-bezier(.32,.72,0,1), box-shadow .5s cubic-bezier(.32,.72,0,1);
+  }
+  .sh-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -24px rgba(17,16,13,.28); }
+  .sh-card .media {
+    position: relative; height: 220px; overflow: hidden;
+    background: var(--bg-2);
+  }
+  .sh-card .media .mark {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-family: "Gloock", serif;
+    font-size: 88px; color: var(--ink); opacity: .12;
+    letter-spacing: -0.04em;
+    transition: transform .9s cubic-bezier(.32,.72,0,1), opacity .5s;
+  }
+  .sh-card:hover .media .mark { transform: scale(1.05); opacity: .18; }
+  .sh-card .cat {
+    position: absolute; top: 18px; left: 22px;
+    font-family: "Fragment Mono", monospace; font-size: 11px;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted-ink);
+  }
+  .sh-card .body { padding: 24px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+  .sh-card h3 { font-size: 24px; margin: 0; line-height: 1.15; }
+  .sh-card .summary { color: var(--muted-ink); font-size: 14px; margin: 0; }
+  .sh-card .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .sh-card .metric {
+    text-align: center; padding: 12px 6px; border-radius: 12px;
+    background: var(--bg); border: 1px solid var(--hair-2);
+  }
+  .sh-card .metric .v { font-family: "Gloock", serif; font-size: 22px; }
+  .sh-card .metric .l { font-family: "Fragment Mono", monospace; font-size: 10px; color: var(--muted-dim); text-transform: uppercase; letter-spacing: .06em; margin-top: 4px; }
+  .sh-card .toolkit { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .sh-card .tool { padding: 4px 10px; border-radius: 999px; font-size: 11px; font-family: "Fragment Mono", monospace; border: 1px solid; }
+  .sh-card .tool.c0 { color: var(--brand); border-color: color-mix(in oklch, var(--brand) 40%, transparent); background: color-mix(in oklch, var(--brand) 8%, transparent); }
+  .sh-card .tool.c1 { color: var(--accent-blue); border-color: color-mix(in oklch, var(--accent-blue) 40%, transparent); background: color-mix(in oklch, var(--accent-blue) 8%, transparent); }
+  .sh-card .tool.c2 { color: var(--ink-2); border-color: var(--hair); background: var(--bg-2); }
+
+  /* Footer */
+  .page-foot { max-width: var(--site-max); margin: 80px auto 40px; padding: 0 var(--site-pad); color: var(--muted-ink); font-size: 13px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .page-foot code { font-family: "Fragment Mono", monospace; background: var(--bg-2); padding: 2px 6px; border-radius: 6px; color: var(--ink-2); }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <span class="eyebrow">Motion study · Carousel rails</span>
+  <h1>Smooth, consistent, effortless.</h1>
+  <p>Three carousels — Featured Work, Spotlight, Showcase — driven by one shared motion engine. Snap is mandatory, easing is a long-tail cubic-bezier, and the index updates the instant your eye lands. Toggle below to feel the difference against native browser scroll.</p>
+</header>
+
+<div class="mode-row">
+  <div class="mode-toggle" role="tablist" aria-label="Scroll engine">
+    <button id="mode-new" class="active" role="tab" aria-selected="true">New · custom easing</button>
+    <button id="mode-native" role="tab" aria-selected="false">Native · browser smooth</button>
+  </div>
+  <div class="legend">Easing: <code>cubic-bezier(0.32, 0.72, 0, 1)</code> · Step = one card · Snap: <code>x mandatory</code></div>
+</div>
+
+<!-- ============ FEATURED WORK ============ -->
+<div class="sec-head">
+  <div>
+    <span class="eyebrow">01 — Featured Work</span>
+    <h2>Selected projects</h2>
+  </div>
+  <div class="arrows" id="fw-arrows">
+    <button class="arrow" data-prev aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="arrow" data-next aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</div>
+<div class="sec-head" style="margin-top: 24px;">
+  <div class="pills" id="fw-pills"></div>
+  <div></div>
+</div>
+<div class="rail" id="fw-rail" role="region" aria-roledescription="carousel" aria-label="Featured work">
+  <div class="lead" aria-hidden="true"></div>
+  <div class="tail" aria-hidden="true" data-tail></div>
+</div>
+<div class="index-strip">
+  <span id="fw-meta">01 / 06</span>
+  <div class="progress" id="fw-progress"></div>
+  <a href="#">All work →</a>
+</div>
+
+<!-- ============ SPOTLIGHT ============ -->
+<div class="sec-head">
+  <div>
+    <span class="eyebrow">02 — Spotlight</span>
+    <h2>Live builds, in detail</h2>
+  </div>
+  <div class="arrows" id="sp-arrows">
+    <button class="arrow" data-prev aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="arrow" data-next aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</div>
+<div class="rail" id="sp-rail" role="region" aria-roledescription="carousel" aria-label="Spotlight builds">
+  <div class="lead" aria-hidden="true"></div>
+  <div class="tail" aria-hidden="true" data-tail></div>
+</div>
+<div class="index-strip">
+  <span id="sp-meta">01 / 04</span>
+  <div class="progress" id="sp-progress"></div>
+  <a href="#">View all →</a>
+</div>
+
+<!-- ============ SHOWCASE ============ -->
+<div class="sec-head">
+  <div>
+    <span class="eyebrow">03 — Showcase</span>
+    <h2>Outcomes &amp; toolkit</h2>
+  </div>
+  <div class="arrows" id="sh-arrows">
+    <button class="arrow" data-prev aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="arrow" data-next aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</div>
+<div class="rail" id="sh-rail" role="region" aria-roledescription="carousel" aria-label="Showcase">
+  <div class="lead" aria-hidden="true"></div>
+  <div class="tail" aria-hidden="true" data-tail></div>
+</div>
+<div class="index-strip">
+  <span id="sh-meta">01 / 05</span>
+  <div class="progress" id="sh-progress"></div>
+  <a href="#">Case studies →</a>
+</div>
+
+<footer class="page-foot">
+  <span>Drop-in files: <code>src/lib/carouselRail.ts</code> + append <code>src/styles/carousel-rail.css</code>.</span>
+  <span>Drag with trackpad, swipe on touch, or use ←/→.</span>
+</footer>
+
+<script>
+// =====================================================================
+// Rail engine v2 — minimal, no shared maps, state lives on the rail.
+//
+// Public API on each rail element:
+//   rail.__idx          → committed card index (number)
+//   rail.__animId       → in-flight rAF id, or null
+//   railStep(rail, dir) → move ±1, animate, refresh chrome
+//   railGoTo(rail, i)   → jump to a specific card
+//
+// Snap is suspended via a `.scrolling` class (not inline style) so there's
+// no chance of a stale inline value sticking around after a cancelled
+// animation.
+// =====================================================================
+
+const EASE = (() => {
+  const A = (a,b)=>1-3*b+3*a, B = (a,b)=>3*b-6*a, C = a=>3*a;
+  const calc = (t,a,b) => ((A(a,b)*t + B(a,b))*t + C(a))*t;
+  const slope = (t,a,b) => 3*A(a,b)*t*t + 2*B(a,b)*t + C(a);
+  const p1x = 0.32, p1y = 0.72, p2x = 0, p2y = 1;
+  return x => {
+    let t = x;
+    for (let i = 0; i < 6; i++) {
+      const s = slope(t, p1x, p2x);
+      if (s === 0) break;
+      t -= (calc(t, p1x, p2x) - x) / s;
+    }
+    return calc(t, p1y, p2y);
+  };
+})();
+
+const REDUCED = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+let MODE = "new";
+
+function railCards(rail) {
+  return [...rail.querySelectorAll("[data-card]")];
+}
+
+// Absolute scrollLeft target that seats card `i` against the snap line.
+function railTargetFor(rail, i) {
+  const cards = railCards(rail);
+  if (!cards[i]) return null;
+  const padL = parseFloat(getComputedStyle(rail).scrollPaddingLeft) || 0;
+  const railLeft = rail.getBoundingClientRect().left;
+  const cardLeft = cards[i].getBoundingClientRect().left;
+  // (cardLeft - railLeft) = card's viewport-x relative to rail; add current
+  // scrollLeft to get content-x; subtract padLeft to get scroll target.
+  const contentX = (cardLeft - railLeft) + rail.scrollLeft;
+  const max = rail.scrollWidth - rail.clientWidth;
+  return Math.max(0, Math.min(max, contentX - padL));
+}
+
+function railClosest(rail) {
+  const cards = railCards(rail);
+  if (!cards.length) return 0;
+  const padL = parseFloat(getComputedStyle(rail).scrollPaddingLeft) || 0;
+  const railLeft = rail.getBoundingClientRect().left;
+  let bi = 0, bd = Infinity;
+  for (let i = 0; i < cards.length; i++) {
+    const d = Math.abs((cards[i].getBoundingClientRect().left - railLeft) - padL);
+    if (d < bd) { bd = d; bi = i; }
+  }
+  return bi;
+}
+
+function railAnimateTo(rail, target) {
+  if (rail.__animId != null) {
+    cancelAnimationFrame(rail.__animId);
+    rail.__animId = null;
+  }
+  const from = rail.scrollLeft;
+  const dx = target - from;
+  if (Math.abs(dx) < 1) {
+    rail.classList.remove("scrolling");
+    return;
+  }
+  if (MODE === "native" || REDUCED()) {
+    rail.classList.remove("scrolling");
+    rail.scrollTo({ left: target, behavior: MODE === "native" ? "smooth" : "auto" });
+    return;
+  }
+
+  const dur = Math.max(480, Math.min(900, Math.abs(dx) / 2.4));
+  const t0 = performance.now();
+  rail.classList.add("scrolling");
+
+  const tick = now => {
+    const t = Math.min(1, (now - t0) / dur);
+    const e = EASE(t);
+    rail.scrollLeft = from + dx * e;
+    if (t < 1) {
+      rail.__animId = requestAnimationFrame(tick);
+    } else {
+      rail.__animId = null;
+      rail.classList.remove("scrolling");
+    }
+  };
+  rail.__animId = requestAnimationFrame(tick);
+}
+
+function railGoTo(rail, i) {
+  const cards = railCards(rail);
+  if (!cards[i]) return;
+  rail.__idx = Math.max(0, Math.min(cards.length - 1, i));
+  const target = railTargetFor(rail, rail.__idx);
+  if (target != null) railAnimateTo(rail, target);
+}
+
+function railStep(rail, dir) {
+  const cards = railCards(rail);
+  if (!cards.length) return;
+  const cur = rail.__idx ?? railClosest(rail);
+  const next = Math.max(0, Math.min(cards.length - 1, cur + dir));
+  if (next === cur) return;
+  railGoTo(rail, next);
+}
+
+// =====================================================================
+// Wire chrome: arrows, meta counter, progress line.
+// =====================================================================
+function wire(railEl, arrowsEl, metaEl, progressEl) {
+  if (railEl.__idx == null) railEl.__idx = 0;
+
+  const refresh = () => {
+    const cards = railCards(railEl);
+    if (!cards.length) return;
+    const i = railEl.__idx ?? 0;
+    arrowsEl.querySelector("[data-prev]").disabled = i <= 0;
+    arrowsEl.querySelector("[data-next]").disabled = i >= cards.length - 1;
+    if (metaEl) {
+      metaEl.textContent =
+        String(i + 1).padStart(2, "0") + " / " + String(cards.length).padStart(2, "0");
+    }
+    if (progressEl) {
+      const pct = cards.length > 1 ? (i / (cards.length - 1)) * 100 : 0;
+      progressEl.style.setProperty("--p", pct + "%");
+    }
+  };
+
+  const onPrev = () => { railStep(railEl, -1); refresh(); };
+  const onNext = () => { railStep(railEl, 1); refresh(); };
+  arrowsEl.querySelector("[data-prev]").addEventListener("click", onPrev);
+  arrowsEl.querySelector("[data-next]").addEventListener("click", onNext);
+
+  // Trackpad / touch: when the user scrolls themselves, settle the index
+  // 140 ms after the last scroll event so chrome reflects what they see.
+  let settleTimer;
+  railEl.addEventListener("scroll", () => {
+    // Don't fight our own programmatic animation.
+    if (railEl.__animId != null) return;
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(() => {
+      railEl.__idx = railClosest(railEl);
+      refresh();
+    }, 140);
+  }, { passive: true });
+
+  new ResizeObserver(refresh).observe(railEl);
+  refresh();
+  return { refresh };
+}
+
+// =====================================================================
+// Data — placeholders matching the repo's domain.
+// =====================================================================
+
+const fwProjects = [
+  { cat: "Web",      co: "Northwind Studio",  title: "Editorial relaunch",            desc: "Performance-first publication with an art-directed reading mode.",        tags: ["Next.js", "MDX", "CMS"],           hue: 22 },
+  { cat: "Product",  co: "Holm & Wynter",     title: "Design system v2",              desc: "Tokens, primitives, and a docs site shipped in a quarter.",                tags: ["Figma", "React", "Storybook"],     hue: 200 },
+  { cat: "Marketing", co: "Brio",              title: "Brand &amp; growth site",        desc: "Narrative landing system with conversion-tuned cohorts.",                  tags: ["Astro", "Tailwind", "GA4"],        hue: 35 },
+  { cat: "Web",      co: "Atlas Health",      title: "Patient portal redesign",       desc: "Frictionless intake, calmer flows, measurable drop-off reductions.",       tags: ["TypeScript", "Auth", "Stripe"],     hue: 165 },
+  { cat: "Product",  co: "Looplab",           title: "Onboarding overhaul",           desc: "Wizard-to-canvas onboarding that doubled activation in 90 days.",          tags: ["React", "Framer", "Mixpanel"],     hue: 285 },
+  { cat: "Marketing", co: "Field & Foundry",   title: "Campaign microsite",            desc: "Story-led microsite with progressively-revealed product detail.",           tags: ["GSAP", "Three.js", "Vercel"],      hue: 5 },
+];
+const fwCats = ["All", "Web", "Product", "Marketing"];
+
+const spProjects = [
+  { cat: "Live build", title: "Maple — financial onboarding",     desc: "From cold visitor to verified account in under three minutes — measured across 8,000 sessions.", outcomes: ["−42% drop-off", "+18% LTV", "WCAG AA"], hue: 28 },
+  { cat: "Case study", title: "Halo — ops dashboard",             desc: "A single pane of glass for a fragmented operations team. Now their morning standup is the dashboard.", outcomes: ["6 tools → 1", "92 NPS", "Audit-ready"], hue: 215 },
+  { cat: "Walkthrough", title: "Ember — commerce storefront",      desc: "Headless storefront with an editorial flair. CMS-driven sections, motion-rich product detail.", outcomes: ["−1.6s LCP", "+22% AOV", "Editorial CMS"], hue: 12 },
+  { cat: "Live build", title: "Reach — outbound copilot",         desc: "Internal tooling for SDRs with thoughtful AI hand-offs and a strict audit trail.", outcomes: ["3× throughput", "Human-in-loop", "SOC 2"], hue: 250 },
+];
+
+const shProjects = [
+  { cat: "SaaS",      title: "Maple",   summary: "Financial onboarding rebuilt around the actual user — fewer fields, smarter defaults, faster verification.",                          metrics: [["−42%","Drop-off"],["+18%","LTV"],["3m","Time"]],   stack: ["TypeScript","Stripe","Plaid","Vercel"],         hue: 28  },
+  { cat: "Internal",  title: "Halo",    summary: "Operations dashboard that replaced six dashboards. Designed around the morning standup, not the database schema.",                   metrics: [["6→1","Tools"],["92","NPS"],["A11y","AA"]],         stack: ["Next.js","Postgres","tRPC"],                     hue: 215 },
+  { cat: "Commerce",  title: "Ember",   summary: "Headless commerce storefront with editorial cadence — sections feel hand-set, but they're CMS-driven.",                                metrics: [["−1.6s","LCP"],["+22%","AOV"],["98","CWV"]],        stack: ["Shopify","Sanity","Tailwind"],                    hue: 12  },
+  { cat: "AI tools",  title: "Reach",   summary: "Outbound copilot with hand-offs that respect the human's judgement. Strict audit trail, no surprises.",                                metrics: [["3×","Throughput"],["100%","Trace"],["SOC 2","Ready"]], stack: ["Python","FastAPI","LLM","Redis"],                hue: 250 },
+  { cat: "Marketing", title: "Brio",     summary: "Narrative landing system tuned to convert. Cohort-aware copy, progressive disclosure, and a content model marketers actually like.",     metrics: [["+34%","CVR"],["−12%","CPL"],["A/B","12"]],          stack: ["Astro","GA4","Optimizely"],                       hue: 35  },
+];
+
+// =====================================================================
+// Render helpers — produce a tiny SVG-pattern placeholder so we don't
+// pretend to be hand-drawn product art. Each card gets a distinct hue.
+// =====================================================================
+function softTint(hue) {
+  // Quiet, single-hue card backdrop. No stripes, no glow — just a calm wash.
+  const a = `hsl(${hue}, 22%, 88%)`;
+  const b = `hsl(${hue}, 28%, 76%)`;
+  return `linear-gradient(155deg, ${a}, ${b})`;
+}
+function pad(n) { return String(n).padStart(2,"0"); }
+function insertCard(rail, el) {
+  // Insert before the tail spacer so the tail stays last.
+  const tail = rail.querySelector("[data-tail]");
+  if (tail) rail.insertBefore(el, tail);
+  else rail.appendChild(el);
+}
+
+// =====================================================================
+// Featured Work
+// =====================================================================
+const fwRail  = document.getElementById("fw-rail");
+const fwPills = document.getElementById("fw-pills");
+const fwArrows = document.getElementById("fw-arrows");
+const fwMeta  = document.getElementById("fw-meta");
+const fwProgress = document.getElementById("fw-progress");
+
+let fwActive = "All";
+function renderFw() {
+  fwRail.querySelectorAll("[data-card]").forEach(n => n.remove());
+  const list = fwActive === "All" ? fwProjects : fwProjects.filter(p => p.cat === fwActive);
+  list.forEach((p, i) => {
+    const a = document.createElement("a");
+    a.href = "#"; a.className = "fw-card"; a.setAttribute("data-card","");
+    a.innerHTML = `
+      <div class="media" style="background: ${softTint(p.hue)};">
+        <div class="mark">${p.title.split(" ")[0]}</div>
+        <span class="tag-top">${p.cat}</span>
+        <span class="num-corner">${pad(i+1)} / ${pad(list.length)}</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span>${p.co}</span><span>2026</span></div>
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+      </div>
+      <div class="foot">
+        <div class="tags">${p.tags.map(t => `<span class="t">${t}</span>`).join("")}</div>
+        <span class="cta">View case &rarr;</span>
+      </div>`;
+    insertCard(fwRail, a);
+  });
+  fwRail.__idx = 0;
+  fwRail.scrollTo({ left: 0 });
+  requestAnimationFrame(fwApi.refresh);
+}
+
+fwCats.forEach(c => {
+  const b = document.createElement("button");
+  b.className = "pill" + (c === fwActive ? " active" : "");
+  b.textContent = c;
+  b.addEventListener("click", () => {
+    fwActive = c;
+    [...fwPills.children].forEach(n => n.classList.toggle("active", n.textContent === c));
+    renderFw();
+  });
+  fwPills.appendChild(b);
+});
+
+const fwApi = wire(fwRail, fwArrows, fwMeta, fwProgress);
+renderFw();
+
+// =====================================================================
+// Spotlight
+// =====================================================================
+const spRail = document.getElementById("sp-rail");
+spProjects.forEach(p => {
+  const el = document.createElement("article");
+  el.className = "sp-card"; el.setAttribute("data-card","");
+  el.innerHTML = `
+    <div class="bg" style="background: linear-gradient(155deg, hsl(${p.hue}, 18%, 32%), hsl(${(p.hue+30)%360}, 22%, 14%));">
+      <div class="mark">${p.title.split(" \u2014 ")[0]}</div>
+    </div>
+    <span class="pad-tag">${p.cat}</span>
+    <div class="info">
+      <h3>${p.title}</h3>
+      <p>${p.desc}</p>
+      <div class="outcomes">${p.outcomes.map(o => `<span class="outcome">${o}</span>`).join("")}</div>
+    </div>`;
+  insertCard(spRail, el);
+});
+const spApi = wire(spRail, document.getElementById("sp-arrows"), document.getElementById("sp-meta"), document.getElementById("sp-progress"));
+
+// =====================================================================
+// Showcase
+// =====================================================================
+const shRail = document.getElementById("sh-rail");
+shProjects.forEach(p => {
+  const el = document.createElement("article");
+  el.className = "sh-card"; el.setAttribute("data-card","");
+  el.innerHTML = `
+    <div class="media" style="background: ${softTint(p.hue)};">
+      <div class="mark">${p.title}</div>
+      <span class="cat">${p.cat}</span>
+    </div>
+    <div class="body">
+      <h3>${p.title}</h3>
+      <p class="summary">${p.summary}</p>
+      <div class="metrics">
+        ${p.metrics.map(([v,l]) => `<div class="metric"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("")}
+      </div>
+      <div class="toolkit">
+        ${p.stack.map((t,i) => `<span class="tool c${i % 3}">${t}</span>`).join("")}
+      </div>
+    </div>`;
+  insertCard(shRail, el);
+});
+const shApi = wire(shRail, document.getElementById("sh-arrows"), document.getElementById("sh-meta"), document.getElementById("sh-progress"));
+
+// =====================================================================
+// Mode toggle — flip every rail between custom-easing and native scroll
+// =====================================================================
+const btnNew = document.getElementById("mode-new");
+const btnNative = document.getElementById("mode-native");
+function setMode(m) {
+  MODE = m;
+  btnNew.classList.toggle("active", m === "new");
+  btnNative.classList.toggle("active", m === "native");
+  btnNew.setAttribute("aria-selected", m === "new");
+  btnNative.setAttribute("aria-selected", m === "native");
+  document.querySelectorAll(".rail").forEach(r => r.classList.toggle("native", m === "native"));
+}
+btnNew.addEventListener("click", () => setMode("new"));
+btnNative.addEventListener("click", () => setMode("native"));
+
+// =====================================================================
+// Keyboard nav on the focused rail
+// =====================================================================
+document.querySelectorAll(".rail").forEach(r => {
+  r.tabIndex = 0;
+  r.addEventListener("keydown", e => {
+    if (e.key === "ArrowLeft")  { e.preventDefault(); railStep(r, -1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); railStep(r, 1); }
+    if (e.key === "Home")       { e.preventDefault(); railGoTo(r, 0); }
+    if (e.key === "End")        { e.preventDefault(); railGoTo(r, railCards(r).length - 1); }
+  });
+});
+</script>
+
+</body>
+</html>

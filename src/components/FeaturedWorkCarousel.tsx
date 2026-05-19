@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { measureRail, scrollRailToIndex, stepRail, type RailState } from "@/lib/carouselRail"
+import { measureRail, railGoTo, railSettleIdx, railStep, type RailState } from "@/lib/carouselRail"
 
 type Work = {
   id: number
@@ -20,7 +20,6 @@ type Props = {
 }
 
 const pad = (n: number) => String(n).padStart(2, "0")
-const CARD_SELECTOR = "[data-fw-card]"
 
 export function FeaturedWorkCarousel({ works, categories }: Props) {
   const [active, setActive] = useState("All")
@@ -30,15 +29,17 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
     index: 0,
     canPrev: false,
     canNext: filtered.length > 1,
+    total: filtered.length,
   })
 
   const refresh = useCallback(() => {
-    if (railRef.current) setState(measureRail(railRef.current, CARD_SELECTOR))
+    if (railRef.current) setState(measureRail(railRef.current))
   }, [])
 
   useEffect(() => {
     const rail = railRef.current
     if (!rail) return
+    rail.__idx = 0
     rail.scrollTo({ left: 0 })
     requestAnimationFrame(refresh)
   }, [active, refresh])
@@ -46,25 +47,43 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
   useEffect(() => {
     const rail = railRef.current
     if (!rail) return
-    const onScroll = () => refresh()
+    let settle: number | undefined
+    const onScroll = () => {
+      if (rail.__animId != null) return
+      if (settle) window.clearTimeout(settle)
+      settle = window.setTimeout(() => {
+        if (rail.__animId == null) railSettleIdx(rail)
+        refresh()
+      }, 140)
+    }
     rail.addEventListener("scroll", onScroll, { passive: true })
     const ro = new ResizeObserver(refresh)
     ro.observe(rail)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); railStep(rail, -1); refresh() }
+      else if (e.key === "ArrowRight") { e.preventDefault(); railStep(rail, 1); refresh() }
+      else if (e.key === "Home") { e.preventDefault(); railGoTo(rail, 0); refresh() }
+      else if (e.key === "End") { e.preventDefault(); railGoTo(rail, filtered.length - 1); refresh() }
+    }
+    rail.addEventListener("keydown", onKey)
     refresh()
     return () => {
       rail.removeEventListener("scroll", onScroll)
+      rail.removeEventListener("keydown", onKey)
       ro.disconnect()
+      if (settle) window.clearTimeout(settle)
     }
-  }, [refresh])
+  }, [refresh, filtered.length])
 
-  const step = (dir: 1 | -1) => {
-    if (railRef.current) stepRail(railRef.current, CARD_SELECTOR, dir)
-  }
-  const scrollToIndex = (i: number) => {
-    if (railRef.current) scrollRailToIndex(railRef.current, CARD_SELECTOR, i)
+  const onArrow = (dir: 1 | -1) => {
+    const rail = railRef.current
+    if (!rail) return
+    railStep(rail, dir)
+    refresh()
   }
 
-  const { index, canPrev, canNext } = state
+  const { index, canPrev, canNext, total } = state
+  const progress = total > 1 ? (index / (total - 1)) * 100 : 0
 
   return (
     <div>
@@ -81,43 +100,29 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
             </button>
           ))}
         </div>
-        <div className="sd-car-arrows" aria-hidden={!canPrev && !canNext}>
-          {canPrev && (
-            <button
-              type="button"
-              onClick={() => step(-1)}
-              className="sd-arrowbtn"
-              aria-label="Previous projects"
-            >
-              <ChevronLeft style={{ width: 22, height: 22 }} />
-            </button>
-          )}
-          {canNext && (
-            <button
-              type="button"
-              onClick={() => step(1)}
-              className="sd-arrowbtn"
-              aria-label="Next projects"
-            >
-              <ChevronRight style={{ width: 22, height: 22 }} />
-            </button>
-          )}
+        <div className="arrow-row">
+          <button type="button" className="arrow" disabled={!canPrev} onClick={() => onArrow(-1)} aria-label="Previous projects">
+            <ChevronLeft />
+          </button>
+          <button type="button" className="arrow" disabled={!canNext} onClick={() => onArrow(1)} aria-label="Next projects">
+            <ChevronRight />
+          </button>
         </div>
       </div>
 
       <div
         ref={railRef}
-        className="sd-car-rail"
+        className="rail"
         role="region"
         aria-roledescription="carousel"
         aria-label="Featured work carousel"
         tabIndex={0}
       >
-        <div className="sd-car-lead" aria-hidden="true" />
+        <div className="lead" aria-hidden="true" />
         {filtered.map((work, i) => (
           <a
             key={work.id}
-            data-fw-card
+            data-card
             href={work.caseStudyUrl}
             className="sd-work-card"
             aria-label={`${work.title} — ${work.company}, case study`}
@@ -156,30 +161,13 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
             </div>
           </a>
         ))}
+        <div className="tail" aria-hidden="true" />
       </div>
 
-      <div className="sd-wrap">
-        <div className="sd-car-controls">
-          <div className="sd-mono" style={{ fontSize: 12, color: "var(--muted-dim)" }}>
-            {pad(index + 1)} / {pad(filtered.length)}
-          </div>
-          <div className="sd-car-dots" role="tablist" aria-label="Slide selector">
-            {filtered.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => scrollToIndex(i)}
-                aria-label={`Go to project ${i + 1} of ${filtered.length}`}
-                aria-current={i === index}
-                role="tab"
-                className={cn("dot", i === index && "active")}
-              />
-            ))}
-          </div>
-          <a href="/work" className="sd-mono" style={{ fontSize: 12, color: "var(--ink)", textDecoration: "none" }}>
-            All work →
-          </a>
-        </div>
+      <div className="index-strip">
+        <span aria-live="polite">{pad(index + 1)} / {pad(total)}</span>
+        <div className="progress" style={{ ["--p" as string]: `${progress}%` }} />
+        <a href="/work">All work →</a>
       </div>
     </div>
   )
