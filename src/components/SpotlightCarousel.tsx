@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Play } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { measureRail, scrollRailToIndex, stepRail, type RailState } from "@/lib/carouselRail"
 
 type Spotlight = {
   id: string
@@ -13,57 +14,60 @@ type Spotlight = {
   link: string
 }
 
+const CARD_SELECTOR = "[data-spot-card]"
+
 const openVideo = (detail: { url: string; title: string }) => {
   window.dispatchEvent(new CustomEvent("portfolio:open-video", { detail }))
 }
 
 export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
   const railRef = useRef<HTMLDivElement | null>(null)
-  const [index, setIndex] = useState(0)
+  const [state, setState] = useState<RailState>({
+    index: 0,
+    canPrev: false,
+    canNext: projects.length > 1,
+  })
+
+  const refresh = useCallback(() => {
+    if (railRef.current) setState(measureRail(railRef.current, CARD_SELECTOR))
+  }, [])
 
   useEffect(() => {
     const rail = railRef.current
     if (!rail) return
-    const onScroll = () => {
-      const card = rail.querySelector<HTMLElement>("[data-spot-card]")
-      if (!card) return
-      const w = card.offsetWidth + 32
-      setIndex(Math.max(0, Math.min(Math.round(rail.scrollLeft / w), projects.length - 1)))
-    }
+    const onScroll = () => refresh()
     rail.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
-    return () => rail.removeEventListener("scroll", onScroll)
-  }, [projects.length])
+    const ro = new ResizeObserver(refresh)
+    ro.observe(rail)
+    refresh()
+    return () => {
+      rail.removeEventListener("scroll", onScroll)
+      ro.disconnect()
+    }
+  }, [refresh])
 
-  const scrollTo = (i: number) => {
-    const rail = railRef.current
-    if (!rail) return
-    const card = rail.querySelector<HTMLElement>("[data-spot-card]")
-    if (!card) return
-    const w = card.offsetWidth + 32
-    rail.scrollTo({ left: i * w, behavior: "smooth" })
-  }
   const step = (dir: 1 | -1) => {
-    const rail = railRef.current
-    if (!rail) return
-    const card = rail.querySelector<HTMLElement>("[data-spot-card]")
-    if (!card) return
-    const w = card.offsetWidth + 32
-    const current = Math.round(rail.scrollLeft / w)
-    const next = Math.max(0, Math.min(current + dir, projects.length - 1))
-    rail.scrollTo({ left: next * w, behavior: "smooth" })
+    if (railRef.current) stepRail(railRef.current, CARD_SELECTOR, dir)
   }
+  const scrollToIndex = (i: number) => {
+    if (railRef.current) scrollRailToIndex(railRef.current, CARD_SELECTOR, i)
+  }
+
+  const { index, canPrev, canNext } = state
+  const arrowClass = "inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground border-2 border-primary shadow-lg hover:bg-primary/90 hover:shadow-xl hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-standout transition-all"
 
   return (
     <div className="relative">
       <div
         ref={railRef}
-        className="carousel-bleed flex snap-x snap-mandatory gap-8 overflow-x-auto pb-8 scroll-smooth scrollbar-hide"
+        className="carousel-bleed flex snap-x snap-mandatory gap-8 overflow-x-auto pb-8 scrollbar-hide"
         style={{ scrollbarWidth: "none" }}
         role="region"
         aria-roledescription="carousel"
-        aria-label="Spotlight builds"
+        aria-label="Spotlight builds carousel"
+        tabIndex={0}
       >
+        <div className="carousel-lead" aria-hidden="true" />
         {projects.map(s => (
           <article
             key={s.id}
@@ -92,10 +96,10 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
                 <button
                   type="button"
                   onClick={() => openVideo({ url: s.video, title: s.title })}
-                  className="inline-flex items-center gap-2 rounded-md px-8 py-4 text-lg font-semibold bg-white text-foreground hover:bg-white/90 dark:text-gray-900"
+                  className="inline-flex items-center gap-2 rounded-md px-8 py-4 text-lg font-semibold bg-card text-foreground hover:bg-card/90 font-sans"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30 shadow-inner mr-2">
-                    <Play className="h-5 w-5 text-foreground dark:text-gray-900" />
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-card/40 ring-1 ring-foreground/15 shadow-inner mr-2">
+                    <Play className="h-5 w-5 text-foreground" />
                   </span>
                   Watch walkthrough
                 </button>
@@ -110,17 +114,33 @@ export function SpotlightCarousel({ projects }: { projects: Spotlight[] }) {
 
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
         <div className="mt-8 flex items-center justify-center gap-4">
-          <button type="button" onClick={() => step(-1)} disabled={index === 0} className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all" aria-label="Previous">
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <div className="flex items-center gap-2">
+          <div className="flex gap-3 items-center" aria-hidden={!canPrev && !canNext}>
+            {canPrev && (
+              <button type="button" onClick={() => step(-1)} className={arrowClass} aria-label="Previous spotlight" style={{ width: 52, height: 52 }}>
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+            )}
+          </div>
+          <div className="flex items-center gap-2" role="tablist" aria-label="Slide selector">
             {projects.map((_, i) => (
-              <button key={i} type="button" onClick={() => scrollTo(i)} aria-label={`Go to slide ${i + 1}`} className={cn("h-2 rounded-full transition-all", i === index ? "w-8 bg-standout" : "w-2 bg-border hover:bg-standout/50")} />
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                onClick={() => scrollToIndex(i)}
+                aria-label={`Go to spotlight ${i + 1} of ${projects.length}`}
+                aria-current={i === index}
+                className={cn("h-2 rounded-full transition-all", i === index ? "w-8 bg-primary" : "w-2 bg-border hover:bg-primary/50")}
+              />
             ))}
           </div>
-          <button type="button" onClick={() => step(1)} disabled={index === projects.length - 1} className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all" aria-label="Next">
-            <ChevronRight className="w-5 h-5" />
-          </button>
+          <div className="flex gap-3 items-center" aria-hidden={!canPrev && !canNext}>
+            {canNext && (
+              <button type="button" onClick={() => step(1)} className={arrowClass} aria-label="Next spotlight" style={{ width: 52, height: 52 }}>
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

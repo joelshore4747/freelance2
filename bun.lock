@@ -7,8 +7,9 @@
       "dependencies": {
         "@astrojs/node": "^10.1.1",
         "@astrojs/react": "^5.0.5",
-        "@fontsource-variable/inter": "^5.2.8",
-        "@fontsource-variable/plus-jakarta-sans": "^5.2.8",
+        "@fontsource-variable/hanken-grotesk": "^5.2.8",
+        "@fontsource/fragment-mono": "^5.2.8",
+        "@fontsource/gloock": "^5.2.8",
         "@radix-ui/react-label": "2.1.1",
         "@radix-ui/react-slot": "1.1.1",
         "@tailwindcss/vite": "^4.3.0",
@@ -167,9 +168,11 @@
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.27.7", "", { "os": "win32", "cpu": "x64" }, "sha512-56hiAJPhwQ1R4i+21FVF7V8kSD5zZTdHcVuRFMW0hn753vVfQN8xlx4uOPT4xoGH0Z/oVATuR82AiqSTDIpaHg=="],
 
-    "@fontsource-variable/inter": ["@fontsource-variable/inter@5.2.8", "", {}, "sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ=="],
+    "@fontsource-variable/hanken-grotesk": ["@fontsource-variable/hanken-grotesk@5.2.8", "", {}, "sha512-K7hu09ZKReBc7EifRLeM4K94NZBrxFEg0nGcISmVwlFQOJo4EmYkLXTWEwr5JcNW4z2hr5zy8vLS2sxC8JDmrQ=="],
 
-    "@fontsource-variable/plus-jakarta-sans": ["@fontsource-variable/plus-jakarta-sans@5.2.8", "", {}, "sha512-iQecBizIdZxezODNHzOn4SvvRMrZL/S8k4MEXGDynCmUrImVW0VmX+tIAMqnADwH4haXlHSXqMgU6+kcfBQJdw=="],
+    "@fontsource/fragment-mono": ["@fontsource/fragment-mono@5.2.8", "", {}, "sha512-m+aRQ+c9GghoUtEdSFIPM/ylCxDhY5ESeVzuvF+eSCqkR85VSCWM7jnNWZ+OrC9K2+xp6f0uallDDAjmPLQNrQ=="],
+
+    "@fontsource/gloock": ["@fontsource/gloock@5.2.8", "", {}, "sha512-2qh1h3uC8bY93r2zuX3a0Q2IoGUf4vc1qxM0DUqoNVxwqDkXIOhGS7/0EEYNBLfSWO7ABfi/qkVmzedkj2jSZA=="],
 
     "@img/colour": ["@img/colour@1.1.0", "", {}, "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="],
 

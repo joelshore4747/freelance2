@@ -1,66 +1,50 @@
 ---
-import { Github, Linkedin, Twitter, Mail } from "lucide-react"
-
 const year = new Date().getFullYear()
 ---
 
-<footer class="bg-card border-t border-border">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div class="col-span-1 md:col-span-2">
-        <div class="flex items-center space-x-2 mb-4">
-          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <span class="text-primary-foreground font-bold text-lg font-sans">SD</span>
-          </div>
-          <span class="font-bold text-xl font-sans text-card-foreground">Studio Duo</span>
-        </div>
-        <p class="text-muted-foreground font-serif mb-4 max-w-md">
-          A two-person freelance design and development studio creating modern, high-converting websites and digital
-          experiences for forward-thinking businesses.
-        </p>
-        <div class="flex space-x-4">
-          <a href="#" class="text-muted-foreground hover:text-primary transition-colors" aria-label="GitHub">
-            <Github className="h-5 w-5" />
-          </a>
-          <a href="#" class="text-muted-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
-            <Linkedin className="h-5 w-5" />
-          </a>
-          <a href="#" class="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
-            <Twitter className="h-5 w-5" />
-          </a>
-          <a href="#" class="text-muted-foreground hover:text-primary transition-colors" aria-label="Email">
-            <Mail className="h-5 w-5" />
-          </a>
-        </div>
-      </div>
-
+<footer class="sd-foot">
+  <div class="sd-wrap">
+    <div class="sd-foot-grid">
       <div>
-        <h3 class="font-semibold text-card-foreground font-sans mb-4">Quick Links</h3>
-        <ul class="space-y-2">
-          <li><a href="/about" class="text-muted-foreground hover:text-primary transition-colors font-serif">About Us</a></li>
-          <li><a href="/services" class="text-muted-foreground hover:text-primary transition-colors font-serif">Services</a></li>
-          <li><a href="/portfolio" class="text-muted-foreground hover:text-primary transition-colors font-serif">Portfolio</a></li>
-          <li><a href="/contact" class="text-muted-foreground hover:text-primary transition-colors font-serif">Contact</a></li>
+        <a class="sd-logo" href="/">
+          <span class="sd-logo-mark"></span>
+          <span>Studio Duo</span>
+        </a>
+        <p>A small studio building websites, stores and quiet automations for small businesses. Manchester, UK.</p>
+      </div>
+      <div>
+        <h5>Services</h5>
+        <ul>
+          <li><a href="/services#ecommerce">Ecommerce</a></li>
+          <li><a href="/services#booking">Booking</a></li>
+          <li><a href="/automation">Automation</a></li>
+          <li><a href="/services#ai">AI tools</a></li>
+          <li><a href="/services#seo">SEO &amp; growth</a></li>
         </ul>
       </div>
-
       <div>
-        <h3 class="font-semibold text-card-foreground font-sans mb-4">Services</h3>
-        <ul class="space-y-2">
-          <li><span class="text-muted-foreground font-serif">Web Design</span></li>
-          <li><span class="text-muted-foreground font-serif">Development</span></li>
-          <li><span class="text-muted-foreground font-serif">UI/UX Design</span></li>
-          <li><span class="text-muted-foreground font-serif">Consulting</span></li>
+        <h5>Studio</h5>
+        <ul>
+          <li><a href="/work">Work</a></li>
+          <li><a href="/#process">Process</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Elsewhere</h5>
+        <ul>
+          <li><a href="#" aria-disabled="true">Instagram</a></li>
+          <li><a href="#" aria-disabled="true">LinkedIn</a></li>
+          <li><a href="#" aria-disabled="true">Read.cv</a></li>
+          <li><a href="#" aria-disabled="true">Are.na</a></li>
         </ul>
       </div>
     </div>
-
-    <div class="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-      <p class="text-muted-foreground font-serif text-sm">© {year} Studio Duo. All rights reserved.</p>
-      <div class="flex space-x-6 mt-4 md:mt-0">
-        <a href="/privacy" class="text-muted-foreground hover:text-primary transition-colors font-serif text-sm">Privacy Policy</a>
-        <a href="/terms" class="text-muted-foreground hover:text-primary transition-colors font-serif text-sm">Terms of Service</a>
-      </div>
+    <div class="sd-foot-bottom">
+      <span>© {year} Studio Duo · Manchester · made with care &amp; n8n</span>
+      <span class="sd-mono">classic brass edition</span>
     </div>
   </div>
 </footer>

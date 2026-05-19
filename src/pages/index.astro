@@ -1,277 +1,427 @@
 ---
-import { ShoppingBag, CalendarCheck, Workflow, Sparkles, ArrowRight, ChevronRight } from "lucide-react"
-import { Image } from "astro:assets"
+import { ShoppingBag, CalendarCheck, Workflow, Sparkles, ArrowUpRight, Plus, Play, ArrowRight, Calendar, Star } from "lucide-react"
 import Layout from "@/layouts/Layout.astro"
 import Navigation from "@/components/Navigation.astro"
 import Footer from "@/components/Footer.astro"
-import Badge from "@/components/ui/Badge.astro"
-import GetStartedButton from "@/components/GetStartedButton.astro"
 import { FeaturedWorkCarousel } from "@/components/FeaturedWorkCarousel"
-import { EmailSignup } from "@/components/EmailSignup"
-import heroImg from "../../public/modern-ecommerce-interface.png"
-
-const services = [
-  {
-    Icon: ShoppingBag,
-    title: "Ecommerce Stores",
-    description: "Sell products with a clean, trustworthy online store.",
-    features: ["Shopify & WooCommerce builds", "Product, collection & checkout pages", "Reviews, trust & email capture", "Analytics + basic SEO"],
-    href: "/services#ecommerce",
-  },
-  {
-    Icon: CalendarCheck,
-    title: "Booking Websites",
-    description: "Let customers book appointments, classes, reservations or experiences online.",
-    features: ["Appointment & class booking", "Restaurants, salons, gyms, clinics", "Deposits & payment setup", "Calendar + email confirmations"],
-    href: "/services#booking",
-  },
-  {
-    Icon: Workflow,
-    title: "Workflow Automation",
-    description: "Connect your tools and remove repetitive admin using n8n.",
-    features: ["Form → CRM, sheet, email", "Booking & order follow-ups", "Slack / Notion / Airtable syncs", "Abandoned enquiry chasers"],
-    href: "/automation",
-  },
-  {
-    Icon: Sparkles,
-    title: "AI Business Tools",
-    description: "Practical AI assistants for enquiries, content, support and internal workflows.",
-    features: ["Website chatbots & FAQ assistants", "Enquiry summaries & lead qualification", "AI email & content drafts", "Internal knowledge assistants"],
-    href: "/services#ai",
-  },
-]
 
 const featuredWorks = [
-  { id: 1, title: "Golf tee-time booking", company: "Concept design", category: "Booking", description: "Calendar-driven booking with member rates, deposits and email confirmations.", image: "/data-analytics-dashboard.png", tags: ["Booking", "Calendar", "Stripe"], caseStudyUrl: "/work" },
-  { id: 2, title: "Hair & beauty product store", company: "Concept design", category: "Ecommerce", description: "Premium product pages, reviews, email capture and a one-page checkout.", image: "/modern-ecommerce-interface.png", tags: ["Shopify", "Reviews", "Email"], caseStudyUrl: "/work" },
-  { id: 3, title: "Yoga studio class booking", company: "Concept design", category: "Booking", description: "Class schedule with capacity, waitlists, member passes and reminders.", image: "/mobile-fitness-app-interface-design.jpg", tags: ["Booking", "Memberships"], caseStudyUrl: "/work" },
-  { id: 4, title: "Enquiry → CRM automation", company: "n8n workflow", category: "Automation", description: "Form submissions enriched, summarised by AI and synced to CRM with Slack alerts.", image: "/marketing-analytics-dashboard-dark-theme.png", tags: ["n8n", "AI", "CRM"], caseStudyUrl: "/automation" },
+  { id: 1, title: "Golf tee-time booking",           company: "Concept design", category: "Booking",    description: "Calendar-driven booking with member rates, deposits and email confirmations.",                tags: ["Booking", "Calendar", "Stripe"],  image: "/data-analytics-dashboard.png",                caseStudyUrl: "/work" },
+  { id: 2, title: "Hair & beauty product store",     company: "Concept design", category: "Ecommerce",  description: "Premium product pages, reviews, email capture and a one-page checkout.",                       tags: ["Shopify", "Reviews", "Email"],    image: "/modern-ecommerce-interface.png",              caseStudyUrl: "/work" },
+  { id: 3, title: "Yoga studio class booking",       company: "Concept design", category: "Booking",    description: "Class schedule with capacity, waitlists, member passes and reminders.",                        tags: ["Booking", "Memberships"],         image: "/mobile-fitness-app-interface-design.jpg",     caseStudyUrl: "/work" },
+  { id: 4, title: "Enquiry → CRM automation",        company: "n8n workflow",   category: "Automation", description: "Form submissions enriched, summarised by AI and synced to CRM with Slack alerts.",              tags: ["n8n", "AI", "CRM"],               image: "/marketing-analytics-dashboard-dark-theme.png", caseStudyUrl: "/automation" },
+  { id: 5, title: "Supplement subscription store",   company: "Concept design", category: "Ecommerce",  description: "Subscribe-and-save flow with bundle discounts, account portal and churn-saver emails.",          tags: ["Shopify", "Subscriptions"],       image: "/modern-ecommerce-interface.png",              caseStudyUrl: "/work" },
 ]
 const workCategories = ["All", "Ecommerce", "Booking", "Automation"]
 
-const howItWorks = [
-  { step: "01", title: "Plan", description: "Understand the offer, the audience, and the workflows you want to fix or build." },
-  { step: "02", title: "Design", description: "Clear pages, simple flows, and visual examples before a line of code is written." },
-  { step: "03", title: "Build", description: "Production-ready websites and stores with analytics, SEO and payment wiring." },
-  { step: "04", title: "Automate", description: "n8n flows and AI assistants that handle the repetitive parts after launch." },
+const heroStats = [
+  { v: "150",  em: "+", l: "Projects shipped" },
+  { v: "98",   em: "%", l: "Client retention" },
+  { v: "4–8",  em: "w", l: "Avg delivery"     },
+  { v: "2",    em: "·2", l: "The whole team"   },
+]
+
+const process = [
+  { n: "01", title: "Audit & align",   sub: "01 · Plan",     desc: "We audit the offer, the tools and the workflows you want to fix. Agree what success looks like before opening Figma." },
+  { n: "02", title: "Wireframe & ship",sub: "02 · Design",   desc: "Wireframes, then visual designs for every page or screen. You see and sign off the whole thing before code." },
+  { n: "03", title: "Production-ready",sub: "03 · Build",    desc: "Fast, accessible builds with payments, SEO and analytics wired in. Mobile-first, easy to update." },
+  { n: "04", title: "Quiet machine",   sub: "04 · Automate", desc: "n8n flows and AI assistants take over the repetitive parts. We monitor for 30 days and tune the edges." },
+]
+
+const testimonials = [
+  { quote: "The bookings page paid for itself in the first weekend. Customers stopped DMing us — they just booked, paid the deposit and showed up.",      name: "Priya Shah",     role: "Owner · Bloom Hair & Beauty",     av: "linear-gradient(135deg,#D9A17E,#9B5A36)" },
+  { quote: "The n8n flow quietly does the work of a part-time admin. We forgot it existed — which is exactly the point.",                                  name: "Tom Whittaker",  role: "Founder · Ledger & Co",            av: "linear-gradient(135deg,#fff,#D8CEBE)" },
+  { quote: "First studio I've worked with that treats 'automate it' as a real deliverable — not a wishlist item buried in slide 30.",                       name: "Esmé Carter",    role: "COO · Northline Studio",          av: "linear-gradient(135deg,#fff,#aaa)" },
+  { quote: "Best money we've spent on a website. The reviews module alone bumped repeat orders ~22% in the first quarter.",                                  name: "Marco Inglese",  role: "Founder · Roma Supplements",      av: "linear-gradient(135deg,#C7754E,#6B3B2E)" },
+  { quote: "The AI chatbot answers 70% of 'where's my order' questions before they hit my inbox. I got my evenings back.",                                   name: "Liv Andersen",   role: "Owner · Stille Skincare",         av: "linear-gradient(135deg,#BFA399,#4A4050)" },
 ]
 
 const faqs = [
-  { q: "How long does a typical project take?", a: "Most websites and stores ship in 4–8 weeks. Booking and automation builds usually take 2–4 weeks depending on integrations." },
-  { q: "Do you work with Shopify or WooCommerce?", a: "Both. Shopify is our default for product brands because checkout, payments and shipping are built in. WooCommerce works well when you already have a WordPress site." },
-  { q: "What does workflow automation actually look like?", a: "Things like: new enquiry → enriched → summarised by AI → sent to CRM with a Slack alert. Or: booking → confirmation email → calendar event → reminder the day before. We build these in n8n so they’re visible and editable." },
-  { q: "Is the AI stuff useful or just a buzzword?", a: "Useful — when it’s scoped. We build chatbots trained on your FAQs, AI email drafts, product description generators, and enquiry summarisers. We don’t pretend AI replaces strategy or design." },
-  { q: "Do you provide ongoing support?", a: "Yes. Maintenance packages cover updates, content edits, automation tuning, and bug fixes. You can also just hire us per-change." },
-  { q: "What if my business doesn’t fit any of the four services?", a: "Tell us what you need on the contact form. If it’s adjacent — landing page, internal portal, dashboard — we’ve probably built something similar." },
+  { q: "How long does a typical project take?",                  a: "Most websites and stores ship in 4–8 weeks. Booking and automation builds usually take 2–4 weeks depending on integrations and volume of test data." },
+  { q: "Shopify or WooCommerce — which one?",                    a: "Both. Shopify is our default for product brands because checkout, payments and shipping are built in. WooCommerce works well when you already have a WordPress site you want to keep." },
+  { q: "What does workflow automation actually look like?",       a: "A real example: new enquiry → enriched with company data → summarised by AI → pushed to CRM with a Slack alert. Or: booking → confirmation → calendar event → reminder the day before. Built in n8n so they're visible and editable." },
+  { q: "Is the AI stuff actually useful?",                        a: "When it's scoped. We build chatbots trained on your FAQs, AI email drafts, product description generators and enquiry summarisers. We don't pretend AI replaces strategy or design — but it's great at the boring bits." },
+  { q: "Do you provide ongoing support?",                         a: "Yes. Maintenance packages cover updates, content edits, automation tuning and bug fixes. You can also just hire us per-change at an hourly rate — no minimum retainer." },
+  { q: "What if my business doesn't fit any of the four services?", a: "Tell us what you need on the contact form. If it's adjacent — landing page, internal portal, dashboard, integration — we've probably built something similar before." },
 ]
 ---
 
 <Layout
   title="Studio Duo — Websites, Ecommerce & Automations"
-  description="We build premium websites, online stores and workflow automations that help businesses take bookings, sell products and reduce manual admin."
+  description="A small studio designing premium websites, online stores and quietly powerful workflow automations — so you take more bookings, sell more products and spend less time in your inbox."
 >
-  <div class="min-h-screen bg-background">
-    <Navigation />
+  <Navigation />
 
-    <section class="relative py-16 md:py-24 lg:py-48 overflow-hidden bg-section-white text-section-white-foreground">
-      <div
-        class="absolute -inset-8 md:-inset-12 pointer-events-none hero-animated-bg"
-        style="background-image: linear-gradient(45deg, color-mix(in oklch, var(--primary) 20%, transparent), color-mix(in oklch, var(--standout) 20%, transparent)); background-size: 180% 180%; background-position: 12% 12%; animation: bg-drift 20s ease-in-out infinite; opacity: 0.85; will-change: background-position;"
-      ></div>
-
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
-        <div class="lg:hidden">
-          <div class="mb-6">
-            <Badge variant="secondary" class="font-serif text-sm px-3 py-1">✨ Websites • Ecommerce • Automation • AI</Badge>
-          </div>
-          <h1 class="text-4xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance leading-tight">
-            Websites, Ecommerce & <span class="text-standout font-bold">Automations</span> for Modern Businesses
-          </h1>
-          <p class="text-xl md:text-2xl text-muted-foreground font-serif mb-8 text-pretty leading-relaxed">
-            We build premium websites, online stores and workflow automations that help businesses take bookings, sell products and reduce manual admin.
-          </p>
-          <div class="grid grid-cols-2 gap-3 mb-8">
-            {["✓ More bookings", "✓ More sales", "✓ Less admin", "✓ AI built-in"].map(f => (
-              <div class="flex items-center gap-2 text-m text-muted-foreground font-black">
-                <span class="text-green-500 font-medium">{f.split(" ")[0]}</span>
-                <span>{f.split(" ").slice(1).join(" ")}</span>
-              </div>
-            ))}
-          </div>
-          <div class="space-y-4 mb-12">
-            <GetStartedButton size="lg" class="w-full font-serif font-semibold text-base px-8 py-4 mb-4" />
-            <a href="/work" class="inline-flex w-full items-center justify-center h-12 px-8 rounded-md text-base font-serif font-semibold border bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors">View Our Work</a>
-          </div>
+  <!-- ============ HERO ============ -->
+  <section class="sd-hero">
+    <div class="sd-wrap sd-hero-inner">
+      <div class="sd-hero-text" data-sd-reveal>
+        <a class="sd-hero-tag" href="/services#ai">
+          <span class="pill">New</span>
+          <span>Now offering AI &amp; automation packages →</span>
+          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <h1 class="sd-head">
+          Websites, ecommerce,<br />
+          <span class="grad">automation &amp; SEO</span><br />
+          for modern businesses.
+        </h1>
+        <p class="sd-hero-sub">
+          A small studio designing premium websites, quietly powerful workflows and the SEO behind them — so you take more bookings, sell more products and get found by the right people without the inbox grind.
+        </p>
+        <div class="sd-hero-actions">
+          <a class="sd-btn sd-btn-primary" href="/contact">
+            Start a project
+            <ArrowRight className="sd-ic" />
+          </a>
+          <a class="sd-btn sd-btn-ghost" href="/work">
+            <Play className="sd-ic" />
+            See recent work
+          </a>
         </div>
+      </div>
 
-        <div class="hidden lg:grid grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div class="text-left animate-fade-in-up">
-            <Badge variant="secondary" class="mb-6 lg:mb-10 font-serif text-sm px-4 py-2 animate-bounce-subtle">Websites • Ecommerce • Automation • AI</Badge>
-            <h1 class="text-3xl md:text-4xl lg:text-6xl font-bold text-foreground font-sans mb-6 lg:mb-12 text-balance leading-tight animate-slide-in-left">
-              Websites, Ecommerce & <span class="text-standout font-bold">Automations</span> for Modern Businesses
-            </h1>
-            <p class="text-base md:text-lg lg:text-xl text-muted-foreground font-serif mb-8 lg:mb-14 max-w-2xl text-pretty leading-relaxed animate-fade-in-up animation-delay-300">
-              We build premium websites, online stores and workflow automations that help businesses take bookings, sell products and reduce manual admin.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 lg:gap-6 animate-fade-in-up animation-delay-600">
-              <GetStartedButton size="lg" class="font-serif font-semibold text-base px-8 py-4 hover:scale-105 transition-transform" />
-              <a href="/work" class="inline-flex items-center justify-center h-12 px-8 rounded-md text-base font-serif font-semibold border bg-transparent hover:bg-accent hover:text-accent-foreground transition-all hover:scale-105">View Our Work</a>
+      <!-- Product preview mock -->
+      <div class="sd-hero-product" data-sd-reveal>
+        <div class="sd-hp-bar">
+          <span class="d"></span><span class="d"></span><span class="d"></span>
+          <span class="url">studioduo.co — live dashboard</span>
+        </div>
+        <div class="sd-hp-body">
+          <aside class="sd-hp-side">
+            <div class="ico active"><span class="sq"></span>Overview</div>
+            <div class="ico"><span class="sq"></span>Bookings</div>
+            <div class="ico"><span class="sq"></span>Orders</div>
+            <div class="ico"><span class="sq"></span>Automations</div>
+            <div class="ico"><span class="sq"></span>AI inbox</div>
+            <div class="ico"><span class="sq"></span>Settings</div>
+          </aside>
+          <div class="sd-hp-main">
+            <div class="sd-hp-row">
+              <span class="t">This week</span>
+              <span class="s">Mon — Sun</span>
             </div>
-          </div>
-
-          <div class="relative animate-fade-in-right parallax-element">
-            <div class="relative bg-card rounded-3xl p-6 lg:p-10 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105 animate-float">
-              <Image src={heroImg} alt="Modern web interface" class="w-full h-auto rounded-2xl shadow-2xl" priority sizes="(max-width: 1024px) 100vw, 640px" />
-              <div class="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 bg-standout text-standout-foreground px-4 py-2 lg:px-6 lg:py-3 rounded-2xl font-semibold shadow-lg text-xs lg:text-sm animate-bounce-in">
-                More bookings • More sales
+            <div class="sd-hp-graph">
+              <div style="height:35%"></div>
+              <div style="height:55%"></div>
+              <div style="height:48%"></div>
+              <div style="height:70%"></div>
+              <div style="height:62%"></div>
+              <div style="height:80%"></div>
+              <div style="height:74%"></div>
+              <div style="height:90%"></div>
+              <div style="height:68%"></div>
+              <div style="height:85%"></div>
+              <div style="height:78%"></div>
+              <div style="height:96%"></div>
+            </div>
+            <div class="sd-hp-cards">
+              <div class="sd-hp-card">
+                <span class="ck">Bookings</span>
+                <span class="cv">142<span class="pos">+18%</span></span>
+              </div>
+              <div class="sd-hp-card">
+                <span class="ck">Revenue</span>
+                <span class="cv">£<em>9,240</em><span class="pos">+12%</span></span>
+              </div>
+              <div class="sd-hp-card">
+                <span class="ck">Auto-handled</span>
+                <span class="cv">68%<span class="pos">+4%</span></span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="py-10 lg:py-28 bg-section-muted text-section-white-foreground cv-auto">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div class="text-left lg:text-center mb-20">
-          <h2 class="scroll-animate text-3xl md:text-4xl lg:text-5xl font-bold text-foreground font-sans mb-1 lg:mb-8 text-balance opacity-0 translate-y-8 tracking-tight">
-            What We <span class="text-standout">Build</span>
-          </h2>
-          <p class="scroll-animate text-xl md:text-2xl text-muted-foreground font-serif max-w-4xl mx-auto lg:mx-auto md:mx-0 text-pretty leading-relaxed opacity-0 translate-y-8 animation-delay-300 font-light">
-            Four focused services that work together — websites that sell, bookings that convert, automations that save hours, and AI that earns its keep.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map(s => (
-            <div class="group">
-              <div class="card-universal services-card-apple h-full transition-all duration-300 border-[1.5px] border-[var(--color-tech-accent-1)] dark:border-[var(--color-tech-accent-1)] bg-card dark:bg-card rounded-[var(--radius-lg)] overflow-hidden group-hover:border-[var(--color-tech-accent-4)] group-hover:-translate-y-0.5 group-hover:shadow-lg flex flex-col gap-6 py-6">
-                <div class="pb-2 pt-2 px-8 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5">
-                  <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-3 transition-all duration-300 text-[var(--color-tech-accent-1)] bg-blue-50 dark:bg-blue-950/30 group-hover:text-[var(--color-tech-accent-4)] group-hover:bg-orange-50 dark:group-hover:bg-orange-950/30">
-                    <s.Icon className="w-10 h-10" />
-                  </div>
-                  <div class="services-title text-xl font-semibold text-foreground mb-2">{s.title}</div>
-                  <div class="services-description text-base text-foreground leading-relaxed font-normal">{s.description}</div>
-                </div>
-                <div class="px-8 pb-2">
-                  <ul class="space-y-2 mb-8">
-                    {s.features.map(f => (
-                      <li class="flex items-start gap-3">
-                        <span class="w-1.5 h-1.5 bg-[var(--color-tech-accent-4)] rounded-full mt-2 flex-shrink-0"></span>
-                        <span class="text-sm text-foreground leading-snug font-light">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div class="flex justify-start">
-                    <a href={s.href} class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground bg-transparent border border-border rounded-full transition-all duration-300 hover:border-[var(--color-tech-accent-4)] hover:text-[var(--color-tech-accent-4)]">
-                      Learn More <ChevronRight className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div class="sd-hero-stats" data-sd-reveal>
+        {heroStats.map(s => (
+          <div class="sd-hstat"><div class="v">{s.v}<em>{s.em}</em></div><div class="l">{s.l}</div></div>
+        ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="pt-4 md:pt-6 lg:pt-8 pb-20 md:pb-32 lg:pb-48 bg-section-muted text-section-muted-foreground cv-auto">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div class="text-left lg:text-center mb-16 md:mb-24">
-          <h2 class="scroll-animate text-3xl md:text-4xl lg:text-5xl font-bold text-section-muted-foreground font-sans mb-2 lg:mb-12 text-balance opacity-0 translate-y-8">
-            How We <span class="text-standout">Work</span>
-          </h2>
-          <p class="scroll-animate text-xl md:text-2xl text-muted-foreground/80 text-section-muted-foreground/80 font-serif mb-8 md:mb-16 text-pretty leading-relaxed opacity-0 translate-y-8 animation-delay-300">
-            Plan, design, build, automate. Same process whether you need a store, a booking page or a workflow.
-          </p>
-        </div>
+  <!-- ============ LOGOS ============ -->
+  <section class="sd-logos">
+    <div class="sd-wrap">
+      <p class="sd-logos-title">Built with the tools you already trust</p>
+      <div class="sd-logo-row">
+        <span><span class="sq"></span>Shopify</span>
+        <span><span class="sq"></span>n8n</span>
+        <span><span class="sq"></span>Stripe</span>
+        <span><span class="sq"></span>OpenAI</span>
+        <span><span class="sq"></span>Notion</span>
+        <span><span class="sq"></span>Astro</span>
+      </div>
+    </div>
+  </section>
 
-        <div class="hidden lg:block relative">
-          <div class="absolute top-10 left-0 right-0 h-1 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 rounded-full"></div>
-          <div class="grid grid-cols-4 gap-10">
-            {howItWorks.map(p => (
-              <div class="text-center relative group">
-                <div class="w-20 h-20 bg-gradient-to-br from-primary to-standout rounded-3xl flex items-center justify-center text-white mb-6 mx-auto relative z-10 shadow-2xl group-hover:scale-110 transition-transform duration-300 text-2xl font-bold">
-                  {p.step}
-                </div>
-                <h3 class="text-xl font-bold text-section-muted-foreground font-sans mb-4">{p.title}</h3>
-                <p class="text-section-muted-foreground/80 font-serif text-pretty text-base leading-relaxed">{p.description}</p>
-              </div>
-            ))}
+  <!-- ============ SERVICES (Bento) ============ -->
+  <section class="sd-section" id="services">
+    <div class="sd-wrap">
+      <div class="sd-sec-head" data-sd-reveal>
+        <span class="sd-eyebrow">01 · Services</span>
+        <h2 class="sd-sec-title">Four focused services that <em>compound.</em></h2>
+        <p class="sd-sec-blurb">Each stands on its own — together they form a small, opinionated stack that turns a website into a sales channel and the sales channel into a quiet machine.</p>
+      </div>
+
+      <div class="sd-bento" data-sd-reveal>
+        <a class="sd-b-card sd-b-a" href="/services#ecommerce">
+          <span class="b-eyebrow">Ecommerce</span>
+          <h3>Stores that look <em style="font-style:italic">handpicked,</em> not built.</h3>
+          <p>Clean Shopify &amp; WooCommerce builds with checkout polish, reviews, email capture and the trust details that move conversion.</p>
+          <div class="sd-b-vis"><div class="sd-vis-store"><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="row">
+            <span class="price">From <b>£3,500</b></span>
+            <span class="arrow"><ArrowUpRight className="sd-ic" /></span>
           </div>
-        </div>
+        </a>
 
-        <div class="lg:hidden space-y-6">
-          {howItWorks.map(p => (
-            <div class="bg-card rounded-2xl p-6 shadow-lg flex gap-4">
-              <div class="w-12 h-12 bg-gradient-to-br from-primary to-standout rounded-xl flex items-center justify-center text-white shadow-lg shrink-0 font-bold">
-                {p.step}
-              </div>
-              <div>
-                <h3 class="text-lg font-bold text-foreground font-sans mb-1">{p.title}</h3>
-                <p class="text-muted-foreground font-serif text-sm leading-relaxed">{p.description}</p>
-              </div>
+        <a class="sd-b-card sd-b-b" href="/services#booking">
+          <span class="b-eyebrow">Booking</span>
+          <h3>Pages people actually finish.</h3>
+          <p>Salon, spa, gym or golf club — calendar flows with deposits and reminders.</p>
+          <div class="sd-b-vis">
+            <div class="sd-vis-cal">
+              <div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+              <div></div><div class="h"></div><div class="act"></div><div></div><div></div><div></div><div></div>
+              <div></div><div></div><div class="act"></div><div class="act"></div><div class="h"></div><div></div><div></div>
+              <div></div><div></div><div></div><div></div><div class="act"></div><div></div><div></div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+          </div>
+          <div class="row">
+            <span class="price">From <b>£2,500</b></span>
+            <span class="arrow"><ArrowUpRight className="sd-ic" /></span>
+          </div>
+        </a>
 
-    <section class="relative isolate overflow-hidden py-28 lg:py-40 bg-section-white text-section-white-foreground cv-auto">
-      <div aria-hidden class="absolute inset-0 -z-10 bg-gradient-to-br from-primary/15 via-transparent to-standout/15 [background-size:200%_200%] [animation:bg-pan_18s_ease-in-out_infinite]"></div>
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
-        <div class="text-left lg:text-center mb-12 lg:mb-14">
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground font-sans mb-2 lg:mb-4">
-            Featured <span class="text-standout">Concepts</span>
-          </h2>
-          <p class="text-lg md:text-xl text-muted-foreground font-serif mb-8 lg:mb-10 max-w-3xl lg:mx-auto leading-relaxed">
-            Booking pages, ecommerce stores and automation flows we've designed and built.
-          </p>
-        </div>
+        <a class="sd-b-card sd-b-c" href="/services#ai">
+          <span class="b-eyebrow">AI tools</span>
+          <h3>Practical AI that earns its keep.</h3>
+          <p>Chatbots, enquiry summarisers, content drafts.</p>
+          <div class="row" style="margin-top:auto">
+            <span class="price">From <b>£900</b></span>
+            <span class="arrow"><ArrowUpRight className="sd-ic" /></span>
+          </div>
+        </a>
+
+        <a class="sd-b-card sd-b-d" href="/automation">
+          <span class="b-eyebrow">Automation · n8n</span>
+          <h3>Workflows that do the admin at 3am.</h3>
+          <p>Built in n8n so they're visible and editable. Forms enrich themselves, bookings confirm themselves, follow-ups go out on their own.</p>
+          <div class="sd-b-vis">
+            <div class="sd-vis-flow">
+              <div class="node">Form</div>
+              <div class="ln"></div>
+              <div class="node">Enrich</div>
+              <div class="ln"></div>
+              <div class="node acc">AI summary</div>
+              <div class="ln"></div>
+              <div class="node">CRM + Slack</div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="price">From <b>£1,200</b></span>
+            <span class="arrow"><ArrowUpRight className="sd-ic" /></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED WORK ============ -->
+  <section class="sd-section" id="work" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+    <div class="sd-wrap">
+      <div class="sd-sec-head" data-sd-reveal>
+        <span class="sd-eyebrow">02 · Featured work</span>
+        <h2 class="sd-sec-title">Real builds across <em>real businesses.</em></h2>
+        <p class="sd-sec-blurb">A few recent projects across our four services. Filter by what you're after — every card is a live build.</p>
       </div>
 
       <FeaturedWorkCarousel client:visible works={featuredWorks} categories={workCategories} />
+    </div>
+  </section>
 
-      <div class="text-center mt-14">
-        <a href="/work" class="inline-flex items-center justify-center h-12 px-8 rounded-full text-base font-semibold border-[1.5px] bg-primary/10 text-primary border-primary hover:bg-primary hover:text-primary-foreground transition-colors">
-          View All Work <ArrowRight className="ml-2.5 h-5 w-5" />
-        </a>
-      </div>
-    </section>
-
-    <section class="py-32 lg:py-48 bg-section-secondary text-section-secondary-foreground">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-20">
-          <h2 class="scroll-animate text-3xl md:text-4xl lg:text-5xl font-bold text-foreground font-sans mb-6 text-balance opacity-0 translate-y-8">
-            Frequently Asked <span style="color: var(--tech-accent-2);">Questions</span>
-          </h2>
-          <p class="scroll-animate text-lg md:text-xl text-muted-foreground font-serif mb-12 max-w-3xl mx-auto text-pretty leading-relaxed opacity-0 translate-y-8 animation-delay-300">
-            What ecommerce, booking, automation and AI projects with us look like.
-          </p>
+  <!-- ============ PROCESS ============ -->
+  <section class="sd-section" id="process" style="padding-left:0;padding-right:0">
+    <div class="sd-proc-band">
+      <div class="sd-wrap">
+        <div class="sd-sec-head" data-sd-reveal>
+          <span class="sd-eyebrow">03 · Process</span>
+          <h2 class="sd-sec-title">Plan, design, build, <em>automate.</em></h2>
+          <p class="sd-sec-blurb">The same four steps whether you need a store, a booking page or a workflow. No mystery, no theatre — just a clear path from kickoff to launch.</p>
         </div>
 
-        <div class="space-y-4 mb-20">
-          {faqs.map(item => (
-            <details class="group bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/20">
-              <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-muted/50 transition-colors duration-200">
-                <h3 class="text-lg font-semibold text-card-foreground pr-4">{item.q}</h3>
-                <ChevronRight className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-open:rotate-90" />
-              </summary>
-              <div class="px-6 pb-6">
-                <p class="text-muted-foreground leading-relaxed">{item.a}</p>
-              </div>
-            </details>
+        <div class="sd-proc-grid" data-sd-reveal>
+          {process.map(p => (
+            <div class="sd-proc">
+              <span class="num">{p.n}</span>
+              <span class="pn">{p.sub}</span>
+              <h4>{p.title}</h4>
+              <p>{p.desc}</p>
+            </div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <EmailSignup client:visible />
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="sd-section" id="testimonials">
+    <div class="sd-wrap">
+      <div class="sd-sec-head" data-sd-reveal>
+        <span class="sd-eyebrow">04 · Clients</span>
+        <h2 class="sd-sec-title">Not case studies, just <em>kind words.</em></h2>
+        <p class="sd-sec-blurb">A small selection from founders, salon owners and small-team operators we've worked with over the past two years.</p>
+      </div>
+    </div>
 
-    <Footer />
+    <div class="sd-quote-rail" id="sd-quote-rail">
+      <div class="sd-quote-lead" aria-hidden="true"></div>
+      {testimonials.map(t => (
+        <article class="sd-quote">
+          <div class="stars">
+            <Star className="sd-ic" style={{ width: 14, height: 14, fill: "currentColor" }} />
+            <Star className="sd-ic" style={{ width: 14, height: 14, fill: "currentColor" }} />
+            <Star className="sd-ic" style={{ width: 14, height: 14, fill: "currentColor" }} />
+            <Star className="sd-ic" style={{ width: 14, height: 14, fill: "currentColor" }} />
+            <Star className="sd-ic" style={{ width: 14, height: 14, fill: "currentColor" }} />
+          </div>
+          <p class="big">"{t.quote}"</p>
+          <div class="who">
+            <div class="av" style={`background:${t.av}`}></div>
+            <div>
+              <div class="name">{t.name}</div>
+              <div class="role">{t.role}</div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
 
-    <a href="/contact" class="fixed bottom-4 right-4 z-50 inline-flex items-center justify-center h-10 px-6 rounded-full shadow-lg text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
-      Start a project
-    </a>
-  </div>
+    <div class="sd-wrap">
+      <div class="sd-car-controls" style="margin-top:24px">
+        <div class="sd-mono" style="font-size:12px;color:var(--muted-dim)">{testimonials.length} of 42 testimonials</div>
+        <div class="sd-car-dots" id="sd-quote-dots"></div>
+        <button class="sd-arrowbtn" id="sd-quote-next" type="button" aria-label="Next">
+          <ArrowRight className="sd-ic" />
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="sd-section" id="faq" style="background:var(--bg-2);border-top:1px solid var(--hair)">
+    <div class="sd-wrap">
+      <div class="sd-sec-head" data-sd-reveal>
+        <span class="sd-eyebrow">05 · FAQ</span>
+        <h2 class="sd-sec-title">Questions, before <em>the form.</em></h2>
+        <p class="sd-sec-blurb">The things we get asked most. If yours isn't here, the contact form takes about 60 seconds.</p>
+      </div>
+
+      <div class="sd-faqs" data-sd-reveal>
+        {faqs.map((f, i) => (
+          <details class="sd-faq" open={i === 0}>
+            <summary>
+              <span class="qt">{f.q}</span>
+              <span class="plus"><Plus className="sd-ic" /></span>
+            </summary>
+            <div class="ans">{f.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="sd-cta" id="contact-cta">
+    <div class="sd-wrap sd-cta-inner">
+      <span class="sd-eyebrow">Start a project</span>
+      <h2>Let's build the <em>quiet machine.</em></h2>
+      <p>Tell us what you want to ship — store, booking page, automation, AI tool — and we'll come back inside 24 hours with a plan and a price.</p>
+      <div class="sd-cta-actions">
+        <a class="sd-btn sd-btn-primary" href="/contact">
+          Start a project
+          <ArrowRight className="sd-ic" />
+        </a>
+        <a class="sd-btn sd-btn-ghost" href="/contact">
+          <Calendar className="sd-ic" />
+          Book a 20-min intro call
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+
+  <a href="/contact" class="sd-float-cta">
+    Start a project
+    <ArrowRight className="sd-ic" />
+  </a>
 </Layout>
+
+<script>
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => e.isIntersecting && e.target.classList.add("in")),
+    { threshold: 0.12 }
+  )
+  document.querySelectorAll("[data-sd-reveal]").forEach(el => io.observe(el))
+
+  const qrail = document.getElementById("sd-quote-rail")
+  const qdots = document.getElementById("sd-quote-dots")
+  const qnext = document.getElementById("sd-quote-next")
+  if (qrail && qdots && qnext) {
+    const quotes = qrail.querySelectorAll(".sd-quote")
+    qdots.innerHTML = Array.from(quotes)
+      .map((_, i) => `<button class="dot ${i === 0 ? "active" : ""}" data-i="${i}" aria-label="Go to slide ${i + 1}"></button>`)
+      .join("")
+
+    const stepW = () => {
+      const card = qrail.querySelector<HTMLElement>(".sd-quote")
+      if (!card) return 0
+      const gap = parseFloat(getComputedStyle(qrail).columnGap || "0") || 0
+      return card.offsetWidth + gap
+    }
+
+    const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const clamp = (n: number) => Math.max(0, Math.min(n, qrail.scrollWidth - qrail.clientWidth))
+
+    const activeIndex = () => {
+      const w = stepW()
+      if (!w) return 0
+      const epsilon = 4
+      const atEnd = qrail.scrollLeft + qrail.clientWidth >= qrail.scrollWidth - epsilon
+      if (atEnd) return quotes.length - 1
+      const lead = qrail.querySelector<HTMLElement>(".sd-quote-lead")
+      const railRect = qrail.getBoundingClientRect()
+      const targetX = lead ? lead.getBoundingClientRect().right : railRect.left
+      let best = 0
+      let bestDelta = Infinity
+      quotes.forEach((q, i) => {
+        const delta = Math.abs((q as HTMLElement).getBoundingClientRect().left - targetX)
+        if (delta < bestDelta) { bestDelta = delta; best = i }
+      })
+      return best
+    }
+
+    qnext.addEventListener("click", () => {
+      const w = stepW()
+      if (!w) return
+      const perView = Math.max(1, Math.floor(qrail.clientWidth / w))
+      qrail.scrollTo({ left: clamp(qrail.scrollLeft + perView * w), behavior: reducedMotion() ? "auto" : "smooth" })
+    })
+
+    qrail.addEventListener("scroll", () => {
+      const i = activeIndex()
+      qdots.querySelectorAll<HTMLElement>(".dot").forEach((d, di) => d.classList.toggle("active", di === i))
+    }, { passive: true })
+
+    qdots.addEventListener("click", (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLElement>("button[data-i]")
+      if (!b) return
+      const w = stepW()
+      if (!w) return
+      qrail.scrollTo({ left: clamp(w * Number(b.dataset.i)), behavior: reducedMotion() ? "auto" : "smooth" })
+    })
+  }
+</script>

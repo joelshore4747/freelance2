@@ -1,104 +1,168 @@
 ---
-import { Menu, X } from "lucide-react"
+import { ShoppingBag, CalendarCheck, Workflow, Sparkles, Search, ArrowRight, ChevronDown, Menu, X } from "lucide-react"
 
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/work", label: "Work" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+const servicesMenu = [
+  { Icon: ShoppingBag,    title: "Ecommerce stores",    desc: "Shopify & WooCommerce builds that sell.",     href: "/services#ecommerce", tone: "" },
+  { Icon: CalendarCheck,  title: "Booking websites",    desc: "Calendar-driven flows that customers finish.", href: "/services#booking",   tone: "v" },
+  { Icon: Workflow,       title: "Workflow automation", desc: "n8n flows that quietly run the admin.",        href: "/automation",         tone: "m" },
+  { Icon: Sparkles,       title: "AI business tools",   desc: "Practical assistants for support & ops.",      href: "/services#ai",        tone: "p" },
+  { Icon: Search,         title: "SEO & growth",        desc: "Earn search traffic instead of paying for it.", href: "/services#seo",      tone: "v" },
+]
+
+const workMenu = [
+  { title: "All projects",          href: "/work" },
+  { title: "Ecommerce",             href: "/work#ecommerce" },
+  { title: "Booking",               href: "/work#booking" },
+  { title: "Automation case study", href: "/automation" },
+]
+
+const resourcesMenu = [
+  { title: "Our process",        href: "/#process" },
+  { title: "FAQ",                href: "/#faq" },
+  { title: "Pricing & packages", href: "/services#pricing" },
+  { title: "About us",           href: "/about" },
 ]
 ---
 
-<nav
-  data-nav
-  class="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm"
->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
-      <a href="/" class="flex items-center space-x-2">
-        <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center shadow-sm">
-          <span class="text-primary-foreground font-bold text-lg font-sans">SD</span>
+<div class="sd-topbar">
+  <div class="sd-wrap sd-topbar-row">
+    <span class="sd-badge">New</span>
+    <span>Now booking Q3 2026 — limited to 4 new clients.</span>
+    <a href="/contact">
+      Get in touch
+      <svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</div>
+
+<header class="sd-nav">
+  <div class="sd-wrap sd-nav-row">
+    <a class="sd-logo" href="/">
+      <span class="sd-logo-mark"></span>
+      <span>Studio&nbsp;Duo</span>
+    </a>
+
+    <nav class="sd-nav-center" aria-label="Primary">
+      <div class="sd-nav-item has-menu">
+        <button class="sd-nav-link" type="button" aria-haspopup="true">
+          Services
+          <ChevronDown className="sd-caret" />
+        </button>
+        <div class="sd-menu" role="menu">
+          <div class="sd-menu-grid">
+            {servicesMenu.map(item => (
+              <a class="sd-menu-item" href={item.href} role="menuitem">
+                <span class={`sd-menu-icon ${item.tone}`}><item.Icon className="sd-ic" /></span>
+                <div>
+                  <div class="sd-menu-title">{item.title}</div>
+                  <div class="sd-menu-desc">{item.desc}</div>
+                </div>
+              </a>
+            ))}
+          </div>
+          <div class="sd-menu-foot">
+            <div>
+              <div class="ft">Not sure where to start?</div>
+              <div class="fs">Book a 20-min intro call — free, no pitch.</div>
+            </div>
+            <a href="/contact">
+              Book a call
+              <svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
-        <span class="font-bold text-xl font-sans text-foreground">Studio Duo</span>
+      </div>
+
+      <div class="sd-nav-item has-menu">
+        <button class="sd-nav-link" type="button" aria-haspopup="true">
+          Work
+          <ChevronDown className="sd-caret" />
+        </button>
+        <div class="sd-menu small" role="menu">
+          <div class="sd-menu-grid">
+            {workMenu.map(item => (
+              <a class="sd-menu-item" href={item.href} role="menuitem">
+                <span class="sd-menu-icon">→</span>
+                <div><div class="sd-menu-title">{item.title}</div></div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="sd-nav-item has-menu">
+        <button class="sd-nav-link" type="button" aria-haspopup="true">
+          Resources
+          <ChevronDown className="sd-caret" />
+        </button>
+        <div class="sd-menu small" role="menu">
+          <div class="sd-menu-grid">
+            {resourcesMenu.map(item => (
+              <a class="sd-menu-item" href={item.href} role="menuitem">
+                <span class="sd-menu-icon">→</span>
+                <div><div class="sd-menu-title">{item.title}</div></div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <a class="sd-nav-link" href="/about" style="padding-left:14px;padding-right:14px">About</a>
+      <a class="sd-nav-link" href="/contact" style="padding-left:14px;padding-right:14px">Contact</a>
+    </nav>
+
+    <div class="sd-nav-right">
+      <button
+        data-theme-toggle
+        type="button"
+        class="sd-theme-toggle"
+        aria-label="Toggle theme"
+      >
+        <span data-theme-icon>🌙</span>
+      </button>
+      <a class="sd-btn-sm-primary" href="/contact">
+        Start a project
+        <svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:14px;height:14px"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
-
-      <div class="hidden md:flex items-center space-x-8">
-        {
-          navItems.map(item => (
-            <a
-              href={item.href}
-              class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
-            >
-              {item.label}
-            </a>
-          ))
-        }
-      </div>
-
-      <div class="hidden md:flex items-center space-x-4">
-        <button
-          data-theme-toggle
-          type="button"
-          class="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-all duration-300 border border-border hover:scale-105 active:scale-95"
-          aria-label="Toggle theme"
-        >
-          <span data-theme-icon class="text-lg filter grayscale leading-none w-5 h-5 flex items-center justify-center">🌙</span>
-        </button>
-        <a
-          href="/contact"
-          class="inline-flex items-center justify-center h-9 px-4 rounded-full font-medium text-sm bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
-        >
-          Get Started
-        </a>
-      </div>
-
-      <div class="md:hidden">
-        <button
-          data-mobile-toggle
-          type="button"
-          class="inline-flex items-center justify-center size-9 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors text-foreground"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          <span data-mobile-icon="menu"><Menu className="h-6 w-6" /></span>
-          <span data-mobile-icon="close" class="hidden"><X className="h-6 w-6" /></span>
-        </button>
-      </div>
+      <button
+        data-mobile-toggle
+        type="button"
+        class="sd-mobile-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <span data-mobile-icon="menu"><Menu className="sd-ic" /></span>
+        <span data-mobile-icon="close" class="hidden"><X className="sd-ic" /></span>
+      </button>
     </div>
+  </div>
 
-    <div data-mobile-menu class="md:hidden mt-2 hidden">
-      <div class="px-3 pt-3 pb-4 bg-card rounded-lg shadow-lg space-y-2">
-        {
-          navItems.map(item => (
-            <a
-              href={item.href}
-              class="block px-3 py-2 rounded-md text-sm font-medium text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-            >
-              {item.label}
-            </a>
-          ))
-        }
-        <div class="flex items-center justify-between px-3 pt-3 border-t border-border">
-          <button
-            data-theme-toggle
-            type="button"
-            class="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-all duration-300 border border-border hover:scale-105 active:scale-95"
-            aria-label="Toggle theme"
-          >
-            <span data-theme-icon class="text-lg filter grayscale leading-none w-5 h-5 flex items-center justify-center">🌙</span>
-          </button>
-          <a
-            href="/contact"
-            class="inline-flex items-center justify-center h-9 px-4 w-1/2 rounded-full font-medium text-sm bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
-          >
-            Get Started
-          </a>
-        </div>
+  <div data-mobile-panel class="sd-mobile-panel">
+    <div class="sd-wrap">
+      <div class="sd-mobile-group">
+        <div class="sd-mobile-group-title">Services</div>
+        {servicesMenu.map(item => (
+          <a class="sd-mobile-link" href={item.href}>{item.title}<svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a>
+        ))}
+      </div>
+      <div class="sd-mobile-group">
+        <div class="sd-mobile-group-title">Work</div>
+        {workMenu.map(item => (
+          <a class="sd-mobile-link" href={item.href}>{item.title}<svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a>
+        ))}
+      </div>
+      <div class="sd-mobile-group">
+        <div class="sd-mobile-group-title">Resources</div>
+        {resourcesMenu.map(item => (
+          <a class="sd-mobile-link" href={item.href}>{item.title}<svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a>
+        ))}
+      </div>
+      <div class="sd-mobile-group">
+        <a class="sd-mobile-link" href="/contact">Contact<svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a>
       </div>
     </div>
   </div>
-</nav>
+</header>
 
 <script>
   const root = document.documentElement
@@ -125,14 +189,14 @@ const navItems = [
   })
 
   const mobileToggle = document.querySelector<HTMLButtonElement>("[data-mobile-toggle]")
-  const mobileMenu = document.querySelector<HTMLElement>("[data-mobile-menu]")
+  const mobilePanel = document.querySelector<HTMLElement>("[data-mobile-panel]")
   const iconMenu = document.querySelector<HTMLElement>('[data-mobile-icon="menu"]')
   const iconClose = document.querySelector<HTMLElement>('[data-mobile-icon="close"]')
 
   const setMobileOpen = (open: boolean) => {
-    if (!mobileToggle || !mobileMenu || !iconMenu || !iconClose) return
+    if (!mobileToggle || !mobilePanel || !iconMenu || !iconClose) return
     mobileToggle.setAttribute("aria-expanded", String(open))
-    mobileMenu.classList.toggle("hidden", !open)
+    mobilePanel.classList.toggle("open", open)
     iconMenu.classList.toggle("hidden", open)
     iconClose.classList.toggle("hidden", !open)
   }
@@ -141,5 +205,12 @@ const navItems = [
     setMobileOpen(mobileToggle.getAttribute("aria-expanded") !== "true")
   })
 
-  mobileMenu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMobileOpen(false)))
+  mobilePanel?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMobileOpen(false)))
+
+  document.querySelectorAll<HTMLElement>(".sd-nav-item.has-menu").forEach(item => {
+    const trigger = item.querySelector<HTMLButtonElement>(".sd-nav-link")
+    trigger?.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") (document.activeElement as HTMLElement | null)?.blur()
+    })
+  })
 </script>

@@ -1,5 +1,5 @@
 ---
-import { ShoppingBag, CalendarCheck, Workflow, Sparkles, CheckCircle, ArrowRight, Clock, Award, TrendingUp, Users, Target, Headphones, Calendar } from "lucide-react"
+import { ShoppingBag, CalendarCheck, Workflow, Sparkles, Search, CheckCircle, ArrowRight, Clock, Award, TrendingUp, Users, Target, Headphones, Calendar } from "lucide-react"
 import Layout from "@/layouts/Layout.astro"
 import Navigation from "@/components/Navigation.astro"
 import Footer from "@/components/Footer.astro"
@@ -11,6 +11,7 @@ const heroPoints = [
   "Ecommerce stores built for clarity, trust and checkout speed",
   "Booking pages that turn enquiries into confirmed customers",
   "n8n + AI automations that remove repetitive admin",
+  "SEO & growth work that gets your site found by the right people",
 ]
 
 const heroMetrics = [
@@ -97,6 +98,25 @@ const offers = [
     ],
     examples: ["Chatbot trained on your FAQs", "Lead qualification + summary", "Bulk product description generator", "AI-drafted customer replies"],
   },
+  {
+    id: "seo",
+    Icon: Search,
+    badge: "SEO",
+    title: "SEO & Growth",
+    subtitle: "Get found by the right customers. Technical SEO, on-page work and local search setup so your site earns its traffic instead of begging for it.",
+    price: "from £750/mo",
+    forWhom: "Shops, service businesses, booking-led venues and any brand that wants Google to send qualified people their way.",
+    includes: [
+      "Technical SEO audit",
+      "On-page optimisation (titles, headings, schema)",
+      "Site speed + Core Web Vitals",
+      "Keyword & competitor research",
+      "Local SEO + Google Business Profile",
+      "Content briefs for the pages that matter",
+      "Monthly reporting against real outcomes",
+    ],
+    examples: ["Local salon ranking #1 for nearby searches", "Ecommerce store doubling organic sessions", "Booking site capturing 'near me' traffic", "Service business off paid-ads dependency"],
+  },
 ]
 
 const reasons = [
@@ -126,13 +146,13 @@ const stages = [
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <Badge class="mb-6 font-serif border-2 border-standout/30 bg-standout/20 text-standout font-semibold">
-              Websites • Ecommerce • Automation • AI
+              Ecommerce • Bookings • Automation • AI • SEO
             </Badge>
             <h1 class="text-4xl md:text-6xl font-bold text-foreground font-sans mb-6 text-balance">
-              Everything You Need to <span class="text-standout">Sell, Book & Automate</span>
+              Everything You Need to <span class="text-standout">Sell, Book, Automate & Grow</span>
             </h1>
             <p class="text-xl text-muted-foreground font-serif mb-8 text-pretty">
-              Four focused services that help businesses get more bookings, more sales and less manual admin.
+              Five focused services that help businesses get more bookings, more sales, less manual admin and better search visibility.
             </p>
             <div class="space-y-4 mb-8">
               {
@@ -167,6 +187,7 @@ const stages = [
       </div>
     </section>
 
+    <div id="pricing">
     {
       offers.map((o, i) => (
         <section id={o.id} class={`py-20 lg:py-28 ${i % 2 === 0 ? "bg-section-muted" : "bg-section-white"}`}>
@@ -231,6 +252,7 @@ const stages = [
         </section>
       ))
     }
+    </div>
 
     <section class="py-20 lg:py-32 bg-section-white">
       <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
