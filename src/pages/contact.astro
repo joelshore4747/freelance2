@@ -1,133 +1,346 @@
 ---
-import { Mail, Phone, MapPin } from "lucide-react"
 import Layout from "@/layouts/Layout.astro"
 import Navigation from "@/components/Navigation.astro"
 import Footer from "@/components/Footer.astro"
-import { ContactForm } from "@/components/ContactForm"
 
-const faqs = [
-  {
-    title: "How long does a typical project take?",
-    body: "Project timelines vary based on complexity, but most websites take 4-8 weeks from start to launch.",
-  },
-  {
-    title: "Do you work with international clients?",
-    body: "We work with clients worldwide and are experienced in remote collaboration.",
-  },
-  {
-    title: "What’s included in your services?",
-    body: "We provide end-to-end services including design, development, testing, and post-launch support.",
-  },
-  {
-    title: "Do you offer ongoing maintenance?",
-    body: "Yes, we offer maintenance packages to keep your website secure, updated, and performing optimally.",
-  },
-]
+const services = ["Ecommerce", "Booking", "Automation", "AI tools", "Not sure yet"]
+const budgets = ["Not decided", "Under £2,500", "£2,500 – £5,000", "£5,000 – £10,000", "£10,000 – £20,000", "£20,000+"]
+const timelines = ["Flexible", "Within a month", "Within a quarter", "Q3 or Q4 2026", "2027"]
 
-const steps = [
-  { n: 1, title: "Initial Consultation", body: "We’ll schedule a call to discuss your project in detail." },
-  { n: 2, title: "Proposal & Timeline", body: "Receive a detailed proposal with timeline and pricing." },
-  { n: 3, title: "Project Kickoff", body: "Start building your vision with regular updates." },
+const callSlots = [
+  { when: "Mon · 21 Jul · 10:30", dur: "20 min", pick: false },
+  { when: "Tue · 22 Jul · 14:00", dur: "20 min", pick: true  },
+  { when: "Wed · 23 Jul · 16:30", dur: "20 min", pick: false },
+  { when: "Thu · 24 Jul · 09:00", dur: "20 min", pick: false },
 ]
 ---
 
 <Layout
-  title="Contact - Studio Duo | Start Your Project"
-  description="Ready to bring your vision to life? Contact Studio Duo for a free consultation. We design and build web experiences, automations, and digital systems that drive results."
+  title="Contact — Studio Duo"
+  description="Start a project, book a 20-minute call, or just say hello. 24-hour reply, no pitch."
 >
-  <main class="min-h-screen bg-background">
-    <Navigation />
+  <Navigation />
 
-    <section class="py-20 lg:py-28 px-6 sm:px-8 lg:px-12">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-balance text-foreground">
-          Let’s Build Something <span class="text-standout">Amazing Together</span>
-        </h1>
-        <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-          Ready to transform your ideas into reality? We’re here to help you create exceptional digital experiences that drive results.
-        </p>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="/">Studio Duo</a>
+        <span class="sep">/</span>
+        <span>Contact</span>
       </div>
-    </section>
+      <div class="page-head-grid">
+        <div data-reveal>
+          <span class="eyebrow">Contact</span>
+          <h1>Let's build the <em>quiet machine.</em></h1>
+          <p class="lede">Tell us what you want to ship — site, store, booking page, automation, AI tool. 24-hour reply, no pitch, no awkward sales call unless you'd like one.</p>
+        </div>
+        <div class="page-head-meta" data-reveal>
+          <div><div class="k">Reply within</div><div class="v">24 hours · UK time</div></div>
+          <div><div class="k">Email</div><div class="v"><a href="mailto:inquire@shoremail.cc">inquire@shoremail.cc</a></div></div>
+          <div><div class="k">Office</div><div class="v">Manchester, UK</div></div>
+          <div><div class="k">Q3 slots</div><div class="v">1 of 4 remaining</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="py-16 px-6 sm:px-8 lg:px-12">
-      <div class="max-w-7xl mx-auto">
-        <div class="w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-8">
-          <ContactForm client:load />
+  <section class="section" style="padding:64px 0 110px">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <form class="form-card" id="contact-form" novalidate>
+            <div class="form-head">
+              <h2>Start a project</h2>
+              <p>5 fields, 60 seconds. Skip what doesn't apply.</p>
+            </div>
 
-          <div class="space-y-6">
-            <div class="card-universal bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
-              <div class="px-6">
-                <h2 class="leading-none font-semibold text-lg">Contact Information</h2>
-                <p class="text-muted-foreground text-sm mt-1.5">Prefer to reach out directly? Here’s how you can get in touch.</p>
+            <input type="text" name="website" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true" />
+
+            <div class="row-2">
+              <div class="field">
+                <label>Your name <span class="req">*</span></label>
+                <input name="name" type="text" placeholder="First & last" required />
               </div>
-              <div class="px-6 space-y-4">
-                <div class="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-primary" />
-                  <div>
-                    <p class="font-medium">Email</p>
-                    <p class="text-sm text-muted-foreground">inquire@shoremail.cc</p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-primary" />
-                  <div>
-                    <p class="font-medium">Phone</p>
-                    <p class="text-sm text-muted-foreground">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <div>
-                    <p class="font-medium">Location</p>
-                    <p class="text-sm text-muted-foreground">San Francisco, CA</p>
-                  </div>
-                </div>
+              <div class="field">
+                <label>Email <span class="req">*</span></label>
+                <input name="email" type="email" placeholder="you@studio.co" required />
               </div>
             </div>
 
-            <div class="card-universal bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
-              <div class="px-6">
-                <h2 class="leading-none font-semibold text-lg">What Happens Next?</h2>
-              </div>
-              <div class="px-6 space-y-4">
-                {
-                  steps.map(s => (
-                    <div class="flex gap-3">
-                      <div class="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
-                        {s.n}
-                      </div>
-                      <div>
-                        <p class="font-medium">{s.title}</p>
-                        <p class="text-sm text-muted-foreground">{s.body}</p>
-                      </div>
-                    </div>
-                  ))
-                }
+            <div class="field">
+              <label>Company / project</label>
+              <input name="company" type="text" placeholder="Optional" />
+            </div>
+
+            <div class="field">
+              <label>What service(s) do you need?</label>
+              <div class="chip-group" id="chips-service">
+                {services.map(s => (
+                  <label class="chip-opt">
+                    <input type="checkbox" name="service" value={s} />
+                    <span class="dot"></span>{s}
+                  </label>
+                ))}
               </div>
             </div>
+
+            <div class="row-2">
+              <div class="field">
+                <label>Budget</label>
+                <select name="budget">
+                  {budgets.map(b => <option>{b}</option>)}
+                </select>
+              </div>
+              <div class="field">
+                <label>Timeline</label>
+                <select name="timeline">
+                  {timelines.map(t => <option>{t}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>What are you trying to ship? <span class="req">*</span></label>
+              <textarea name="message" placeholder="A sentence or three. Existing site? What's not working? What does success look like in 6 months?" required></textarea>
+            </div>
+
+            <div class="submit-row">
+              <span class="promise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+                24-hour reply · no pitch
+              </span>
+              <button type="submit" class="btn btn-primary">
+                Send enquiry
+                <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+
+            <p class="form-error" id="form-error" hidden></p>
+          </form>
+
+          <div class="form-card success" id="form-success">
+            <div class="ic-circ">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg>
+            </div>
+            <h2>Sent. We're on it.</h2>
+            <p>You'll hear from Joel or Ella inside 24 hours. If you'd rather skip the email back-and-forth, the 20-minute call slot on the right is yours to grab.</p>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section class="py-16 px-6 sm:px-8 lg:px-12 bg-section-muted">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-3xl font-bold text-center mb-12 text-foreground">Frequently Asked Questions</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-          {
-            faqs.map(item => (
-              <div class="card-universal bg-card/90 text-card-foreground flex flex-col gap-6 rounded-xl border border-border/80 py-6 shadow-sm">
-                <div class="px-6">
-                  <h3 class="text-lg font-semibold mb-2 text-foreground">{item.title}</h3>
-                  <p class="text-muted-foreground">{item.body}</p>
+        <aside>
+          <div class="side-stack">
+            <article class="book-card" id="call">
+              <span class="eyebrow">20-min intro call</span>
+              <h3>Or just talk it through.</h3>
+              <p>A short, free call. Bring questions, leave with a plan. We'll usually quote inside the call.</p>
+              <div class="slots">
+                {callSlots.map(s => (
+                  <div class={`slot ${s.pick ? "pick" : ""}`}>
+                    <span>{s.when}</span><span class="t">{s.dur}</span>
+                  </div>
+                ))}
+              </div>
+              <a class="btn btn-primary" href="mailto:inquire@shoremail.cc?subject=20-min%20intro%20call">Book a slot
+                <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+            </article>
+
+            <article class="side-card">
+              <h3>Or contact us directly.</h3>
+              <div class="row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                <div>
+                  <div class="k">Direct email</div>
+                  <div class="v"><a href="mailto:inquire@shoremail.cc">inquire@shoremail.cc</a></div>
                 </div>
               </div>
-            ))
-          }
-        </div>
+              <div class="row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <div>
+                  <div class="k">Hours</div>
+                  <div class="v">Mon–Thu · 9–5 UK</div>
+                </div>
+              </div>
+              <div class="row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                <div>
+                  <div class="k">Agencies &amp; partners</div>
+                  <div class="v"><a href="mailto:partners@shoremail.cc">partners@shoremail.cc</a></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </aside>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <Footer />
-  </main>
+  <Footer />
 </Layout>
+
+<style is:global>
+  .contact-grid { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  @media (min-width: 980px) { .contact-grid { grid-template-columns: 1.3fr 1fr; gap: 60px; } }
+
+  .form-card {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: 18px;
+    padding: 28px; box-shadow: var(--shadow-sm);
+    display: grid; gap: 20px;
+  }
+  @media (min-width: 700px) { .form-card { padding: 32px; gap: 22px; } }
+  .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; opacity: 0; }
+  .form-head { display: grid; gap: 8px; }
+  .form-head h2 { font-family: "Gloock", serif; font-size: 32px; font-weight: 400; letter-spacing: -.035em; margin: 0; line-height: 1; }
+  .form-head p { font-size: 14.5px; color: var(--muted-ink); margin: 0; }
+
+  .field { display: grid; gap: 8px; }
+  .field label { font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted-ink); }
+  .field label .req { color: var(--brand); }
+  .field input, .field textarea, .field select {
+    appearance: none;
+    width: 100%; padding: 14px 16px; border-radius: 12px;
+    border: 1px solid var(--hair); background: var(--bg);
+    font: inherit; font-size: 15px; color: var(--ink);
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder { color: var(--muted-dim); }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none; border-color: var(--ink); background: var(--surface);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--brand) 14%, transparent);
+  }
+  .field textarea { min-height: 140px; resize: vertical; line-height: 1.55; }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23766A61' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center; background-size: 18px;
+    padding-right: 44px;
+  }
+  .row-2 { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 600px) { .row-2 { grid-template-columns: 1fr 1fr; } }
+
+  /* chip selectors -------------------------------------------- */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip-opt {
+    cursor: pointer; user-select: none;
+    padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--hair); background: var(--bg);
+    font-size: 13.5px; color: var(--ink-2);
+    transition: all .15s ease; position: relative;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chip-opt input { display: none; }
+  .chip-opt:hover { border-color: var(--ink); }
+  .chip-opt.picked { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .chip-opt .dot { width: 14px; height: 14px; border-radius: 99px; border: 1.5px solid var(--muted-dim); background: transparent; display: inline-grid; place-items: center; flex-shrink: 0; }
+  .chip-opt.picked .dot { border-color: var(--surface); }
+  .chip-opt.picked .dot::after { content: ""; width: 6px; height: 6px; border-radius: 99px; background: var(--surface); }
+
+  .submit-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .submit-row .promise { font-size: 13px; color: var(--muted-ink); display: inline-flex; align-items: center; gap: 6px; }
+  .submit-row .promise svg { width: 14px; height: 14px; color: var(--brand); }
+  .form-error { margin: 0; font-size: 13.5px; color: #B0523D; }
+
+  /* Sidebar --------------------------------------------------- */
+  .side-stack { display: grid; gap: 14px; position: sticky; top: 96px; }
+  .side-card { background: var(--surface); border: 1px solid var(--hair); border-radius: 16px; padding: 24px; display: grid; gap: 14px; align-content: start; }
+  .side-card h3 { font-family: "Gloock", serif; font-size: 22px; font-weight: 400; letter-spacing: -.03em; margin: 0 0 4px; line-height: 1.15; }
+  .side-card p { margin: 0; color: var(--muted-ink); font-size: 14.5px; line-height: 1.55; }
+  .side-card .row { display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start; }
+  .side-card .row svg { width: 16px; height: 16px; color: var(--brand); margin-top: 3px; }
+  .side-card .row .k { font-family: "Fragment Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted-ink); }
+  .side-card .row .v { font-size: 14px; margin-top: 2px; }
+  .side-card .row .v a { color: inherit; text-decoration: underline; text-decoration-color: var(--hair); text-underline-offset: 3px; }
+
+  /* Booking option -------------------------------------------- */
+  .book-card { background: linear-gradient(135deg, var(--brand-soft), color-mix(in oklab, var(--peach) 30%, white)); border-radius: 16px; padding: 24px; display: grid; gap: 14px; }
+  .book-card h3 { font-family: "Gloock", serif; font-size: 24px; font-weight: 400; letter-spacing: -.03em; margin: 0; }
+  .book-card p { margin: 0; color: var(--ink-2); font-size: 14.5px; line-height: 1.55; }
+  .book-card .slots { display: grid; gap: 8px; }
+  .book-card .slot { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 13.5px; }
+  .book-card .slot .t { font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-ink); }
+  .book-card .slot.pick { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .book-card .slot.pick .t { color: rgba(255,255,255,.5); }
+  .book-card .btn-primary { justify-self: start; }
+
+  /* Success state hidden by default --------------------------- */
+  .form-card.success { display: none; padding: 36px; text-align: center; }
+  .form-card.success.show { display: grid; gap: 14px; }
+  .form-card.success .ic-circ {
+    width: 56px; height: 56px; border-radius: 99px;
+    background: color-mix(in oklab, var(--brand) 14%, white);
+    color: var(--brand); display: grid; place-items: center; margin: 0 auto;
+  }
+  .form-card.success h2 { font-family: "Gloock", serif; font-weight: 400; font-size: 30px; letter-spacing: -.03em; margin: 0; }
+  .form-card.success p { color: var(--muted-ink); font-size: 15px; margin: 0 auto; max-width: 48ch; line-height: 1.6; }
+  .form-card.hidden { display: none; }
+</style>
+
+<script>
+  // Chip toggling
+  document.querySelectorAll<HTMLLabelElement>(".chip-opt").forEach((label) => {
+    const input = label.querySelector<HTMLInputElement>("input")
+    if (!input) return
+    const sync = () => label.classList.toggle("picked", input.checked)
+    input.addEventListener("change", sync)
+    sync()
+  })
+
+  // Pre-select service from ?service=ecommerce
+  const params = new URLSearchParams(window.location.search)
+  const svc = params.get("service")
+  if (svc) {
+    const map: Record<string, string> = { ecommerce: "Ecommerce", booking: "Booking", automation: "Automation", ai: "AI tools" }
+    const want = map[svc.toLowerCase()]
+    if (want) {
+      const input = Array.from(document.querySelectorAll<HTMLInputElement>("[name='service']")).find((i) => i.value === want)
+      if (input) { input.checked = true; input.dispatchEvent(new Event("change")) }
+    }
+  }
+  const pkg = params.get("package")
+  if (pkg) {
+    const ta = document.querySelector<HTMLTextAreaElement>("textarea[name='message']")
+    if (ta) ta.placeholder = `I'm interested in the ${pkg} package — here's what I'm trying to ship...`
+  }
+
+  // Submit handler — POSTs to /api/contact
+  const form = document.getElementById("contact-form") as HTMLFormElement | null
+  const success = document.getElementById("form-success")
+  const errEl = document.getElementById("form-error") as HTMLParagraphElement | null
+
+  if (form && success && errEl) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault()
+      errEl.hidden = true
+      errEl.textContent = ""
+      const fd = new FormData(form)
+      const services = fd.getAll("service").map(String)
+      const payload = {
+        name:    String(fd.get("name") ?? ""),
+        email:   String(fd.get("email") ?? ""),
+        company: String(fd.get("company") ?? ""),
+        budget:  String(fd.get("budget") ?? ""),
+        message: String(fd.get("message") ?? ""),
+        website: String(fd.get("website") ?? ""),
+        services,
+      }
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+        const body = await res.json() as { ok: boolean; error?: string }
+        if (!res.ok || !body.ok) {
+          errEl.textContent = body.error ?? "Something went wrong. Please try again."
+          errEl.hidden = false
+          return
+        }
+        form.classList.add("hidden")
+        success.classList.add("show")
+        success.scrollIntoView({ behavior: "smooth", block: "start" })
+      } catch {
+        errEl.textContent = "Network error. Please check your connection and try again."
+        errEl.hidden = false
+      }
+    })
+  }
+</script>

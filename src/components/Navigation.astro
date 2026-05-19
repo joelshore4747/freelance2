@@ -15,13 +15,6 @@ const workMenu = [
   { title: "Booking",               href: "/work#booking" },
   { title: "Automation case study", href: "/automation" },
 ]
-
-const resourcesMenu = [
-  { title: "Our process",        href: "/#process" },
-  { title: "FAQ",                href: "/#faq" },
-  { title: "Pricing & packages", href: "/services#pricing" },
-  { title: "About us",           href: "/about" },
-]
 ---
 
 <div class="sd-topbar">
@@ -90,25 +83,9 @@ const resourcesMenu = [
         </div>
       </div>
 
-      <div class="sd-nav-item has-menu">
-        <button class="sd-nav-link" type="button" aria-haspopup="true">
-          Resources
-          <ChevronDown className="sd-caret" />
-        </button>
-        <div class="sd-menu small" role="menu">
-          <div class="sd-menu-grid">
-            {resourcesMenu.map(item => (
-              <a class="sd-menu-item" href={item.href} role="menuitem">
-                <span class="sd-menu-icon">→</span>
-                <div><div class="sd-menu-title">{item.title}</div></div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <a class="sd-nav-link" href="/about" style="padding-left:14px;padding-right:14px">About</a>
-      <a class="sd-nav-link" href="/contact" style="padding-left:14px;padding-right:14px">Contact</a>
+      <a class="sd-nav-link" href="/pricing">Pricing</a>
+      <a class="sd-nav-link" href="/about">About</a>
+      <a class="sd-nav-link" href="/contact">Contact</a>
     </nav>
 
     <div class="sd-nav-right">
@@ -152,12 +129,9 @@ const resourcesMenu = [
         ))}
       </div>
       <div class="sd-mobile-group">
-        <div class="sd-mobile-group-title">Resources</div>
-        {resourcesMenu.map(item => (
-          <a class="sd-mobile-link" href={item.href}>{item.title}<svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a>
-        ))}
-      </div>
-      <div class="sd-mobile-group">
+        <div class="sd-mobile-group-title">More</div>
+        <a class="sd-mobile-link" href="/pricing">Pricing<svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a>
+        <a class="sd-mobile-link" href="/about">About<svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a>
         <a class="sd-mobile-link" href="/contact">Contact<svg class="sd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a>
       </div>
     </div>

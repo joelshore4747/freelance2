@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact — Studio Duo</title>
+<meta name="description" content="Start a project, book a 20-minute call, or just say hello. 24-hour reply, no pitch." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr; gap: 32px; align-items: start;
+  }
+  @media (min-width: 980px) { .contact-grid { grid-template-columns: 1.3fr 1fr; gap: 60px; } }
+
+  .form-card {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: 22px;
+    padding: 36px; box-shadow: var(--shadow-md);
+    display: grid; gap: 24px;
+  }
+  .form-head { display: grid; gap: 8px; }
+  .form-head h2 { font-family: "Gloock", serif; font-size: 32px; font-weight: 400; letter-spacing: -.035em; margin: 0; line-height: 1; }
+  .form-head p { font-size: 14.5px; color: var(--muted); margin: 0; }
+
+  .field { display: grid; gap: 8px; }
+  .field label {
+    font-family: "Fragment Mono", monospace; font-size: 11px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  }
+  .field label .req { color: var(--brand); }
+  .field input, .field textarea, .field select {
+    appearance: none;
+    width: 100%; padding: 14px 16px; border-radius: 12px;
+    border: 1px solid var(--hair); background: var(--bg);
+    font: inherit; font-size: 15px; color: var(--ink);
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder { color: var(--muted-dim); }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none; border-color: var(--ink); background: var(--surface);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--brand) 14%, transparent);
+  }
+  .field textarea { min-height: 140px; resize: vertical; line-height: 1.55; }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23766A61' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center; background-size: 18px;
+    padding-right: 44px;
+  }
+  .row-2 { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 600px) { .row-2 { grid-template-columns: 1fr 1fr; } }
+
+  /* chip selectors */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip-opt {
+    cursor: pointer; user-select: none;
+    padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--hair); background: var(--bg);
+    font-size: 13.5px; color: var(--ink-2);
+    transition: all .15s ease; position: relative;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chip-opt input { display: none; }
+  .chip-opt:hover { border-color: var(--ink); }
+  .chip-opt.picked {
+    background: var(--ink); color: var(--surface); border-color: var(--ink);
+  }
+  .chip-opt .dot {
+    width: 14px; height: 14px; border-radius: 99px;
+    border: 1.5px solid var(--muted-dim); background: transparent;
+    display: inline-grid; place-items: center; flex-shrink: 0;
+  }
+  .chip-opt.picked .dot { border-color: var(--surface); }
+  .chip-opt.picked .dot::after { content: ""; width: 6px; height: 6px; border-radius: 99px; background: var(--surface); }
+
+  .submit-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .submit-row .promise { font-size: 13px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  .submit-row .promise svg { width: 14px; height: 14px; color: var(--brand); }
+
+  /* Sidebar */
+  .side-stack { display: grid; gap: 16px; position: sticky; top: 96px; }
+  .side-card {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: 18px;
+    padding: 28px; display: grid; gap: 18px; align-content: start;
+  }
+  .side-card.dark { background: var(--ink); color: var(--surface); border-color: transparent; }
+  .side-card h3 { font-family: "Gloock", serif; font-size: 24px; font-weight: 400; letter-spacing: -.03em; margin: 0; line-height: 1.1; }
+  .side-card p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+  .side-card.dark p { color: rgba(255,255,255,.7); }
+  .side-card .row {
+    display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: start;
+  }
+  .side-card .row svg { width: 18px; height: 18px; color: var(--brand); margin-top: 3px; }
+  .side-card.dark .row svg { color: #E8B698; }
+  .side-card .row .k { font-family: "Fragment Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .side-card.dark .row .k { color: rgba(255,255,255,.5); }
+  .side-card .row .v { font-size: 14.5px; margin-top: 2px; }
+  .side-card .row .v a { color: inherit; text-decoration: underline; text-decoration-color: var(--hair); text-underline-offset: 3px; }
+  .side-card.dark .row .v a { text-decoration-color: rgba(255,255,255,.3); }
+
+  /* Booking option */
+  .book-card {
+    background: linear-gradient(135deg, var(--brand-soft), color-mix(in oklab, var(--peach) 30%, white));
+    border-radius: 18px; padding: 28px; display: grid; gap: 16px;
+  }
+  .book-card h3 { font-family: "Gloock", serif; font-size: 24px; font-weight: 400; letter-spacing: -.03em; margin: 0; }
+  .book-card .slots { display: grid; gap: 8px; }
+  .book-card .slot {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: 10px;
+    padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 13.5px;
+  }
+  .book-card .slot .t { font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted); }
+  .book-card .slot.pick { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .book-card .slot.pick .t { color: rgba(255,255,255,.5); }
+
+  /* Success state hidden by default */
+  .success { display: none; padding: 36px; text-align: center; }
+  .success.show { display: grid; gap: 14px; }
+  .success .ic-circ {
+    width: 56px; height: 56px; border-radius: 99px;
+    background: color-mix(in oklab, var(--brand) 14%, white);
+    color: var(--brand); display: grid; place-items: center; margin: 0 auto;
+  }
+  .success h2 { margin: 0; }
+  .form-card.hidden { display: none; }
+</style>
+</head>
+<body data-page="contact">
+
+<div data-slot="topbar"></div>
+<div data-slot="nav"></div>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumb">
+      <a href="index.html">Studio Duo</a>
+      <span class="sep">/</span>
+      <span>Contact</span>
+    </div>
+    <div class="page-head-grid">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1>Let's build the <em>quiet machine.</em></h1>
+        <p class="lede">Tell us what you want to ship — site, store, booking page, automation, AI tool. 24-hour reply, no pitch, no awkward sales call unless you'd like one.</p>
+      </div>
+      <div class="page-head-meta">
+        <div><div class="k">Reply within</div><div class="v">24 hours · UK time</div></div>
+        <div><div class="k">Email</div><div class="v"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cda5a8a1a1a28dbeb9b8a9a4a2a9b8a2e3aea2">[email&#160;protected]</a></div></div>
+        <div><div class="k">Office</div><div class="v">Manchester, UK</div></div>
+        <div><div class="k">Q3 slots</div><div class="v">1 of 4 remaining</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding:64px 0 110px">
+  <div class="wrap">
+    <div class="contact-grid">
+
+      <div>
+        <form class="form-card" id="contact-form" novalidate>
+          <div class="form-head">
+            <h2>Start a project</h2>
+            <p>5 fields, 60 seconds. Skip what doesn't apply.</p>
+          </div>
+
+          <div class="row-2">
+            <div class="field">
+              <label>Your name <span class="req">*</span></label>
+              <input name="name" type="text" placeholder="First &amp; last" required />
+            </div>
+            <div class="field">
+              <label>Email <span class="req">*</span></label>
+              <input name="email" type="email" placeholder="you@studio.co" required />
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="field">
+              <label>Company / project</label>
+              <input name="company" type="text" placeholder="Optional" />
+            </div>
+            <div class="field">
+              <label>Where are you?</label>
+              <input name="location" type="text" placeholder="City &amp; timezone" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>What service(s) do you need?</label>
+            <div class="chip-group" id="chips-service">
+              <label class="chip-opt"><input type="checkbox" name="service" value="Ecommerce"/><span class="dot"></span>Ecommerce</label>
+              <label class="chip-opt"><input type="checkbox" name="service" value="Booking"/><span class="dot"></span>Booking</label>
+              <label class="chip-opt"><input type="checkbox" name="service" value="Automation"/><span class="dot"></span>Automation</label>
+              <label class="chip-opt"><input type="checkbox" name="service" value="AI tools"/><span class="dot"></span>AI tools</label>
+              <label class="chip-opt"><input type="checkbox" name="service" value="Not sure yet"/><span class="dot"></span>Not sure yet</label>
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="field">
+              <label>Budget</label>
+              <select name="budget">
+                <option>Not decided</option>
+                <option>Under £2,500</option>
+                <option>£2,500 – £5,000</option>
+                <option>£5,000 – £10,000</option>
+                <option>£10,000 – £20,000</option>
+                <option>£20,000+</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Timeline</label>
+              <select name="timeline">
+                <option>Flexible</option>
+                <option>Within a month</option>
+                <option>Within a quarter</option>
+                <option>Q3 or Q4 2026</option>
+                <option>2027</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>What are you trying to ship? <span class="req">*</span></label>
+            <textarea name="message" placeholder="A sentence or three. Existing site? What's not working? What does success look like in 6 months?" required></textarea>
+          </div>
+
+          <div class="field">
+            <label>How did you hear about us?</label>
+            <div class="chip-group">
+              <label class="chip-opt"><input type="checkbox" name="source" value="Referral"/><span class="dot"></span>Referral</label>
+              <label class="chip-opt"><input type="checkbox" name="source" value="Read.cv"/><span class="dot"></span>Read.cv</label>
+              <label class="chip-opt"><input type="checkbox" name="source" value="Instagram"/><span class="dot"></span>Instagram</label>
+              <label class="chip-opt"><input type="checkbox" name="source" value="Search"/><span class="dot"></span>Search</label>
+              <label class="chip-opt"><input type="checkbox" name="source" value="Other"/><span class="dot"></span>Other</label>
+            </div>
+          </div>
+
+          <div class="submit-row">
+            <span class="promise">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+              24-hour reply · no pitch
+            </span>
+            <button type="submit" class="btn btn-primary">
+              Send enquiry
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="form-card success" id="form-success">
+          <div class="ic-circ">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg>
+          </div>
+          <h2>Sent. We're on it.</h2>
+          <p style="color:var(--muted);font-size:15px;margin:0;max-width:48ch;margin:0 auto">You'll hear from Joel or Ella inside 24 hours. If you'd rather skip the email back-and-forth, the 20-minute call slot on the right is yours to grab.</p>
+        </div>
+      </div>
+
+      <aside>
+        <div class="side-stack">
+          <article class="book-card" id="call">
+            <span class="eyebrow">20-min intro call</span>
+            <h3>Or just talk it through.</h3>
+            <p style="margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.55">A short, free call. Bring questions, leave with a plan. We'll usually quote inside the call.</p>
+            <div class="slots">
+              <div class="slot"><span>Mon · 21 Jul · 10:30</span><span class="t">20 min</span></div>
+              <div class="slot pick"><span>Tue · 22 Jul · 14:00</span><span class="t">20 min</span></div>
+              <div class="slot"><span>Wed · 23 Jul · 16:30</span><span class="t">20 min</span></div>
+              <div class="slot"><span>Thu · 24 Jul · 09:00</span><span class="t">20 min</span></div>
+            </div>
+            <a class="btn btn-primary" href="#" style="justify-self:start">Book a slot
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <article class="side-card">
+            <h3>Or contact us directly.</h3>
+            <div class="row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+              <div>
+                <div class="k">Email</div>
+                <div class="v"><a href="/cdn-cgi/l/email-protection#5e363b3232311e2d2a2b3a37313a2b31703d31"><span class="__cf_email__" data-cfemail="046c6168686b44777071606d6b60716b2a676b">[email&#160;protected]</span></a></div>
+              </div>
+            </div>
+            <div class="row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <div class="k">Office</div>
+                <div class="v">Northern Quarter, Manchester</div>
+              </div>
+            </div>
+            <div class="row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <div>
+                <div class="k">Hours</div>
+                <div class="v">Mon–Thu · 9–5 UK</div>
+              </div>
+            </div>
+            <div class="row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              <div>
+                <div class="k">Availability</div>
+                <div class="v">1 of 4 Q3 slots open</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="side-card dark">
+            <h3 style="color:var(--surface)">For agencies &amp; partners.</h3>
+            <p>White-label engagements, automation work for agency clients, and the occasional referral fee for the right fit. Quiet about it.</p>
+            <a class="link-arrow" style="color:#E8B698" href="/cdn-cgi/l/email-protection#ec9c8d9e9882899e9fac9f9899888583889983c28f83"><span class="__cf_email__" data-cfemail="15657467617b70676655666160717c7a71607a3b767a">[email&#160;protected]</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </article>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div data-slot="footer"></div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/partials.js"></script>
+<script>
+  // chip toggling
+  document.querySelectorAll(".chip-opt").forEach((label) => {
+    const input = label.querySelector("input");
+    if (!input) return;
+    const sync = () => label.classList.toggle("picked", input.checked);
+    input.addEventListener("change", sync);
+    sync();
+  });
+
+  // pre-select service from query param ?service=ecommerce
+  const params = new URLSearchParams(location.search);
+  const svc = params.get("service");
+  if (svc) {
+    const map = { ecommerce: "Ecommerce", booking: "Booking", automation: "Automation", ai: "AI tools" };
+    const want = map[svc.toLowerCase()];
+    if (want) {
+      const input = [...document.querySelectorAll("[name='service']")].find((i) => i.value === want);
+      if (input) { input.checked = true; input.dispatchEvent(new Event("change")); }
+    }
+  }
+  // pre-select package
+  const pkg = params.get("package");
+  if (pkg) {
+    const ta = document.querySelector("textarea[name='message']");
+    if (ta) ta.placeholder = `I'm interested in the ${pkg} package — here's what I'm trying to ship...`;
+  }
+
+  // submit handler (demo)
+  const form = document.getElementById("contact-form");
+  const success = document.getElementById("form-success");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    form.classList.add("hidden");
+    success.classList.add("show");
+    success.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+</script>
+</body>
+</html>

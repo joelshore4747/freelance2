@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Case study · Roma Supplements — Studio Duo</title>
+<meta name="description" content="Subscribe-and-save, churn-saver emails and a cleaner subscription portal — case study." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .cs-hero { padding: 100px 0 80px; position: relative; overflow: hidden; background: linear-gradient(180deg, #FFF0E5 0%, var(--bg) 80%); border-bottom: 1px solid var(--hair); }
+  .cs-hero .grid { display: grid; grid-template-columns: 1fr; gap: 36px; align-items: end; }
+  @media (min-width: 900px) { .cs-hero .grid { grid-template-columns: 1.3fr 1fr; gap: 60px; } }
+  .cs-hero h1 { font-family: "Gloock", serif; font-weight: 400; font-size: clamp(48px, 6.5vw, 88px); line-height: .96; letter-spacing: -.055em; margin: 14px 0 24px; max-width: 18ch; text-wrap: balance; }
+  .cs-hero h1 em { font-style: italic; font-weight: 400; background: linear-gradient(105deg, var(--brand), var(--brand-2), var(--peach)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cs-hero .lede { color: var(--muted); font-size: clamp(17px,1.4vw,19px); line-height: 1.6; max-width: 56ch; }
+
+  .cs-meta {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: 18px; padding: 22px;
+    box-shadow: var(--shadow-md);
+    display: grid; gap: 18px;
+  }
+  .cs-meta .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .cs-meta .k { font-family: "Fragment Mono", monospace; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted-dim); }
+  .cs-meta .v { font-size: 14px; margin-top: 4px; color: var(--ink); font-weight: 500; }
+  .cs-meta .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .cs-meta .chip { font-family: "Fragment Mono", monospace; font-size: 11px; padding: 4px 10px; border: 1px solid var(--hair); border-radius: 99px; color: var(--muted); }
+
+  /* Headline visual */
+  .cs-vis {
+    aspect-ratio: 16/9; border-radius: 24px;
+    background: linear-gradient(135deg, var(--brand-soft), var(--peach));
+    position: relative; overflow: hidden; margin-top: 56px;
+    border: 1px solid var(--hair); box-shadow: 0 50px 100px -40px rgba(165,94,62,.28), 0 20px 40px -20px rgba(17,16,13,.12);
+  }
+  .cs-vis .mark { position: absolute; inset: 0; display: grid; place-items: center; font-family: "Gloock", serif; font-size: clamp(72px, 14vw, 200px); letter-spacing: -.06em; color: var(--ink); opacity: .12; }
+  .cs-vis .pad { position: absolute; top: 24px; left: 24px; font-family: "Fragment Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-2); background: rgba(255,255,255,.7); backdrop-filter: blur(8px); padding: 6px 10px; border-radius: 8px; }
+  .cs-vis .bottom { position: absolute; bottom: 24px; left: 24px; right: 24px; display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+  .cs-vis .label { font-family: "Gloock", serif; font-size: 28px; letter-spacing: -.03em; color: var(--ink); line-height: 1.1; max-width: 18ch; }
+  .cs-vis .url { font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--ink-2); opacity: .65; }
+
+  /* Results */
+  .results { background: var(--ink); color: var(--surface); padding: 80px 0; border-top: 1px solid var(--hair); }
+  .results .wrap { display: grid; gap: 36px; }
+  .results h2 { font-family: "Gloock", serif; font-size: clamp(32px, 4vw, 48px); font-weight: 400; letter-spacing: -.045em; margin: 0; max-width: 18ch; }
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (min-width: 800px) { .results-grid { grid-template-columns: repeat(4, 1fr); } }
+  .res {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 16px;
+    padding: 24px; display: grid; gap: 6px;
+  }
+  .res .v { font-family: "Gloock", serif; font-size: clamp(40px, 5vw, 56px); letter-spacing: -.04em; line-height: 1; }
+  .res .v em { font-style: normal; background: linear-gradient(135deg, #E8B698, #BDA69B); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .res .l { font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-top: 6px; }
+
+  /* Two-column prose */
+  .prose { padding: 100px 0; }
+  .prose .grid { display: grid; grid-template-columns: 1fr; gap: 60px; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  @media (min-width: 900px) { .prose .grid { grid-template-columns: 220px 1fr; gap: 80px; padding: 0 40px; } }
+  .prose .label { font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--brand); padding-top: 10px; position: sticky; top: 88px; align-self: start; }
+  .prose h2 { font-family: "Gloock", serif; font-weight: 400; font-size: clamp(32px, 4vw, 44px); letter-spacing: -.045em; margin: 0 0 24px; max-width: 22ch; line-height: 1.04; text-wrap: balance; }
+  .prose p { color: var(--ink-2); font-size: 17px; line-height: 1.65; margin: 0 0 18px; max-width: 60ch; }
+  .prose p.muted { color: var(--muted); }
+  .prose ul { padding: 0; margin: 24px 0 0; list-style: none; display: grid; gap: 14px; }
+  .prose ul li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+  .prose ul li svg { width: 18px; height: 18px; color: var(--brand); margin-top: 4px; }
+  .divider { border: 0; border-top: 1px solid var(--hair); margin: 0; }
+
+  /* Pull quote */
+  .pull {
+    background: var(--bg-2); padding: 90px 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+  }
+  .pull .wrap { max-width: 900px; text-align: center; }
+  .pull blockquote { font-family: "Gloock", serif; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.2; letter-spacing: -.02em; margin: 0 0 32px; text-wrap: balance; color: var(--ink); }
+  .pull cite { font-style: normal; display: inline-flex; flex-direction: column; align-items: center; gap: 4px; }
+  .pull cite .name { font-weight: 500; font-size: 15px; font-family: "Hanken Grotesk", sans-serif; }
+  .pull cite .role { font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+
+  /* Build gallery */
+  .gallery { padding: 100px 0; }
+  .gallery .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 800px) { .gallery .grid { grid-template-columns: 1fr 1fr; } }
+  .gallery .tile {
+    aspect-ratio: 16/10; border-radius: 18px; border: 1px solid var(--hair); overflow: hidden;
+    background: var(--surface); position: relative;
+  }
+  .gallery .tile.a { background: linear-gradient(135deg, var(--brand-soft), var(--peach)); }
+  .gallery .tile.b { background: linear-gradient(135deg, var(--mint), var(--brand-2)); color: var(--surface); }
+  .gallery .tile.c { background: var(--ink); color: var(--surface); }
+  .gallery .tile.d { background: linear-gradient(135deg, #F7F3EA, #E7DED2); }
+  .gallery .tile .pad {
+    position: absolute; top: 18px; left: 22px;
+    font-family: "Fragment Mono", monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: .14em; opacity: .7;
+  }
+  .gallery .tile .lbl {
+    position: absolute; bottom: 22px; left: 22px;
+    font-family: "Gloock", serif; font-size: 28px; letter-spacing: -.03em; line-height: 1.08; max-width: 18ch;
+  }
+
+  /* Up next */
+  .upnext { padding: 100px 0; background: var(--bg-2); border-top: 1px solid var(--hair); }
+  .upnext .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 800px) { .upnext .grid { grid-template-columns: 1fr 1fr; } }
+  .upnext .next {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: var(--r-lg);
+    padding: 32px; display: grid; gap: 16px; transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .upnext .next:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .upnext .next h3 { font-size: 32px; margin: 0; line-height: 1; }
+  .upnext .next .k { font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--brand); letter-spacing: .14em; text-transform: uppercase; }
+</style>
+</head>
+<body data-page="case-study">
+
+<div data-slot="topbar"></div>
+<div data-slot="nav"></div>
+
+<section class="cs-hero">
+  <div class="wrap">
+    <div class="crumb">
+      <a href="index.html">Studio Duo</a>
+      <span class="sep">/</span>
+      <a href="work.html">Work</a>
+      <span class="sep">/</span>
+      <span>Roma Supplements</span>
+    </div>
+    <div class="grid">
+      <div data-reveal>
+        <span class="eyebrow">Case study · Ecommerce</span>
+        <h1>Subscription store, <em>doubled.</em></h1>
+        <p class="lede">A subscribe-and-save flow with bundle discounts, a real account portal and the churn-saver emails that turned a once-a-month boutique into a real subscription business.</p>
+      </div>
+      <div class="cs-meta" data-reveal>
+        <div class="row">
+          <div><div class="k">Client</div><div class="v">Roma Supplements</div></div>
+          <div><div class="k">Year</div><div class="v">2026</div></div>
+        </div>
+        <div class="row">
+          <div><div class="k">Service</div><div class="v">Ecommerce + email</div></div>
+          <div><div class="k">Duration</div><div class="v">6 weeks</div></div>
+        </div>
+        <div class="row">
+          <div><div class="k">Sector</div><div class="v">DTC / Wellness</div></div>
+          <div><div class="k">Region</div><div class="v">UK · IT</div></div>
+        </div>
+        <hr class="divider"/>
+        <div>
+          <div class="k" style="margin-bottom:8px">Stack</div>
+          <div class="chips">
+            <span class="chip">Shopify</span>
+            <span class="chip">Recharge</span>
+            <span class="chip">Klaviyo</span>
+            <span class="chip">Sanity</span>
+            <span class="chip">n8n</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-vis" data-reveal>
+      <span class="pad">roma-supplements.co · live</span>
+      <span class="mark">Roma</span>
+      <div class="bottom">
+        <span class="label">Daily essentials,<br/>beautifully made.</span>
+        <span class="url">v3 · launched 14 Mar 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Results band -->
+<section class="results">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:24px">
+      <h2>The numbers, six months in.</h2>
+      <span class="mono" style="font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.14em;text-transform:uppercase">vs. baseline before launch</span>
+    </div>
+    <div class="results-grid">
+      <div class="res"><div class="v">+<em>22%</em></div><div class="l">Repeat order rate</div></div>
+      <div class="res"><div class="v">2.1<em>×</em></div><div class="l">Subscribers in 90 days</div></div>
+      <div class="res"><div class="v">−<em>1.4s</em></div><div class="l">Largest Contentful Paint</div></div>
+      <div class="res"><div class="v">£<em>9,240</em></div><div class="l">Avg weekly MRR (+12%)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Brief -->
+<section class="prose">
+  <div class="grid">
+    <span class="label" data-reveal>01 · The brief</span>
+    <div data-reveal>
+      <h2>A small product range. A loyal audience. And a checkout that wasn't pulling its weight.</h2>
+      <p>Roma had built a quiet little brand on Instagram — three SKUs, regular sell-outs, a real audience. But the existing Shopify site was a stock theme, the subscription option was buried, and "where do I manage my plan?" was a daily DM.</p>
+      <p>They came to us with two asks: make it feel like a real boutique brand on the web, and make the subscription business actually work — without changing the product, the voice, or the cost of acquisition.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- What we did -->
+<section class="prose" style="background:var(--surface)">
+  <div class="grid">
+    <span class="label" data-reveal>02 · What we did</span>
+    <div data-reveal>
+      <h2>Editorial product pages. Real subscription portal. The follow-up nobody else was doing.</h2>
+      <p class="muted">Three workstreams, six weeks, one launch.</p>
+      <ul>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg>
+          <span><b>Storefront redesign.</b> Editorial product pages with founder voice, ingredient deep-dives, reviews and a one-page checkout that respects mobile-first traffic.</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg>
+          <span><b>Subscription portal.</b> Real account UI — pause, swap, skip — instead of a Shopify default modal. Built on Recharge with custom front-end.</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg>
+          <span><b>Lifecycle email.</b> Welcome series, post-purchase, browse abandon, win-back and a quiet churn-saver in Roma's voice — not the agency-template kind.</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg>
+          <span><b>Hidden plumbing.</b> n8n flow pushes new subscribers to a Notion CRM, alerts the founder on first £100+ order, and auto-tags VIPs at 6 months. None of which the customer ever sees.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery">
+  <div class="wrap">
+    <div class="grid" data-reveal>
+      <div class="tile a"><span class="pad">01 · Homepage</span><span class="lbl">Daily essentials, beautifully made.</span></div>
+      <div class="tile b"><span class="pad">02 · PDP</span><span class="lbl">Founder voice on every product page.</span></div>
+      <div class="tile c"><span class="pad">03 · Portal</span><span class="lbl">Pause, swap, skip — in one screen.</span></div>
+      <div class="tile d"><span class="pad">04 · Lifecycle</span><span class="lbl">Email that sounds like the brand.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Quote -->
+<section class="pull">
+  <div class="wrap">
+    <blockquote>"Best money we've spent on a website. The reviews module alone bumped repeat orders ~22% in the first quarter."</blockquote>
+    <cite>
+      <span class="name">Marco Inglese</span>
+      <span class="role">Founder · Roma Supplements</span>
+    </cite>
+  </div>
+</section>
+
+<!-- Outcomes long form -->
+<section class="prose">
+  <div class="grid">
+    <span class="label" data-reveal>03 · Outcomes</span>
+    <div data-reveal>
+      <h2>The before-and-after that mattered.</h2>
+      <p>Within 90 days of launch, active subscribers more than doubled — without changing media spend. The store's LCP dropped by 1.4 seconds, which Roma's analytics suggested was responsible for roughly a third of the conversion lift on its own.</p>
+      <p>The churn-saver email — a single send, three days before a planned cancellation — recovered about <b>14%</b> of would-be churners. Not a miracle. Just the kind of detail nobody had bothered to set up before.</p>
+      <p class="muted">Six months on, the site still ships in 4&ndash;8 weeks of small content updates from the team. We've touched it twice. That, too, was part of the point.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Up next -->
+<section class="upnext">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:24px;margin-bottom:32px">
+      <h2 class="sec-title" style="margin:0;font-size:clamp(32px,4vw,44px)">Up next</h2>
+      <a class="link-arrow" href="work.html">All case studies
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="grid">
+      <a class="next" href="case-study.html">
+        <span class="k">Booking</span>
+        <h3>Bookings paid in the first weekend</h3>
+        <p style="color:var(--muted);margin:0;font-size:14.5px;line-height:1.55">Bloom Hair &amp; Beauty · Salon booking with deposits, reminders and a stylist-by-stylist flow.</p>
+      </a>
+      <a class="next" href="case-study.html">
+        <span class="k">Automation</span>
+        <h3>An n8n flow that runs admin</h3>
+        <p style="color:var(--muted);margin:0;font-size:14.5px;line-height:1.55">Ledger &amp; Co · Enquiry → enrichment → AI summary → CRM, with a Slack alert at every step.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap cta-inner">
+    <span class="eyebrow">Start a project</span>
+    <h2>Want a result <em>like this one?</em></h2>
+    <p>Tell us what you're trying to ship — store, booking, automation, AI tool. 24-hour reply, no pitch.</p>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href="contact.html">Start a project
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="services.html">Browse services</a>
+    </div>
+  </div>
+</section>
+
+<div data-slot="footer"></div>
+<script src="assets/partials.js"></script>
+</body>
+</html>

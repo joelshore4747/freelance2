@@ -119,13 +119,17 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
         tabIndex={0}
       >
         <div className="lead" aria-hidden="true" />
-        {filtered.map((work, i) => (
+        {filtered.map((work, i) => {
+          const external = work.caseStudyUrl.endsWith(".html")
+          return (
           <a
             key={work.id}
             data-card
             href={work.caseStudyUrl}
+            data-preview={external ? work.caseStudyUrl : undefined}
+            data-preview-title={external ? `${work.company} — ${work.title}` : undefined}
             className="sd-work-card"
-            aria-label={`${work.title} — ${work.company}, case study`}
+            aria-label={`${work.title} — ${work.company}, ${external ? "live build" : "case study"}`}
           >
             <div className="sd-work-media">
               <span className="tag-top">{work.category}</span>
@@ -155,12 +159,13 @@ export function FeaturedWorkCarousel({ works, categories }: Props) {
                 ))}
               </div>
               <span>
-                View case study
+                {external ? "Preview build" : "View case study"}
                 <ArrowUpRight style={{ width: 14, height: 14 }} />
               </span>
             </div>
           </a>
-        ))}
+          )
+        })}
         <div className="tail" aria-hidden="true" />
       </div>
 

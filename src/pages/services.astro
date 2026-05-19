@@ -1,327 +1,457 @@
 ---
-import { ShoppingBag, CalendarCheck, Workflow, Sparkles, Search, CheckCircle, ArrowRight, Clock, Award, TrendingUp, Users, Target, Headphones, Calendar } from "lucide-react"
 import Layout from "@/layouts/Layout.astro"
 import Navigation from "@/components/Navigation.astro"
 import Footer from "@/components/Footer.astro"
-import Badge from "@/components/ui/Badge.astro"
-import GetStartedButton from "@/components/GetStartedButton.astro"
 
-const heroPoints = [
-  "Premium websites tailored to your brand and audience",
-  "Ecommerce stores built for clarity, trust and checkout speed",
-  "Booking pages that turn enquiries into confirmed customers",
-  "n8n + AI automations that remove repetitive admin",
-  "SEO & growth work that gets your site found by the right people",
+const jumps = [
+  { href: "#ecommerce",  k: "01 · Ecommerce",  v: "Stores that sell",       from: "From £3,500" },
+  { href: "#booking",    k: "02 · Booking",    v: "Calendar-driven sites",  from: "From £2,500" },
+  { href: "#automation", k: "03 · Automation", v: "n8n workflows",          from: "From £1,200" },
+  { href: "#ai",         k: "04 · AI tools",   v: "Practical assistants",   from: "From £900"  },
 ]
 
-const heroMetrics = [
-  { Icon: Target, number: "150+", label: "Projects Delivered", description: "Across web, ecommerce, automation" },
-  { Icon: Users, number: "98%", label: "Client Satisfaction", description: "Happy clients rate" },
-  { Icon: Calendar, number: "5+", label: "Years Experience", description: "In web + automation" },
-  { Icon: Headphones, number: "24/7", label: "Support", description: "Always reachable" },
-]
-
-const offers = [
-  {
-    id: "ecommerce",
-    Icon: ShoppingBag,
-    badge: "Ecommerce",
-    title: "Ecommerce Stores",
-    subtitle: "Premium ecommerce websites built to sell products clearly, quickly and professionally.",
-    price: "from £3,500",
-    forWhom: "Clothing, beauty, hair, supplement, food & drink, handmade and small online brands.",
-    includes: [
-      "Shopify or WooCommerce setup",
-      "Homepage, collection & product pages",
-      "Cart and checkout polish",
-      "Payment + shipping setup",
-      "Reviews and trust sections",
-      "Email capture",
-      "Analytics + basic SEO",
-    ],
-    examples: ["Hair & beauty store", "Fitness supplement store", "Fashion brand storefront", "Local artisan shop"],
-  },
-  {
-    id: "booking",
-    Icon: CalendarCheck,
-    badge: "Bookings",
-    title: "Booking Websites",
-    subtitle: "Clean booking pages for service businesses that want customers to book without calling, messaging or waiting for a reply.",
-    price: "from £2,500",
-    forWhom: "Barbers, salons, spas, yoga studios, gyms, golf clubs, restaurants, clinics, coaches, activity venues.",
-    includes: [
-      "Booking page design",
-      "Appointment, class or reservation flow",
-      "Deposit / payment setup",
-      "Calendar integration",
-      "Confirmation + reminder emails",
-      "Enquiry forms",
-      "Admin view for bookings",
-    ],
-    examples: ["Golf tee-time booking", "Yoga class booking", "Spa treatment booking", "Restaurant reservations"],
-  },
-  {
-    id: "automation",
-    Icon: Workflow,
-    badge: "Automation",
-    title: "Workflow Automation",
-    subtitle: "Automations that connect your apps, reduce repetitive admin and keep your business moving without manual copy-paste work.",
-    price: "from £1,200",
-    forWhom: "Businesses taking lots of enquiries, ecommerce stores, agencies, trades, clinics, appointment-based businesses.",
-    includes: [
-      "Workflow audit",
-      "n8n automation build",
-      "App integrations (Shopify, Stripe, Calendly, Slack, Sheets, Notion, Airtable, CRMs)",
-      "Test runs against real data",
-      "Documentation",
-      "30 days of support",
-    ],
-    examples: ["Form → CRM → Slack alert", "Booking → confirmation → calendar event", "Order → fulfilment alert → customer email", "Abandoned enquiry chaser"],
-    cta: { label: "See automation examples", href: "/automation" },
-  },
-  {
-    id: "ai",
-    Icon: Sparkles,
-    badge: "AI",
-    title: "AI Business Tools",
-    subtitle: "Practical AI tools that help businesses answer questions, process enquiries, create content and save time.",
-    price: "from £900",
-    forWhom: "Ecommerce brands, service businesses, agencies, consultants — anyone with repeated customer questions or messy admin.",
-    includes: [
-      "AI website chatbot / FAQ assistant",
-      "AI enquiry summariser",
-      "AI quote / proposal helper",
-      "AI email reply drafts",
-      "AI lead qualification",
-      "AI product description generator",
-      "AI internal knowledge assistant",
-    ],
-    examples: ["Chatbot trained on your FAQs", "Lead qualification + summary", "Bulk product description generator", "AI-drafted customer replies"],
-  },
-  {
-    id: "seo",
-    Icon: Search,
-    badge: "SEO",
-    title: "SEO & Growth",
-    subtitle: "Get found by the right customers. Technical SEO, on-page work and local search setup so your site earns its traffic instead of begging for it.",
-    price: "from £750/mo",
-    forWhom: "Shops, service businesses, booking-led venues and any brand that wants Google to send qualified people their way.",
-    includes: [
-      "Technical SEO audit",
-      "On-page optimisation (titles, headings, schema)",
-      "Site speed + Core Web Vitals",
-      "Keyword & competitor research",
-      "Local SEO + Google Business Profile",
-      "Content briefs for the pages that matter",
-      "Monthly reporting against real outcomes",
-    ],
-    examples: ["Local salon ranking #1 for nearby searches", "Ecommerce store doubling organic sessions", "Booking site capturing 'near me' traffic", "Service business off paid-ads dependency"],
-  },
-]
-
-const reasons = [
-  { Icon: Award, title: "Focused Scope", description: "Four services we ship every week — not a long list of side hustles." },
-  { Icon: Clock, title: "Fast Delivery", description: "Most projects launch in 4–8 weeks. Automations often in days." },
-  { Icon: TrendingUp, title: "Outcome-Led", description: "Bookings, sales and time saved are the metrics we design for." },
-  { Icon: Users, title: "Direct Access", description: "You work with the team building it — no account managers." },
-]
-
-const stages = [
-  { step: "01", title: "Plan", description: "Audit the offer, current tools and the workflows you want to fix or build. Agree what success looks like." },
-  { step: "02", title: "Design", description: "Wireframes and visual designs for every page or screen before any code." },
-  { step: "03", title: "Build", description: "Production-ready websites and stores with payments, SEO and analytics wired in." },
-  { step: "04", title: "Automate", description: "n8n flows and AI assistants that handle the repetitive parts after launch." },
+const addons = [
+  { tag: "Care · monthly", title: "Maintenance plan",  body: "Updates, content edits, bug fixes & automation tuning. Cancel anytime.",        price: "£250/mo", tone: "" },
+  { tag: "SEO · once",     title: "SEO sprint",         body: "2-week audit, structured-data fixes, content brief & technical wins.",         price: "£1,200",  tone: "" },
+  { tag: "Email · once",   title: "Klaviyo / lifecycle",body: "Welcome, browse-abandon, post-purchase & win-back flows in your voice.",       price: "£1,800",  tone: "" },
+  { tag: "Custom",          title: "Something else?",    body: "Internal tools, landing pages, custom integrations. Tell us what you need.",    price: null,      tone: "dark" },
 ]
 ---
 
 <Layout
-  title="Services — Studio Duo | Ecommerce, Bookings, Automation, AI"
-  description="Ecommerce stores, booking websites, n8n workflow automation and practical AI business tools. Four focused services that work together."
+  title="Services — Studio Duo"
+  description="Ecommerce, booking, workflow automation and practical AI — four focused services that compound."
 >
-  <div class="min-h-screen bg-background text-foreground">
-    <Navigation />
+  <Navigation />
 
-    <section class="py-20 lg:py-32 bg-section-white text-section-white-foreground">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <Badge class="mb-6 font-serif border-2 border-standout/30 bg-standout/20 text-standout font-semibold">
-              Ecommerce • Bookings • Automation • AI • SEO
-            </Badge>
-            <h1 class="text-4xl md:text-6xl font-bold text-foreground font-sans mb-6 text-balance">
-              Everything You Need to <span class="text-standout">Sell, Book, Automate & Grow</span>
-            </h1>
-            <p class="text-xl text-muted-foreground font-serif mb-8 text-pretty">
-              Five focused services that help businesses get more bookings, more sales, less manual admin and better search visibility.
-            </p>
-            <div class="space-y-4 mb-8">
-              {
-                heroPoints.map(point => (
-                  <div class="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span class="text-muted-foreground font-serif">{point}</span>
-                  </div>
-                ))
-              }
-            </div>
-            <GetStartedButton size="lg" class="font-serif font-semibold" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-6">
-            {
-              heroMetrics.map(m => (
-                <div class="card-universal bg-card/80 text-card-foreground rounded-xl border border-border/80 shadow-md py-6 hover:shadow-xl transition-all duration-300">
-                  <div class="text-center px-6">
-                    <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 mx-auto">
-                      <m.Icon className="h-8 w-8" />
-                    </div>
-                    <div class="text-3xl font-bold text-foreground font-sans mb-1">{m.number}</div>
-                    <div class="text-sm font-semibold text-foreground font-sans mb-1">{m.label}</div>
-                    <div class="text-xs text-muted-foreground font-serif">{m.description}</div>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="/">Studio Duo</a>
+        <span class="sep">/</span>
+        <span>Services</span>
+      </div>
+      <div class="page-head-grid">
+        <div data-reveal>
+          <span class="eyebrow">Services</span>
+          <h1>Four focused services that <em>compound.</em></h1>
+          <p class="lede">A small, opinionated stack: a beautiful website, a booking page that converts, the workflows that run behind it and the AI tools that handle the boring bits.</p>
+        </div>
+        <div class="page-head-meta" data-reveal>
+          <div><div class="k">Delivery</div><div class="v">2–8 weeks</div></div>
+          <div><div class="k">Team</div><div class="v">2 designers, 1 engineer</div></div>
+          <div><div class="k">Locations</div><div class="v">UK · Remote</div></div>
+          <div><div class="k">Available</div><div class="v">Q3 2026 (4 slots)</div></div>
         </div>
       </div>
-    </section>
 
-    <div id="pricing">
-    {
-      offers.map((o, i) => (
-        <section id={o.id} class={`py-20 lg:py-28 ${i % 2 === 0 ? "bg-section-muted" : "bg-section-white"}`}>
-          <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-            <div class="grid lg:grid-cols-5 gap-12 items-start">
-              <div class="lg:col-span-2">
-                <Badge class="mb-4 font-serif border-2 border-standout/30 bg-standout/20 text-standout font-semibold">{o.badge}</Badge>
-                <div class="flex items-center gap-4 mb-6">
-                  <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                    <o.Icon className="h-7 w-7" />
-                  </div>
-                  <h2 class="text-3xl md:text-4xl font-bold text-foreground font-sans">{o.title}</h2>
-                </div>
-                <p class="text-lg text-muted-foreground font-serif mb-6 text-pretty leading-relaxed">{o.subtitle}</p>
-                <div class="rounded-2xl border border-border/70 bg-card/60 backdrop-blur p-5 mb-6">
-                  <p class="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-1">Starts</p>
-                  <p class="text-2xl font-bold text-foreground font-sans">{o.price}</p>
-                </div>
-                <p class="text-sm text-muted-foreground font-serif">
-                  <span class="font-semibold text-foreground">Best for:</span> {o.forWhom}
-                </p>
-                <div class="flex flex-wrap gap-3 mt-6">
-                  <GetStartedButton size="lg" class="font-serif font-semibold" />
-                  {o.cta && (
-                    <a href={o.cta.href} class="inline-flex items-center gap-2 h-10 px-6 rounded-md text-base font-serif font-semibold border bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors">
-                      {o.cta.label} <ArrowRight className="h-4 w-4" />
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <div class="lg:col-span-3 grid md:grid-cols-2 gap-6">
-                <div class="card-universal bg-card text-card-foreground rounded-xl border border-border/80 shadow-sm py-6">
-                  <div class="px-6 mb-4">
-                    <h3 class="font-semibold text-foreground font-sans">What's included</h3>
-                  </div>
-                  <ul class="px-6 space-y-2">
-                    {o.includes.map(f => (
-                      <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
-                        <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div class="card-universal bg-card text-card-foreground rounded-xl border border-border/80 shadow-sm py-6">
-                  <div class="px-6 mb-4">
-                    <h3 class="font-semibold text-foreground font-sans">Example use cases</h3>
-                  </div>
-                  <ul class="px-6 space-y-2">
-                    {o.examples.map(f => (
-                      <li class="flex items-center gap-2 text-muted-foreground font-serif text-sm">
-                        <span class="w-1.5 h-1.5 bg-standout rounded-full flex-shrink-0"></span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      ))
-    }
-    </div>
-
-    <section class="py-20 lg:py-32 bg-section-white">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Why Choose Us</h2>
-          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
-            A small team that owns strategy, design, build and automation so nothing gets lost between handoffs.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {
-            reasons.map(r => (
-              <div class="card-universal text-center bg-card/80 text-card-foreground border border-border/80 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
-                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-4 mx-auto">
-                  <r.Icon className="h-8 w-8" />
-                </div>
-                <h3 class="text-xl font-bold text-foreground font-sans mb-3">{r.title}</h3>
-                <p class="text-muted-foreground font-serif text-pretty">{r.description}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section class="py-20 lg:py-32 bg-section-muted">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">How We Work</h2>
-          <p class="text-xl text-muted-foreground font-serif max-w-2xl mx-auto text-pretty">
-            Plan, design, build, automate. Same process whether you need a store, a booking page or a workflow.
-          </p>
-        </div>
-        <div class="relative">
-          <div class="hidden lg:block absolute top-8 left-0 right-0 h-0.5 bg-border"></div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {
-              stages.map(p => (
-                <div class="text-center relative">
-                  <div class="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground font-bold text-xl font-sans mb-4 mx-auto relative z-10 shadow-lg">
-                    {p.step}
-                  </div>
-                  <h3 class="text-xl font-bold text-foreground font-sans mb-3">{p.title}</h3>
-                  <p class="text-muted-foreground font-serif text-pretty">{p.description}</p>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-20 lg:py-32 bg-section-white">
-      <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
-        <h2 class="text-3xl md:text-5xl font-bold text-foreground font-sans mb-6 text-balance">Ready to ship something?</h2>
-        <p class="text-xl text-muted-foreground font-serif mb-8 text-pretty">
-          Tell us what you want to build — store, booking page, automation or AI tool — and we'll come back with a plan.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <GetStartedButton size="lg" class="font-serif font-semibold" />
-          <a href="/work" class="inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md text-base font-serif font-semibold border bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors">
-            View Our Work <ArrowRight className="ml-2 h-4 w-4" />
+      <div class="svc-jump">
+        {jumps.map(j => (
+          <a href={j.href}>
+            <span class="k">{j.k}</span>
+            <span class="v">{j.v}</span>
+            <span class="from">{j.from}</span>
           </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ECOMMERCE -->
+  <section class="svc-block brand" id="ecommerce">
+    <div class="wrap">
+      <div class="svc-grid">
+        <div class="svc-head" data-reveal>
+          <span class="eyebrow">01 · Ecommerce</span>
+          <h2>Stores that look <em>handpicked,</em> not built.</h2>
+          <p class="lede">Shopify &amp; WooCommerce builds with checkout polish, reviews, email capture and the trust details that move conversion. Editorial product pages your customers actually finish reading.</p>
+          <h5 class="includes-head">What's included</h5>
+          <ul class="svc-includes">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Editorial product pages, collection pages, lookbook + journal modules</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Shopify or WooCommerce setup, theme &amp; payment provider</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Reviews, email capture, abandoned-cart flow &amp; trust details</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>SEO, analytics, accessibility &amp; mobile-first build</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>30-day post-launch tuning &amp; a Loom walkthrough so you can update yourself</span></li>
+          </ul>
+          <div class="svc-meta">
+            <div><div class="k">From</div><div class="v">£3,500</div></div>
+            <div><div class="k">Delivery</div><div class="v">4–8 weeks</div></div>
+            <div><div class="k">Platforms</div><div class="v">Shopify · WooCommerce</div></div>
+            <div><div class="k">Good for</div><div class="v">Product brands, subscription</div></div>
+          </div>
+          <div class="svc-actions">
+            <a class="btn btn-primary" href="/contact?service=ecommerce">Start an ecommerce project
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="/case-study">See case study</a>
+          </div>
+        </div>
+
+        <div class="svc-vis" data-reveal>
+          <div class="mock-store">
+            <div class="bar">
+              <span class="d"></span><span class="d"></span><span class="d"></span>
+              <span style="margin-left:14px">roma-supplements.co</span>
+              <span class="u">cart · 2</span>
+            </div>
+            <div class="hero">
+              <div>
+                <div class="label">Daily essentials, beautifully made.</div>
+                <div class="sub">New collection · Shop now</div>
+              </div>
+            </div>
+            <div class="grid">
+              <div class="pr"><div class="ph"></div><div class="n">Morning protein</div><div class="p">£32 · subscribe</div></div>
+              <div class="pr"><div class="ph"></div><div class="n">Magnesium</div><div class="p">£18 · subscribe</div></div>
+              <div class="pr"><div class="ph"></div><div class="n">Omega-3</div><div class="p">£24 · subscribe</div></div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <Footer />
+  <!-- BOOKING -->
+  <section class="svc-block stone" id="booking">
+    <div class="wrap">
+      <div class="svc-grid reverse">
+        <div class="svc-vis" data-reveal>
+          <div class="mock-book">
+            <div class="top">
+              <div class="h">June 2026</div>
+              <div class="arrows"><span>‹</span><span>›</span></div>
+            </div>
+            <div class="grid">
+              <div class="cal">
+                <div class="dow">M</div><div class="dow">T</div><div class="dow">W</div><div class="dow">T</div><div class="dow">F</div><div class="dow">S</div><div class="dow">S</div>
+                <div class="d empty"></div><div class="d empty"></div><div class="d">1</div><div class="d dot">2</div><div class="d">3</div><div class="d dot">4</div><div class="d">5</div>
+                <div class="d">6</div><div class="d dot">7</div><div class="d">8</div><div class="d sel">9</div><div class="d dot">10</div><div class="d">11</div><div class="d">12</div>
+                <div class="d dot">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d dot">17</div><div class="d">18</div><div class="d dot">19</div>
+                <div class="d">20</div><div class="d">21</div><div class="d dot">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d dot">26</div>
+              </div>
+              <div class="slots">
+                <div class="hh">Tue 9 Jun</div>
+                <div class="slot"><span>09:30</span><span class="t">45 min</span></div>
+                <div class="slot pick"><span>11:00</span><span class="t">45 min</span></div>
+                <div class="slot"><span>14:30</span><span class="t">45 min</span></div>
+                <div class="slot"><span>16:00</span><span class="t">45 min</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <GetStartedButton variant="sticky" />
-  </div>
+        <div class="svc-head" data-reveal>
+          <span class="eyebrow">02 · Booking</span>
+          <h2>Pages people actually <em>finish.</em></h2>
+          <p class="lede">Salon, spa, gym, golf club or studio — calendar-driven booking with deposits, reminders, member rates and the kind of UX that turns a casual visit into a confirmed appointment.</p>
+          <h5 class="includes-head">What's included</h5>
+          <ul class="svc-includes">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Custom booking flow with services, durations, staff &amp; rooms</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Stripe deposits, member rates &amp; gift cards</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Email &amp; SMS reminders, calendar sync (Google/Outlook)</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Capacity, waitlists &amp; cancellation rules</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Admin dashboard your team can actually use</span></li>
+          </ul>
+          <div class="svc-meta">
+            <div><div class="k">From</div><div class="v">£2,500</div></div>
+            <div><div class="k">Delivery</div><div class="v">2–4 weeks</div></div>
+            <div><div class="k">Platforms</div><div class="v">Custom + Cal.com / Calendly</div></div>
+            <div><div class="k">Good for</div><div class="v">Salons, studios, clinics</div></div>
+          </div>
+          <div class="svc-actions">
+            <a class="btn btn-primary" href="/contact?service=booking">Start a booking project
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="/case-study">See case study</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOMATION -->
+  <section class="svc-block dark" id="automation">
+    <div class="wrap">
+      <div class="svc-grid">
+        <div class="svc-head" data-reveal>
+          <span class="eyebrow">03 · Automation · n8n</span>
+          <h2>Workflows that do the admin at <em>3am.</em></h2>
+          <p class="lede">Built in n8n so they're visible and editable. Forms enrich themselves, bookings confirm themselves, follow-ups go out on their own. The quiet machine your business has been pretending to be.</p>
+          <h5 class="includes-head">What's included</h5>
+          <ul class="svc-includes">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Audit of your current admin tasks &amp; bottleneck mapping</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>n8n flows you own &amp; can edit yourself (no proprietary lock-in)</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Integrations with CRM, Slack, email, calendar, Notion, Airtable</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Error monitoring, retry logic &amp; a clear audit trail</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>30-day tuning + a Loom walkthrough of every flow</span></li>
+          </ul>
+          <div class="svc-meta">
+            <div><div class="k">From</div><div class="v">£1,200</div></div>
+            <div><div class="k">Delivery</div><div class="v">2–3 weeks</div></div>
+            <div><div class="k">Platform</div><div class="v">n8n (self-host or cloud)</div></div>
+            <div><div class="k">Good for</div><div class="v">Service ops, agencies, B2B</div></div>
+          </div>
+          <div class="svc-actions">
+            <a class="btn btn-primary svc-btn-brand" href="/contact?service=automation">Start an automation project
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-ghost svc-btn-translucent" href="/case-study">See case study</a>
+          </div>
+        </div>
+
+        <div class="svc-vis" data-reveal>
+          <div class="mock-auto">
+            <div class="row">
+              <div class="node"><div class="k">Trigger</div><div class="v">New form submission</div></div>
+              <span class="arr">→</span>
+              <div class="node"><div class="k">Step 1</div><div class="v">Enrich w/ Clearbit</div></div>
+            </div>
+            <div class="row indent-1">
+              <div class="node brand"><div class="k">Step 2 · AI</div><div class="v">Summarise &amp; classify</div></div>
+              <span class="arr">→</span>
+              <div class="node"><div class="k">Step 3</div><div class="v">Push to HubSpot</div></div>
+            </div>
+            <div class="row indent-2">
+              <div class="node"><div class="k">Step 4</div><div class="v">Slack alert · #leads</div></div>
+              <span class="arr">→</span>
+              <div class="node"><div class="k">Done</div><div class="v">Audit log written</div></div>
+            </div>
+            <div class="stats">
+              <div><span class="vv">1.4s</span><span class="ll">Avg run</span></div>
+              <div><span class="vv">99.6%</span><span class="ll">Success</span></div>
+              <div><span class="vv">412</span><span class="ll">Last 30d</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI -->
+  <section class="svc-block peach" id="ai">
+    <div class="wrap">
+      <div class="svc-grid reverse">
+        <div class="svc-vis tall" data-reveal>
+          <div class="mock-ai">
+            <div class="bub a">Hi! I'm Studio Duo's support assistant — what can I help you with today?</div>
+            <div class="bub u">Where's my order? Placed it Tuesday morning.</div>
+            <div class="bub a">Found it — order #4821 shipped yesterday with DHL. Tracking: <b>JD0014123823</b>. Expected Friday between 9am–1pm. Anything else?</div>
+            <div class="bub u">Can I add a second item to it?</div>
+            <div class="bub a"><span class="typing"><span></span><span></span><span></span></span></div>
+            <div class="input">
+              <span>Ask anything…</span>
+              <span class="b">Send</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="svc-head" data-reveal>
+          <span class="eyebrow">04 · AI tools</span>
+          <h2>Practical AI that <em>earns its keep.</em></h2>
+          <p class="lede">No demos that look great and break in production. Scoped chatbots trained on your FAQs, enquiry summarisers, AI email drafters and product description generators — the boring bits, quietly handled.</p>
+          <h5 class="includes-head">What's included</h5>
+          <ul class="svc-includes">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Support chatbot trained on your FAQs, docs &amp; product catalogue</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Enquiry summariser + smart email reply drafts</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Product description &amp; content generators</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Guardrails, escalation rules &amp; an honest "I don't know" mode</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-9"/></svg><span>Usage dashboard &amp; monthly review of accuracy</span></li>
+          </ul>
+          <div class="svc-meta">
+            <div><div class="k">From</div><div class="v">£900</div></div>
+            <div><div class="k">Delivery</div><div class="v">1–3 weeks</div></div>
+            <div><div class="k">Models</div><div class="v">OpenAI · Claude · self-host</div></div>
+            <div><div class="k">Good for</div><div class="v">Support-heavy businesses</div></div>
+          </div>
+          <div class="svc-actions">
+            <a class="btn btn-primary" href="/contact?service=ai">Start an AI project
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="/case-study">See case study</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADD-ONS -->
+  <section class="section addons-section">
+    <div class="wrap">
+      <div class="sec-head left" data-reveal>
+        <span class="eyebrow">Add-ons &amp; care plans</span>
+        <h2 class="sec-title">Extras for after <em>launch.</em></h2>
+      </div>
+      <div class="addon-grid">
+        {addons.map(a => (
+          <div class={`addon ${a.tone}`}>
+            <span class="mono addon-tag">{a.tag}</span>
+            <h3>{a.title}</h3>
+            <p>{a.body}</p>
+            {a.price
+              ? <div class="addon-price">From <b>{a.price}</b></div>
+              : <a class="link-arrow addon-link" href="/contact">Get in touch
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </a>
+            }
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-inner">
+      <span class="eyebrow">Start a project</span>
+      <h2>Pick a service. <em>Or all four.</em></h2>
+      <p>Tell us what you want to ship and we'll come back inside 24 hours with a plan and a price.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="/contact">
+          Start a project
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="/pricing">See pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
 </Layout>
+
+<style is:global>
+  /* jump strip ------------------------------------------------ */
+  .svc-jump { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 40px 0 0; }
+  @media (min-width: 800px) { .svc-jump { grid-template-columns: repeat(4, 1fr); } }
+  .svc-jump a {
+    padding: 18px 20px; border-radius: 14px; border: 1px solid var(--hair);
+    background: var(--surface); display: grid; gap: 4px; text-decoration: none; color: inherit;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .svc-jump a:hover { transform: translateY(-2px); border-color: var(--ink); box-shadow: var(--shadow-md); }
+  .svc-jump .k { font-family: "Fragment Mono", monospace; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--brand); }
+  .svc-jump .v { font-size: 18px; font-weight: 500; letter-spacing: -.01em; }
+  .svc-jump .from { font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-dim); margin-top: 4px; }
+
+  /* SERVICE block --------------------------------------------- */
+  .svc-block { padding: 110px 0; border-top: 1px solid var(--hair); position: relative; }
+  .svc-block.dark { background: var(--ink); color: var(--surface); }
+  .svc-block.dark .eyebrow { color: color-mix(in oklab, var(--mint) 85%, white); }
+  .svc-block.stone { background: var(--bg-2); }
+  .svc-block.brand { background: linear-gradient(180deg, #F4EBDD, var(--bg)); }
+  .svc-block.peach { background: linear-gradient(180deg, #FFF0E5, var(--bg)); }
+
+  .svc-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: start; }
+  @media (min-width: 900px) { .svc-grid { grid-template-columns: 1fr 1.1fr; gap: 80px; } }
+  .svc-grid.reverse > :first-child { order: 2; }
+  @media (min-width: 900px) { .svc-grid.reverse > :first-child { order: initial; } }
+
+  .svc-head h2 { font-family: "Gloock", serif; font-weight: 400; font-size: clamp(40px, 5vw, 64px); line-height: .96; letter-spacing: -.055em; margin: 14px 0 18px; max-width: 14ch; text-wrap: balance; }
+  .svc-head h2 em { font-style: italic; font-weight: 400; background: linear-gradient(105deg, var(--brand), var(--brand-2), var(--peach)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .svc-block.dark .svc-head h2 em { background: linear-gradient(105deg, #E8B698, #BDA69B, #ECD8CC); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .svc-head .lede { color: var(--muted-ink); font-size: 17px; line-height: 1.6; max-width: 48ch; margin: 0 0 32px; }
+  .svc-block.dark .svc-head .lede { color: rgba(255, 255, 255, .72); }
+  .includes-head { font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); margin: 0 0 18px; }
+  .svc-block.dark .includes-head { color: var(--surface); }
+
+  .svc-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; padding-top: 20px; border-top: 1px solid var(--hair); margin-top: 32px; }
+  .svc-block.dark .svc-meta { border-top-color: rgba(255, 255, 255, .14); }
+  .svc-meta .k { font-family: "Fragment Mono", monospace; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted-dim); }
+  .svc-meta .v { font-size: 14px; margin-top: 4px; }
+  .svc-block.dark .svc-meta .v { color: var(--surface); }
+
+  .svc-includes { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .svc-includes li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; font-size: 15px; line-height: 1.5; }
+  .svc-includes li svg { width: 18px; height: 18px; color: var(--brand); margin-top: 2px; }
+  .svc-block.dark .svc-includes li svg { color: #E8B698; }
+
+  .svc-actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .svc-btn-brand { background: var(--brand); }
+  .svc-btn-translucent { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18); color: var(--surface); }
+  .svc-btn-translucent:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.3); }
+
+  /* svc visual ------------------------------------------------ */
+  .svc-vis { position: relative; border-radius: 24px; overflow: hidden; border: 1px solid var(--hair); min-height: 480px; background: var(--surface); box-shadow: var(--shadow-md); }
+  .svc-vis.tall { min-height: 520px; }
+  .svc-block.dark .svc-vis { border-color: rgba(255, 255, 255, .14); background: #181612; box-shadow: 0 30px 60px -30px rgba(0,0,0,.5); }
+
+  /* Storefront mockup ----------------------------------------- */
+  .mock-store { display: grid; grid-template-rows: 36px 220px 1fr; height: 100%; }
+  .mock-store .bar { display: flex; gap: 6px; padding: 12px 14px; border-bottom: 1px solid var(--hair); align-items: center; font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-dim); }
+  .mock-store .bar .d { width: 9px; height: 9px; border-radius: 99px; background: var(--brand); }
+  .mock-store .bar .d:nth-child(2) { background: var(--peach); }
+  .mock-store .bar .d:nth-child(3) { background: var(--accent-blue); }
+  .mock-store .bar .u { margin-left: auto; }
+  .mock-store .hero { position: relative; background: linear-gradient(135deg, var(--brand-soft), var(--peach)); display: grid; place-items: center; color: var(--ink); padding: 24px; }
+  .mock-store .hero .label { font-family: "Gloock", serif; font-size: 42px; letter-spacing: -.04em; line-height: .96; max-width: 12ch; text-align: center; font-weight: 400; }
+  .mock-store .hero .sub { font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); opacity: .65; margin-top: 8px; text-align: center; }
+  .mock-store > .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hair); }
+  .mock-store .pr { background: var(--surface); padding: 14px; display: grid; gap: 10px; }
+  .mock-store .pr .ph { aspect-ratio: 1; border-radius: 10px; background: linear-gradient(135deg, var(--bg-2), var(--mint)); }
+  .mock-store .pr:nth-child(2) .ph { background: linear-gradient(135deg, var(--brand-soft), var(--peach)); }
+  .mock-store .pr:nth-child(3) .ph { background: linear-gradient(135deg, var(--mint), var(--brand-2)); opacity: .85; }
+  .mock-store .pr .n { font-size: 12px; font-weight: 500; }
+  .mock-store .pr .p { font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-ink); }
+
+  /* Booking mockup -------------------------------------------- */
+  .mock-book { display: grid; grid-template-rows: 56px 1fr; height: 100%; }
+  .mock-book .top { padding: 18px 20px; border-bottom: 1px solid var(--hair); display: flex; align-items: center; justify-content: space-between; }
+  .mock-book .top .h { font-size: 14px; font-weight: 600; }
+  .mock-book .top .arrows { display: flex; gap: 6px; }
+  .mock-book .top .arrows span { width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid var(--hair); border-radius: 6px; color: var(--muted-ink); font-size: 12px; }
+  .mock-book > .grid { padding: 22px 20px; display: grid; grid-template-columns: 1fr 220px; gap: 22px; }
+  .mock-book .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .mock-book .cal .dow { font-family: "Fragment Mono", monospace; font-size: 10px; color: var(--muted-dim); text-align: center; letter-spacing: .12em; padding-bottom: 4px; }
+  .mock-book .cal .d { aspect-ratio: 1; border-radius: 8px; background: var(--bg-2); display: grid; place-items: center; font-size: 12px; color: var(--ink-2); }
+  .mock-book .cal .d.empty { background: transparent; }
+  .mock-book .cal .d.dot { position: relative; }
+  .mock-book .cal .d.dot::after { content: ""; position: absolute; bottom: 6px; width: 4px; height: 4px; border-radius: 99px; background: var(--brand); }
+  .mock-book .cal .d.sel { background: var(--ink); color: var(--surface); font-weight: 500; }
+  .mock-book .slots { display: grid; gap: 8px; align-content: start; }
+  .mock-book .slots .hh { font-family: "Fragment Mono", monospace; font-size: 10px; color: var(--muted-dim); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 4px; }
+  .mock-book .slots .slot { padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hair); display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .mock-book .slots .slot.pick { background: var(--brand); color: var(--surface); border-color: var(--brand); }
+  .mock-book .slots .slot.pick .t { color: rgba(255,255,255,.7); }
+  .mock-book .slots .slot .t { font-family: "Fragment Mono", monospace; font-size: 10px; color: var(--muted-dim); }
+
+  /* Automation flow mockup ------------------------------------ */
+  .mock-auto { padding: 28px 24px; display: grid; gap: 22px; }
+  .mock-auto .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .mock-auto .row.indent-1 { padding-left: 24px; }
+  .mock-auto .row.indent-2 { padding-left: 48px; }
+  .mock-auto .node { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; min-width: 160px; }
+  .mock-auto .node .k { font-family: "Fragment Mono", monospace; font-size: 10px; color: var(--muted-dim); letter-spacing: .12em; text-transform: uppercase; }
+  .mock-auto .node .v { font-size: 14px; color: var(--surface); font-weight: 500; }
+  .mock-auto .node.brand { background: rgba(165,94,62,.15); border-color: rgba(165,94,62,.4); }
+  .mock-auto .node.brand .v { color: #E8B698; }
+  .mock-auto .arr { color: rgba(255,255,255,.45); font-size: 22px; }
+  .mock-auto .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 4px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.12); }
+  .mock-auto .stats div { display: grid; gap: 4px; }
+  .mock-auto .stats .vv { font-family: "Gloock", serif; font-size: 30px; letter-spacing: -.03em; color: var(--surface); line-height: 1; font-weight: 400; }
+  .mock-auto .stats .ll { font-family: "Fragment Mono", monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-dim); }
+
+  /* AI mockup -------------------------------------------------- */
+  .mock-ai { padding: 22px; display: grid; gap: 14px; align-content: start; height: 100%; }
+  .mock-ai .bub { padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.5; max-width: 85%; }
+  .mock-ai .u { align-self: flex-end; background: var(--ink); color: var(--surface); border-bottom-right-radius: 4px; margin-left: auto; }
+  .mock-ai .a { align-self: flex-start; background: var(--brand-soft); color: var(--ink); border-bottom-left-radius: 4px; }
+  .mock-ai .typing { display: inline-flex; gap: 3px; align-items: center; }
+  .mock-ai .typing span { width: 6px; height: 6px; border-radius: 99px; background: var(--muted-ink); animation: bounce 1.4s infinite ease-in-out; }
+  .mock-ai .typing span:nth-child(2) { animation-delay: .15s; }
+  .mock-ai .typing span:nth-child(3) { animation-delay: .3s; }
+  @keyframes bounce { 0%, 60%, 100% { opacity: .25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+  .mock-ai .input { margin-top: auto; display: flex; gap: 8px; padding: 10px; border-radius: 12px; background: var(--bg); border: 1px solid var(--hair); font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim); }
+  .mock-ai .input .b { margin-left: auto; padding: 4px 10px; background: var(--ink); color: var(--surface); border-radius: 6px; }
+
+  /* Add-ons --------------------------------------------------- */
+  .addons-section { background: var(--bg-2); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); padding: 90px 0; }
+  .addon-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .addon { background: var(--surface); border: 1px solid var(--hair); border-radius: 16px; padding: 24px; display: grid; gap: 12px; align-content: start; }
+  .addon.dark { background: var(--ink); color: var(--surface); border-color: transparent; }
+  .addon h3 { font-family: "Gloock", serif; font-size: 24px; margin: 0; font-weight: 400; letter-spacing: -.03em; }
+  .addon p { margin: 0; color: var(--muted-ink); font-size: 14.5px; line-height: 1.55; }
+  .addon.dark p { color: rgba(255,255,255,.7); }
+  .addon-tag { color: var(--brand); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+  .addon.dark .addon-tag { color: #E8B698; }
+  .addon-price { font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim); margin-top: auto; }
+  .addon-price b { color: var(--ink); font-weight: 500; }
+  .addon-link { margin-top: auto; color: #E8B698; border-color: rgba(255,255,255,.14); }
+</style>

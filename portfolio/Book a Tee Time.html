@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book a Tee Time — Lyndhurst Park</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#183b2d;
+  --green-2:#0f2a20;
+  --green-deep:#0b1d16;
+  --sage:#657764;
+  --cream:#f6f2e8;
+  --paper:#fffaf0;
+  --sand:#d5c69f;
+  --gold:#b8a368;
+  --gold-deep:#9c8a52;
+  --ink:#1d1d18;
+  --muted:#6d6a60;
+  --line:rgba(29,29,24,.16);
+  --line-soft:rgba(29,29,24,.10);
+  --white:#fffdf7;
+  --serif:"Playfair Display", Georgia, serif;
+  --sans:"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --label:"Montserrat", "Inter", system-ui, sans-serif;
+  --gutter:clamp(20px,4.2vw,72px);
+  --max:1320px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--green);color:var(--cream)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+
+.kicker{font-family:var(--label);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--sage);font-weight:600}
+.display{font-family:var(--serif);font-weight:500;letter-spacing:-.012em;line-height:1.04}
+.label{font-family:var(--label);font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.7rem;
+  border:1px solid currentColor;border-radius:999px;
+  padding:14px 26px;
+  font-family:var(--label);
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  transition:background .25s ease,color .25s ease,transform .25s ease
+}
+.btn:hover{transform:translateY(-1px);background:var(--green);color:var(--cream);border-color:var(--green)}
+.btn.light:hover{background:var(--cream);color:var(--green);border-color:var(--cream)}
+
+/* ───────── HEADER (from Lyndhurst Park) ───────── */
+.site-header{position:fixed;z-index:40;top:0;left:0;right:0;color:var(--white);transition:background .25s ease,color .25s ease,border-color .25s ease;border-bottom:1px solid rgba(255,255,255,.18)}
+.site-header.is-scrolled{background:rgba(246,242,232,.94);color:var(--ink);border-bottom-color:var(--line);backdrop-filter:blur(14px)}
+.navbar{height:84px;padding:0 var(--gutter);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:22px}
+.nav{display:flex;gap:30px;align-items:center}
+.nav.end{justify-content:flex-end}
+.nav a{font-family:var(--label);font-size:11px;text-transform:uppercase;letter-spacing:.22em;font-weight:600;opacity:.92}
+.nav a:hover{opacity:1}
+.brand{text-align:center;font-family:var(--serif);font-size:24px;line-height:1;letter-spacing:.005em;font-weight:500}
+.brand span{display:block;margin-top:8px;font-family:var(--label);font-size:9px;letter-spacing:.42em;text-transform:uppercase;font-weight:600;opacity:.72}
+
+/* ───────── HERO ───────── */
+.hero{position:relative;min-height:52svh;color:var(--white);display:grid;place-items:center;overflow:hidden;background:var(--green);text-align:center;padding-top:84px}
+.hero-media{position:absolute;inset:0;overflow:hidden}
+.hero-media img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-media svg{width:100%;height:100%;display:block}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,22,16,.30) 0%,rgba(9,22,16,.18) 38%,rgba(9,22,16,.70) 100%)}
+.hero-inner{position:relative;z-index:1;padding:90px var(--gutter) 110px;display:flex;flex-direction:column;align-items:center;gap:0}
+.hero-eyebrow{font-family:var(--label);font-size:11px;letter-spacing:.36em;text-transform:uppercase;font-weight:600;color:rgba(255,253,247,.85);display:inline-flex;align-items:center;gap:18px}
+.hero-eyebrow::before,.hero-eyebrow::after{content:"";width:36px;height:1px;background:rgba(255,253,247,.55)}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(56px,7.5vw,108px);line-height:1.02;margin:26px 0 22px;letter-spacing:-.012em}
+.hero p{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(18px,1.6vw,22px);line-height:1.4;color:rgba(255,253,247,.86);margin:0;max-width:560px}
+
+/* ───────── BOOKING SHELL ───────── */
+.booking{padding:0 0 0;background:var(--paper);position:relative;margin-top:-1px}
+.booking-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:0;align-items:stretch}
+.booking-main{padding:60px var(--gutter) 80px;border-right:1px solid var(--line)}
+.booking-side{background:var(--green-2);color:var(--cream);padding:60px 48px 60px}
+
+/* progress */
+.steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;align-items:center;margin:0 0 52px;border-bottom:1px solid var(--line);padding-bottom:30px}
+.step{display:flex;align-items:center;gap:14px;position:relative}
+.step + .step::before{content:"";position:absolute;left:-20px;right:calc(100% - 20px);top:50%;height:1px;background:var(--line)}
+.step{padding-left:0}
+.step-num{
+  width:28px;height:28px;border-radius:999px;
+  display:grid;place-items:center;
+  font-family:var(--label);font-size:11px;font-weight:700;
+  background:var(--cream);color:var(--muted);
+  border:1px solid var(--line);
+  flex:none;
+}
+.step.is-active .step-num{background:var(--green);color:var(--cream);border-color:var(--green)}
+.step.is-done .step-num{background:var(--green);color:var(--cream);border-color:var(--green)}
+.step-label{font-family:var(--label);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.step.is-active .step-label{color:var(--ink)}
+.step-divider{height:1px;background:var(--line);flex:1;margin:0 18px;align-self:center}
+/* simplify: use flex bar */
+.steps{display:flex;align-items:center;gap:0}
+.step + .step::before{display:none}
+.step{flex:none}
+.step.spacer{flex:1;height:1px;background:var(--line);margin:0 22px}
+
+/* field rows */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:38px}
+.field-label{display:block;margin-bottom:10px}
+.field{
+  display:flex;align-items:center;gap:12px;
+  width:100%;
+  border:1px solid var(--line);
+  background:var(--white);
+  padding:14px 18px;
+  border-radius:2px;
+  font-family:var(--sans);font-size:15px;color:var(--ink);
+  transition:border-color .2s ease,box-shadow .2s ease;
+  cursor:pointer;
+}
+.field:hover{border-color:rgba(29,29,24,.32)}
+.field:focus-within{border-color:var(--green);box-shadow:0 0 0 3px rgba(24,59,45,.08)}
+.field .ico{width:18px;height:18px;color:var(--green);flex:none}
+.field .val{flex:1;font-family:var(--serif);font-size:18px;letter-spacing:-.005em}
+.field .chev{width:14px;height:14px;color:var(--muted);flex:none}
+
+/* package cards */
+.section-title{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 16px}
+.package-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:42px}
+.pkg{
+  position:relative;
+  border:1px solid var(--line);
+  background:var(--white);
+  padding:22px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .2s ease,background .2s ease,transform .2s ease;
+}
+.pkg:hover{border-color:rgba(29,29,24,.4)}
+.pkg.is-active{border:1.5px solid var(--green);background:var(--cream)}
+.pkg-name{font-family:var(--serif);font-size:20px;font-weight:500;letter-spacing:-.005em}
+.pkg-sub{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:4px}
+.pkg-tick{
+  position:absolute;top:12px;right:12px;
+  width:20px;height:20px;border-radius:999px;
+  background:var(--green);color:var(--cream);
+  display:none;align-items:center;justify-content:center;
+}
+.pkg.is-active .pkg-tick{display:flex}
+.pkg-tick svg{width:11px;height:11px}
+
+/* tee time grid + addons split */
+.split-row{display:grid;grid-template-columns:1.4fr 1fr;gap:42px;margin-bottom:36px}
+.split-row .col-l{min-width:0}
+.split-row .col-r{min-width:0}
+
+.tt-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.tt-meta{font-family:var(--sans);font-size:12px;color:var(--muted);font-style:italic}
+.tt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tt{
+  position:relative;
+  border:1px solid var(--line);
+  background:var(--white);
+  padding:14px 8px;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .2s ease,background .2s ease;
+}
+.tt:hover{border-color:rgba(29,29,24,.4)}
+.tt.is-active{border:1.5px solid var(--green);background:var(--cream)}
+.tt-time{font-family:var(--serif);font-size:19px;letter-spacing:-.005em;line-height:1}
+.tt-price{font-family:var(--label);font-size:10px;letter-spacing:.18em;color:var(--muted);margin-top:6px;font-weight:600}
+.tt-badge{
+  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:#2a2410;
+  font-family:var(--label);font-size:8px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;
+}
+.tt.sold{opacity:.38;cursor:not-allowed;pointer-events:none}
+.tt.sold .tt-time{text-decoration:line-through}
+
+.tip{
+  display:flex;gap:10px;align-items:flex-start;
+  margin-top:18px;
+  font-family:var(--sans);font-size:13px;color:var(--muted);font-style:italic;
+}
+.tip svg{width:16px;height:16px;flex:none;margin-top:2px;color:var(--sage)}
+
+/* addons */
+.addon-list{display:flex;flex-direction:column;gap:10px}
+.addon{
+  display:grid;grid-template-columns:48px 1fr 22px;gap:14px;align-items:center;
+  border:1px solid var(--line);background:var(--white);
+  padding:14px 16px;
+  cursor:pointer;
+  transition:border-color .2s ease,background .2s ease;
+}
+.addon:hover{border-color:rgba(29,29,24,.32)}
+.addon.is-active{border:1.5px solid var(--green);background:var(--cream)}
+.addon-ico{
+  width:48px;height:48px;
+  background:#eee5cc;
+  display:grid;place-items:center;
+  color:var(--green-2);
+  border-radius:2px;
+}
+.addon-ico svg{width:28px;height:28px}
+.addon-name{font-family:var(--serif);font-size:17px;letter-spacing:-.005em;line-height:1.1}
+.addon-price{font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:3px}
+.addon-check{
+  width:22px;height:22px;border:1.5px solid var(--line);
+  border-radius:3px;display:grid;place-items:center;
+  background:var(--white);
+}
+.addon.is-active .addon-check{background:var(--green);border-color:var(--green);color:var(--cream)}
+.addon-check svg{width:12px;height:12px;display:none}
+.addon.is-active .addon-check svg{display:block}
+
+/* ───── SIDEBAR (sticky) ───── */
+.summary-card{position:sticky;top:104px}
+.summary-title{
+  font-family:var(--label);font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;
+  margin:0 0 30px;
+}
+.sum-row{
+  display:grid;grid-template-columns:1fr auto;gap:18px;
+  padding:18px 0;
+  border-bottom:1px solid rgba(246,242,232,.16);
+  align-items:baseline;
+}
+.sum-row:first-of-type{padding-top:0}
+.sum-row .k{font-family:var(--label);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,242,232,.7);font-weight:600}
+.sum-row .v{font-family:var(--serif);font-size:18px;text-align:right;letter-spacing:-.005em}
+.sum-row .v small{display:block;font-family:var(--sans);font-size:12px;color:rgba(246,242,232,.55);font-style:italic;margin-top:3px;letter-spacing:0;text-transform:none}
+
+.sum-total{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-top:28px;padding-top:24px;
+  border-top:1px solid rgba(246,242,232,.22);
+}
+.sum-total .k{font-family:var(--label);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.sum-total .v{font-family:var(--serif);font-size:42px;color:var(--cream);letter-spacing:-.015em;line-height:1}
+.sum-gst{font-family:var(--sans);font-size:11px;color:rgba(246,242,232,.5);margin-top:4px;font-style:italic}
+
+.cta{
+  margin-top:28px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  width:100%;
+  background:var(--gold);color:#1f1a07;
+  border:1px solid var(--gold);
+  padding:18px 22px;
+  font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;font-weight:700;
+  transition:background .25s ease,transform .25s ease,color .25s ease;
+  cursor:pointer;
+}
+.cta:hover{background:var(--gold-deep);border-color:var(--gold-deep);color:var(--cream);transform:translateY(-1px)}
+.cta svg{width:14px;height:14px}
+
+.secure{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:18px;
+  font-family:var(--sans);font-size:12px;color:rgba(246,242,232,.62);font-style:italic;
+}
+.secure svg{width:14px;height:14px;color:var(--gold)}
+
+/* ───── BOTTOM TRUST ROW ───── */
+.trust{background:var(--cream);border-top:1px solid var(--line);padding:54px 0}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px}
+.trust-item{display:flex;gap:18px;align-items:flex-start}
+.trust-ico{
+  width:42px;height:42px;flex:none;
+  display:grid;place-items:center;
+  color:var(--gold-deep);
+}
+.trust-ico svg{width:32px;height:32px}
+.trust h4{font-family:var(--label);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink);margin:6px 0 8px;font-weight:700}
+.trust p{margin:0;color:var(--muted);font-size:14px;line-height:1.55;max-width:24ch}
+
+/* ───── FOOTER ───── */
+footer{background:var(--green-deep);color:rgba(246,242,232,.7);padding:64px var(--gutter) 36px}
+.footer-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}
+.footer-brand{font-family:var(--serif);font-size:32px;color:var(--cream);letter-spacing:.005em;font-weight:500}
+.footer-links{display:flex;gap:26px;flex-wrap:wrap;font-family:var(--label);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
+.copyright{grid-column:1/-1;border-top:1px solid rgba(246,242,232,.16);padding-top:26px;font-size:12px;letter-spacing:.04em}
+
+@media(max-width:1100px){
+  .booking-grid{grid-template-columns:1fr}
+  .booking-main{border-right:0;border-bottom:1px solid var(--line)}
+  .summary-card{position:static}
+  .split-row{grid-template-columns:1fr;gap:36px}
+}
+@media(max-width:820px){
+  .nav{display:none}
+  .navbar{grid-template-columns:1fr auto 1fr}
+  .row{grid-template-columns:1fr}
+  .package-row{grid-template-columns:1fr}
+  .tt-grid{grid-template-columns:repeat(2,1fr)}
+  .trust-grid{grid-template-columns:1fr 1fr;gap:30px}
+  .steps{flex-wrap:wrap;gap:14px 22px}
+  .step.spacer{display:none}
+  .booking-side{padding:48px var(--gutter)}
+}
+@media(max-width:560px){
+  .navbar{height:72px}
+  .brand{font-size:22px}
+  .hero h1{font-size:clamp(44px,12vw,68px)}
+  .trust-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="navbar">
+    <nav class="nav"><a href="Lyndhurst Park.html#course">Golf</a><a href="Lyndhurst Park.html#clubhouse">Clubhouse</a><a href="Lyndhurst Park.html#membership">Membership</a></nav>
+    <a class="brand" href="Lyndhurst Park.html" aria-label="Lyndhurst Park home">Lyndhurst Park<span>Golf & Estate</span></a>
+    <nav class="nav end"><a href="Lyndhurst Park.html#calendar">What’s on</a><a href="Lyndhurst Park.html#visit">Visit</a><a class="btn light" href="#booking">Book</a></nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-media" aria-hidden="true">
+      <img src="assets/01-hero-course-at-first-light.png" alt="" />
+      <!-- Placeholder atmospheric SVG kept as fallback behind the image -->
+      <svg style="display:none" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a4a48"/>
+            <stop offset="55%" stop-color="#c9a87a"/>
+            <stop offset="100%" stop-color="#7c6a4a"/>
+          </linearGradient>
+          <linearGradient id="hill1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a5040"/>
+            <stop offset="100%" stop-color="#1f3528"/>
+          </linearGradient>
+          <linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5a6c4a"/>
+            <stop offset="100%" stop-color="#3a4a32"/>
+          </linearGradient>
+          <linearGradient id="fair" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7c8a55"/>
+            <stop offset="100%" stop-color="#56683e"/>
+          </linearGradient>
+          <radialGradient id="sun" cx="22%" cy="38%" r="22%">
+            <stop offset="0%" stop-color="#ffe9c0" stop-opacity=".9"/>
+            <stop offset="60%" stop-color="#ffd28a" stop-opacity=".35"/>
+            <stop offset="100%" stop-color="#ffd28a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#ffffff" stop-opacity=".35"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect width="1600" height="900" fill="url(#sky)"/>
+        <circle cx="350" cy="340" r="80" fill="#ffe7b8" opacity=".85"/>
+        <rect width="1600" height="900" fill="url(#sun)"/>
+        <!-- distant tree silhouettes -->
+        <path d="M0,560 C160,500 280,540 380,520 C480,500 560,540 700,510 C820,485 940,520 1060,500 C1180,480 1320,520 1460,500 C1520,492 1560,498 1600,492 L1600,640 L0,640 Z" fill="#3d4d3e" opacity=".75"/>
+        <!-- mist band -->
+        <rect x="0" y="500" width="1600" height="120" fill="url(#mist)"/>
+        <!-- mid hill -->
+        <path d="M0,640 C200,580 420,640 640,620 C860,600 1080,650 1300,620 C1420,602 1520,612 1600,608 L1600,900 L0,900 Z" fill="url(#hill1)"/>
+        <!-- fairway -->
+        <path d="M0,760 C220,720 460,760 700,740 C940,720 1180,770 1400,748 C1500,738 1560,742 1600,740 L1600,900 L0,900 Z" fill="url(#fair)"/>
+        <!-- bunker -->
+        <ellipse cx="980" cy="820" rx="180" ry="22" fill="#e8d8a6" opacity=".55"/>
+        <!-- right grove shadow -->
+        <path d="M1180,560 C1240,540 1280,530 1320,520 C1380,508 1440,512 1500,508 C1560,506 1600,510 1600,510 L1600,720 L1180,720 Z" fill="#2d3a2b" opacity=".55"/>
+      </svg>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Tee Time Reservation</div>
+      <h1>Book a Tee Time</h1>
+      <p>Experience championship heathland golf in a setting like no other.</p>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking" id="booking">
+    <div class="booking-grid">
+
+      <!-- MAIN -->
+      <div class="booking-main">
+
+        <!-- Progress -->
+        <div class="steps" aria-label="Booking progress">
+          <div class="step is-active"><span class="step-num">1</span><span class="step-label">Select Date & Time</span></div>
+          <div class="step spacer" aria-hidden="true"></div>
+          <div class="step"><span class="step-num">2</span><span class="step-label">Your Details</span></div>
+          <div class="step spacer" aria-hidden="true"></div>
+          <div class="step"><span class="step-num">3</span><span class="step-label">Confirm Booking</span></div>
+        </div>
+
+        <!-- Date / Players -->
+        <div class="row">
+          <div>
+            <div class="label field-label">Select Date</div>
+            <button class="field" type="button">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+              <span class="val">Saturday, 16 May 2026</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+          <div>
+            <div class="label field-label">Players</div>
+            <button class="field" type="button">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.2 2.8-5 6-5s6 1.8 6 5"/><circle cx="17" cy="9" r="2.6"/><path d="M15 20c0-2.6 2-4 4-4"/></svg>
+              <span class="val">2 Players</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Packages -->
+        <div class="section-title"><span class="label">Choose a Package</span></div>
+        <div class="package-row" role="radiogroup">
+          <button class="pkg is-active" type="button" data-pkg="visitor" data-price="180">
+            <span class="pkg-tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></span>
+            <div class="pkg-name">Visitor Round</div>
+            <div class="pkg-sub">18 Holes</div>
+          </button>
+          <button class="pkg" type="button" data-pkg="twilight" data-price="120">
+            <span class="pkg-tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></span>
+            <div class="pkg-name">Twilight Round</div>
+            <div class="pkg-sub">After 2:00 PM</div>
+          </button>
+          <button class="pkg" type="button" data-pkg="member" data-price="95">
+            <span class="pkg-tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></span>
+            <div class="pkg-name">Member Guest</div>
+            <div class="pkg-sub">Member + Guest</div>
+          </button>
+        </div>
+
+        <!-- Tee Times + Add-ons -->
+        <div class="split-row">
+          <div class="col-l">
+            <div class="tt-head">
+              <span class="label">Select a Tee Time</span>
+              <span class="tt-meta">All times shown in local time</span>
+            </div>
+            <div class="tt-grid" role="radiogroup">
+              <button class="tt" type="button" data-time="7:00 AM"><div class="tt-time">7:00 AM</div><div class="tt-price">£180</div></button>
+              <button class="tt" type="button" data-time="7:10 AM"><div class="tt-time">7:10 AM</div><div class="tt-price">£180</div></button>
+              <button class="tt is-active" type="button" data-time="7:20 AM"><span class="tt-badge">Popular</span><div class="tt-time">7:20 AM</div><div class="tt-price">£180</div></button>
+              <button class="tt" type="button" data-time="7:30 AM"><div class="tt-time">7:30 AM</div><div class="tt-price">£180</div></button>
+              <button class="tt sold" type="button" aria-disabled="true"><div class="tt-time">8:40 AM</div><div class="tt-price">Sold out</div></button>
+              <button class="tt" type="button" data-time="8:50 AM"><div class="tt-time">8:50 AM</div><div class="tt-price">£180</div></button>
+              <button class="tt" type="button" data-time="9:00 AM"><div class="tt-time">9:00 AM</div><div class="tt-price">£180</div></button>
+              <button class="tt" type="button" data-time="9:10 AM"><div class="tt-time">9:10 AM</div><div class="tt-price">£180</div></button>
+            </div>
+            <div class="tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M11 12h1v5h1"/></svg>
+              <span>Tee times are in high demand. We recommend booking in advance to secure your preferred time.</span>
+            </div>
+          </div>
+
+          <div class="col-r">
+            <div class="tt-head"><span class="label">Add-ons</span></div>
+            <div class="addon-list">
+              <button class="addon is-active" type="button" data-name="Buggy Hire" data-price="45">
+                <span class="addon-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M4 20h4a3 3 0 0 1 3 3v1H4z"/><path d="M11 24h10"/><circle cx="9" cy="26" r="2"/><circle cx="23" cy="26" r="2"/><path d="M14 12h10l2 8h-2"/><path d="M14 12V8h6v4"/></svg></span>
+                <div><div class="addon-name">Buggy Hire</div><div class="addon-price">£45.00</div></div>
+                <span class="addon-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></span>
+              </button>
+              <button class="addon" type="button" data-name="Club Rental" data-price="65">
+                <span class="addon-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6h6l-1 14a3 3 0 0 1-3 3 3 3 0 0 1-3-3z"/><path d="M14 6V4M16 13l3-3M18 18l3-3"/></svg></span>
+                <div><div class="addon-name">Club Rental</div><div class="addon-price">£65.00</div></div>
+                <span class="addon-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></span>
+              </button>
+              <button class="addon" type="button" data-name="Range Balls" data-price="10">
+                <span class="addon-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 22h20l-2-7H8z" stroke-linejoin="round"/><circle cx="12" cy="13" r="2.5"/><circle cx="17" cy="11" r="2.5"/><circle cx="21" cy="14" r="2.5"/></svg></span>
+                <div><div class="addon-name">Range Balls</div><div class="addon-price">£10.00</div></div>
+                <span class="addon-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></span>
+              </button>
+              <button class="addon" type="button" data-name="Pull Cart" data-price="10">
+                <span class="addon-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 8h6l-1 12a2 2 0 0 1-2 2 2 2 0 0 1-2-2z"/><path d="M9 25l5-3M19 25l-5-3"/><circle cx="9" cy="27" r="1.6"/><circle cx="19" cy="27" r="1.6"/></svg></span>
+                <div><div class="addon-name">Pull Cart</div><div class="addon-price">£10.00</div></div>
+                <span class="addon-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="booking-side">
+        <div class="summary-card">
+          <h2 class="summary-title">Booking Summary</h2>
+
+          <div class="sum-row">
+            <span class="k">Package</span>
+            <span class="v" data-sum="package">Visitor Round<small data-sum="package-price">£180.00</small></span>
+          </div>
+          <div class="sum-row">
+            <span class="k">Date</span>
+            <span class="v" data-sum="date">Sat, 16 May 2026</span>
+          </div>
+          <div class="sum-row">
+            <span class="k">Time</span>
+            <span class="v" data-sum="time">7:20 AM</span>
+          </div>
+          <div class="sum-row">
+            <span class="k">Players</span>
+            <span class="v" data-sum="players">2</span>
+          </div>
+
+          <div data-sum="addons-block">
+            <div class="sum-row" data-sum-addon><span class="k">Buggy Hire</span><span class="v">£45.00</span></div>
+          </div>
+
+          <div class="sum-row" style="border-bottom:0">
+            <span class="k">Subtotal</span>
+            <span class="v" data-sum="subtotal">£225.00</span>
+          </div>
+
+          <div class="sum-total">
+            <div>
+              <div class="k">Total</div>
+              <div class="sum-gst">Includes VAT</div>
+            </div>
+            <div class="v" data-sum="total">£225.00</div>
+          </div>
+
+          <button class="cta" type="button">
+            Continue to details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+          </button>
+
+          <div class="secure">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            Secure booking. Your details are protected.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- TRUST ROW -->
+  <section class="trust">
+    <div class="wrap trust-grid">
+      <div class="trust-item">
+        <div class="trust-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4l3 7 7 .8-5.4 4.7L22 24l-6-3.6L10 24l1.4-7.5L6 11.8 13 11z"/></svg></div>
+        <div>
+          <h4>Championship Course</h4>
+          <p>18 holes of heathland golf set in 400 acres of Surrey estate.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h12v4a6 6 0 0 1-12 0z"/><path d="M10 8H6v2a4 4 0 0 0 4 4M22 8h4v2a4 4 0 0 1-4 4"/><path d="M14 18h4M12 24h8M16 18v6"/></svg></div>
+        <div>
+          <h4>Premium Experience</h4>
+          <p>Impeccable service, seasonal kitchen, members’ terrace.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4l11 4v8c0 7-5 11-11 12-6-1-11-5-11-12V8z"/></svg></div>
+        <div>
+          <h4>Member Privileges</h4>
+          <p>Preferred tee times and access to private fixtures.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="11"/><path d="M16 16l5-7M16 16l-3 3"/><circle cx="16" cy="16" r="1.4" fill="currentColor"/></svg></div>
+        <div>
+          <h4>Best Rate Guarantee</h4>
+          <p>Booking direct ensures the best available rates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Lyndhurst Park</div>
+    <nav class="footer-links"><a href="Lyndhurst Park.html#course">Golf</a><a href="Lyndhurst Park.html#clubhouse">Clubhouse</a><a href="Lyndhurst Park.html#membership">Membership</a><a href="Lyndhurst Park.html#visit">Visit</a></nav>
+    <div class="copyright">© 2026 Lyndhurst Park Golf & Estate.</div>
+  </div>
+</footer>
+
+<script>
+const header=document.getElementById('siteHeader');
+const updateHeader=()=>{window.scrollY>40?header.classList.add('is-scrolled'):header.classList.remove('is-scrolled')};
+window.addEventListener('scroll',updateHeader,{passive:true});updateHeader();
+
+/* ── Booking state ── */
+const PACKAGES={
+  visitor:{
+    label:'Visitor Round',price:180,
+    times:['7:00 AM','7:10 AM','7:20 AM','7:30 AM','8:40 AM','8:50 AM','9:00 AM','9:10 AM'],
+    sold:['8:40 AM'],
+    popular:'7:20 AM',
+    default:'7:20 AM'
+  },
+  twilight:{
+    label:'Twilight Round',price:120,
+    times:['2:00 PM','2:10 PM','2:20 PM','2:30 PM','2:40 PM','2:50 PM','3:00 PM','3:10 PM'],
+    sold:['2:40 PM'],
+    popular:'2:30 PM',
+    default:'2:30 PM'
+  },
+  member:{
+    label:'Member Guest',price:95,
+    times:['6:30 AM','6:40 AM','6:50 AM','7:00 AM','3:30 PM','3:40 PM','3:50 PM','4:00 PM'],
+    sold:['7:00 AM'],
+    popular:'6:40 AM',
+    default:'6:40 AM'
+  }
+};
+const state={
+  pkg:'visitor',
+  date:'Sat, 16 May 2026',
+  time:'7:20 AM',
+  players:2,
+  addons:new Map([['Buggy Hire',45]])
+};
+
+function renderTeeTimes(){
+  const p=PACKAGES[state.pkg];
+  const grid=document.querySelector('.tt-grid');
+  grid.innerHTML='';
+  p.times.forEach(t=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='tt';
+    const isSold=p.sold.includes(t);
+    if(isSold){
+      btn.classList.add('sold');
+      btn.setAttribute('aria-disabled','true');
+      btn.innerHTML='<div class="tt-time">'+t+'</div><div class="tt-price">Sold out</div>';
+    } else {
+      btn.dataset.time=t;
+      const badge=(t===p.popular)?'<span class="tt-badge">Popular</span>':'';
+      btn.innerHTML=badge+'<div class="tt-time">'+t+'</div><div class="tt-price">£'+p.price+'</div>';
+      if(t===state.time) btn.classList.add('is-active');
+    }
+    btn.addEventListener('click',()=>{
+      if(btn.classList.contains('sold')) return;
+      grid.querySelectorAll('.tt').forEach(x=>x.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      state.time=btn.dataset.time;
+      render();
+    });
+    grid.appendChild(btn);
+  });
+}
+
+const gbp = n => '£' + n.toFixed(2);
+
+function render(){
+  const p=PACKAGES[state.pkg];
+  document.querySelector('[data-sum="package"]').innerHTML = p.label + '<small>'+gbp(p.price)+'</small>';
+  document.querySelector('[data-sum="date"]').textContent = state.date;
+  document.querySelector('[data-sum="time"]').textContent = state.time;
+  document.querySelector('[data-sum="players"]').textContent = state.players;
+
+  const block=document.querySelector('[data-sum="addons-block"]');
+  block.innerHTML='';
+  for(const [name,price] of state.addons){
+    const row=document.createElement('div');
+    row.className='sum-row';
+    row.innerHTML='<span class="k">'+name+'</span><span class="v">'+gbp(price)+'</span>';
+    block.appendChild(row);
+  }
+  let subtotal=p.price;
+  for(const v of state.addons.values()) subtotal+=v;
+  document.querySelector('[data-sum="subtotal"]').textContent=gbp(subtotal);
+  document.querySelector('[data-sum="total"]').textContent=gbp(subtotal);
+}
+
+/* package select */
+document.querySelectorAll('.pkg').forEach(el=>{
+  el.addEventListener('click',()=>{
+    document.querySelectorAll('.pkg').forEach(p=>p.classList.remove('is-active'));
+    el.classList.add('is-active');
+    state.pkg=el.dataset.pkg;
+    state.time=PACKAGES[state.pkg].default;
+    renderTeeTimes();
+    render();
+  });
+});
+
+/* addons toggle */
+document.querySelectorAll('.addon').forEach(el=>{
+  el.addEventListener('click',()=>{
+    const name=el.dataset.name; const price=+el.dataset.price;
+    if(state.addons.has(name)){state.addons.delete(name);el.classList.remove('is-active')}
+    else{state.addons.set(name,price);el.classList.add('is-active')}
+    render();
+  });
+});
+
+renderTeeTimes();
+render();
+</script>
+</body>
+</html>

@@ -78,28 +78,33 @@ const process = [
   <div class="min-h-screen bg-background text-foreground">
     <Navigation />
 
-    <section class="relative overflow-hidden bg-section-white py-24 sm:py-32 text-section-white-foreground">
-      <div class="absolute inset-0">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_transparent_70%)]"></div>
-        <div class="absolute -bottom-24 left-1/2 h-80 w-[36rem] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl"></div>
-      </div>
-      <div class="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-        <Badge variant="secondary" class="mb-6 inline-flex items-center gap-2 bg-standout/20 text-standout border border-standout/30">
-          <Workflow className="h-4 w-4" /> Workflow automation
-        </Badge>
-        <h1 class="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-          Stop manually copying leads, sending repeated emails and updating spreadsheets.
-        </h1>
-        <p class="mt-6 max-w-3xl text-lg text-muted-foreground sm:text-xl leading-relaxed">
-          We build automations in <span class="text-primary font-semibold">n8n</span> that connect your tools, route work between people, and let AI do the repetitive parts. You see every step. You own every flow.
-        </p>
-        <div class="mt-10 flex flex-wrap gap-4">
-          <a href="/contact?service=automation" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium bg-standout text-white hover:bg-standout/90 shadow-lg">
-            Audit my workflow <ArrowRight className="h-5 w-5" />
-          </a>
-          <a href="#examples" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium border border-primary text-primary hover:bg-primary/10 bg-transparent">
-            See examples
-          </a>
+    <section class="page-head">
+      <div class="wrap">
+        <div class="crumb">
+          <a href="/">Studio Duo</a>
+          <span class="sep">/</span>
+          <a href="/services">Services</a>
+          <span class="sep">/</span>
+          <span>Workflow automation</span>
+        </div>
+        <div class="page-head-grid">
+          <div data-reveal>
+            <span class="eyebrow">Workflow automation · n8n + AI</span>
+            <h1>Stop copying leads, repeating emails &amp; <em>updating spreadsheets.</em></h1>
+            <p class="lede">We build automations in n8n that connect your tools, route work between people, and let AI do the repetitive parts. You see every step. You own every flow.</p>
+            <div class="svc-actions" style="margin-top:28px">
+              <a class="btn btn-primary" href="/contact?service=automation">Audit my workflow
+                <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+              <a class="btn btn-ghost" href="#examples">See examples</a>
+            </div>
+          </div>
+          <div class="page-head-meta" data-reveal>
+            <div><div class="k">From</div><div class="v">£1,200</div></div>
+            <div><div class="k">Delivery</div><div class="v">2–3 weeks</div></div>
+            <div><div class="k">Platform</div><div class="v">n8n · self-host or cloud</div></div>
+            <div><div class="k">Good for</div><div class="v">Service ops, agencies, B2B</div></div>
+          </div>
         </div>
       </div>
     </section>

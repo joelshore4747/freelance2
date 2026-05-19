@@ -1,0 +1,950 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Studio Duo — Websites, ecommerce &amp; quiet automations</title>
+<meta name="description" content="A small Manchester studio designing premium websites and the quietly powerful workflows that run behind them." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  /* ============== HERO ============== */
+  .hero { position: relative; padding: 80px 0 60px; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: -10%; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(40% 40% at 20% 30%, color-mix(in oklab, var(--brand) 35%, transparent), transparent 70%),
+      radial-gradient(35% 35% at 80% 20%, color-mix(in oklab, var(--brand-2) 30%, transparent), transparent 70%),
+      radial-gradient(40% 50% at 70% 80%, color-mix(in oklab, var(--mint) 45%, transparent), transparent 70%);
+    filter: blur(40px); opacity: .55;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: linear-gradient(180deg, transparent 60%, var(--bg) 100%);
+  }
+  .hero-inner { position: relative; z-index: 1; display: grid; gap: 40px; align-items: center; }
+  .hero-text { max-width: 920px; margin: 0 auto; text-align: center; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 14px 6px 8px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--hair);
+    font-size: 13px; color: var(--ink); box-shadow: var(--shadow-sm);
+    margin-bottom: 28px;
+  }
+  .hero-tag .pill-new {
+    font-family: "Fragment Mono", monospace; font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; padding: 4px 8px; border-radius: 99px;
+    background: var(--ink); color: var(--surface);
+  }
+  .hero-tag .arr { width: 14px; height: 14px; color: var(--muted-dim); }
+  h1.head {
+    font-family: "Gloock", Georgia, serif; font-weight: 400;
+    font-size: clamp(54px, 8vw, 108px); line-height: .94; letter-spacing: -0.055em;
+    margin: 0; text-wrap: balance;
+  }
+  h1.head .grad {
+    background: linear-gradient(105deg, var(--brand) 0%, var(--brand-2) 56%, var(--accent-blue) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-style: italic; font-weight: 500;
+  }
+  .hero-sub { margin: 28px auto 0; max-width: 620px; color: var(--muted); font-size: clamp(17px, 1.4vw, 19px); line-height: 1.6; }
+  .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+    margin-top: 80px; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+  }
+  @media (min-width: 800px) { .hero-stats { grid-template-columns: repeat(4, 1fr); } }
+  .hstat { padding: 24px 8px; text-align: center; border-right: 1px solid var(--hair); }
+  .hstat:last-child { border-right: 0; }
+  .hstat .v { font-size: 36px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-family: "Gloock", serif; }
+  .hstat .v em { font-style: normal; background: linear-gradient(135deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hstat .l { margin-top: 6px; font-size: 12px; color: var(--muted); font-family: "Fragment Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
+
+  /* hero product preview */
+  .hero-product {
+    margin: 60px auto 0; max-width: 1100px; position: relative;
+    border: 1px solid var(--hair); border-radius: 20px; background: var(--surface);
+    box-shadow: 0 50px 100px -40px rgba(165, 94, 62, .28), 0 20px 40px -20px rgba(17, 16, 13, .12);
+    overflow: hidden;
+  }
+  .hp-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--hair); }
+  .hp-bar .d { width: 11px; height: 11px; border-radius: 99px; background: #E2E2EA; }
+  .hp-bar .d:nth-child(1) { background: #A55E3E; }
+  .hp-bar .d:nth-child(2) { background: #B77A63; }
+  .hp-bar .d:nth-child(3) { background: #6E7483; }
+  .hp-bar .url { margin: 0 auto; font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim); }
+  .hp-body { aspect-ratio: 16/8; display: grid; grid-template-columns: 220px 1fr; gap: 1px; background: var(--hair); }
+  .hp-side { background: var(--bg); padding: 18px 14px; display: grid; gap: 10px; align-content: start; }
+  .hp-side .ico { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: var(--muted); }
+  .hp-side .ico.active { background: var(--brand-soft); color: var(--brand); font-weight: 500; }
+  .hp-side .ico .sq { width: 16px; height: 16px; border-radius: 5px; background: color-mix(in oklab, var(--muted) 30%, transparent); }
+  .hp-side .ico.active .sq { background: var(--brand); }
+  .hp-main { background: var(--surface); padding: 22px; display: grid; gap: 14px; grid-template-rows: auto 1fr auto; }
+  .hp-row { display: flex; justify-content: space-between; align-items: center; }
+  .hp-row .t { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+  .hp-row .s { font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-dim); text-transform: uppercase; letter-spacing: .14em; }
+  .hp-graph { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; align-items: end; min-height: 90px; }
+  .hp-graph div { background: linear-gradient(180deg, var(--brand-2), var(--brand)); border-radius: 4px; opacity: .95; }
+  .hp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .hp-card { border: 1px solid var(--hair); border-radius: 10px; padding: 12px; background: var(--surface); display: grid; gap: 6px; }
+  .hp-card .ck { font-family: "Fragment Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted-dim); }
+  .hp-card .cv { font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+  .hp-card .cv em { font-style: normal; color: var(--brand); }
+  .hp-card .cv .pos { color: var(--brand-2); font-size: 12px; margin-left: 6px; font-weight: 500; }
+
+  /* ============== LOGOS ============== */
+  .logos { padding: 60px 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  .logos-title { text-align: center; font-size: 13px; color: var(--muted); margin: 0 0 32px; font-family: "Fragment Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+  .logo-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: center; justify-items: center; opacity: .65; }
+  @media (min-width: 800px) { .logo-row { grid-template-columns: repeat(6, 1fr); gap: 32px; } }
+  .logo-row span { font-weight: 600; letter-spacing: -.02em; font-size: 20px; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; }
+  .logo-row span .sq { width: 14px; height: 14px; border-radius: 4px; background: var(--ink); }
+  .logo-row span:nth-child(2) .sq { border-radius: 99px; background: var(--brand); }
+  .logo-row span:nth-child(3) .sq { border-radius: 0; transform: rotate(45deg); background: var(--brand-2); }
+  .logo-row span:nth-child(4) .sq { border-radius: 3px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); }
+  .logo-row span:nth-child(5) .sq { border-radius: 99px; background: var(--ink); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--ink); }
+  .logo-row span:nth-child(6) .sq { background: conic-gradient(from 0deg, var(--brand), var(--brand-2), var(--brand)); }
+
+  /* ============== SERVICES (Bento) ============== */
+  .bento { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) {
+    .bento {
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      grid-template-areas: "a a b" "c d d";
+    }
+  }
+  .b-card {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: var(--r-lg);
+    padding: 32px; display: grid; gap: 18px; align-content: start;
+    position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .b-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .b-card .b-eyebrow { font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--brand); }
+  .b-card h3 { font-family: "Gloock", Georgia, serif; font-size: 34px; line-height: .98; letter-spacing: -.045em; font-weight: 400; margin: 0; max-width: 18ch; }
+  .b-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; max-width: 46ch; }
+  .b-card .row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .b-card .price { font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim); letter-spacing: .1em; text-transform: uppercase; }
+  .b-card .price b { color: var(--ink); font-weight: 500; }
+  .b-card .arrow {
+    width: 38px; height: 38px; border-radius: 99px;
+    background: var(--ink); color: var(--surface);
+    display: inline-flex; align-items: center; justify-content: center; transition: transform .2s ease;
+  }
+  .b-card:hover .arrow { transform: translate(3px, -3px); }
+  .b-a { grid-area: a; background: linear-gradient(135deg, #F4EBDD 0%, var(--surface) 60%); }
+  .b-b { grid-area: b; }
+  .b-c { grid-area: c; }
+  .b-d { grid-area: d; background: linear-gradient(135deg, var(--ink) 0%, #2A2822 100%); color: var(--surface); }
+  .b-d .b-eyebrow { color: color-mix(in oklab, var(--mint) 80%, white); }
+  .b-d p { color: rgba(255, 255, 255, .7); }
+  .b-d .price { color: rgba(255, 255, 255, .5); }
+  .b-d .price b { color: var(--surface); }
+  .b-d .arrow { background: var(--surface); color: var(--ink); }
+  .b-vis {
+    display: grid; align-items: center; justify-content: center; height: 140px; margin-top: 4px;
+    border-radius: 12px; border: 1px solid var(--hair); background: var(--bg); position: relative; overflow: hidden;
+  }
+  .b-d .b-vis { border-color: rgba(255, 255, 255, .08); background: rgba(255, 255, 255, .03); }
+  .vis-store { display: grid; grid-template-columns: repeat(3, 60px); gap: 8px; padding: 14px; }
+  .vis-store div { aspect-ratio: 1; border-radius: 8px; background: linear-gradient(135deg, var(--brand-soft), var(--brand-2)); opacity: .85; }
+  .vis-store div:nth-child(2) { background: linear-gradient(135deg, var(--peach), #A55E3E); }
+  .vis-store div:nth-child(3) { background: linear-gradient(135deg, var(--mint), #8A786F); }
+  .vis-store div:nth-child(4) { background: linear-gradient(135deg, #B66A4B, #A55E3E); }
+  .vis-store div:nth-child(5) { background: linear-gradient(135deg, var(--brand), var(--brand-2)); }
+  .vis-store div:nth-child(6) { background: linear-gradient(135deg, var(--peach), var(--brand-2)); }
+  .vis-cal { display: grid; grid-template-columns: repeat(7, 22px); gap: 5px; padding: 14px; }
+  .vis-cal div { height: 22px; border-radius: 4px; background: var(--hair); }
+  .vis-cal div.act { background: var(--brand); }
+  .vis-cal div.h { background: color-mix(in oklab, var(--brand) 30%, var(--bg)); }
+  .vis-flow { display: flex; align-items: center; gap: 8px; padding: 14px; }
+  .vis-flow .node { padding: 8px 12px; border-radius: 8px; background: var(--surface); border: 1px solid var(--hair); font-family: "Fragment Mono", monospace; font-size: 11px; letter-spacing: .05em; color: var(--ink); }
+  .vis-flow .ln { flex: 0 0 16px; height: 2px; background: var(--hair); position: relative; }
+  .vis-flow .ln::after { content: ""; position: absolute; right: -2px; top: -4px; border: 5px solid transparent; border-left-color: var(--hair); }
+  .vis-flow .node.acc { background: var(--brand-soft); border-color: transparent; color: var(--brand); }
+
+  /* ============== WORK CAROUSEL ============== */
+  .work-rail {
+    display: flex; gap: 20px;
+    overflow-x: auto; overflow-y: hidden;
+    padding: 8px 24px 24px;
+    margin: 0 -24px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: max(24px, calc((100vw - 1280px) / 2 + 24px));
+    scrollbar-width: none;
+    will-change: scroll-position;
+  }
+  @media (min-width: 900px) {
+    .work-rail {
+      padding: 8px 40px 24px;
+      margin: 0 -40px;
+      scroll-padding-left: max(40px, calc((100vw - 1280px) / 2 + 40px));
+    }
+  }
+  .work-rail::-webkit-scrollbar { display: none; }
+  .work-rail.scrolling { scroll-snap-type: none !important; }
+  .work-rail .lead, .work-rail .tail { flex: 0 0 max(0px, calc((100vw - 1280px) / 2 + 24px - 20px)); }
+  @media (min-width: 900px) { .work-rail .lead, .work-rail .tail { flex: 0 0 max(0px, calc((100vw - 1280px) / 2 + 40px - 20px)); } }
+  .work-rail .tail { min-width: 40px; }
+
+  .work-controls {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; margin-top: 24px;
+  }
+  .work-controls .progress {
+    flex: 1; height: 1px; background: var(--hair); position: relative; overflow: hidden;
+    margin: 0 8px;
+  }
+  .work-controls .progress::after {
+    content: ""; position: absolute; left: 0; top: 0; height: 100%;
+    background: var(--ink); width: var(--p, 16%);
+    transition: width .45s cubic-bezier(.32,.72,0,1);
+  }
+  .work-controls .counter {
+    font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim);
+    letter-spacing: .12em;
+  }
+  .arrow-btn {
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--hair);
+    background: var(--surface); color: var(--ink);
+    display: grid; place-items: center; cursor: pointer; padding: 0;
+    transition: transform .25s cubic-bezier(.32,.72,0,1),
+                background .25s cubic-bezier(.32,.72,0,1),
+                box-shadow .25s cubic-bezier(.32,.72,0,1),
+                opacity .25s;
+    box-shadow: 0 1px 2px rgba(17,16,13,.04);
+  }
+  .arrow-btn:hover { background: var(--bg-2); transform: translateY(-1px); box-shadow: 0 6px 14px -8px rgba(17,16,13,.25); }
+  .arrow-btn[disabled] { opacity: .25; cursor: default; transform: none; box-shadow: none; }
+  .arrow-btn svg { width: 18px; height: 18px; }
+
+  .wp-card {
+    width: min(380px, 80vw); flex: 0 0 auto; scroll-snap-align: start; scroll-snap-stop: always;
+    background: var(--surface); border: 1px solid var(--hair); border-radius: var(--r-lg);
+    overflow: hidden; transition: transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s cubic-bezier(.32,.72,0,1);
+    display: grid; grid-template-rows: auto 1fr auto; text-decoration: none;
+  }
+  .wp-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .wp-media {
+    aspect-ratio: 16/10; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #F7F3EA 0%, #EBD9CC 100%);
+  }
+  .wp-media.dark { background: linear-gradient(135deg, #1A1815 0%, #2F2A24 100%); }
+  .wp-media.stone { background: linear-gradient(135deg, #F7F3EA 0%, #E7DED2 100%); }
+  .wp-media.peach { background: linear-gradient(135deg, #FFF9EF 0%, #EBD6C8 100%); }
+  .wp-media::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(60% 80% at 80% 20%, color-mix(in oklab, var(--brand) 30%, transparent), transparent 70%),
+      radial-gradient(60% 80% at 20% 80%, color-mix(in oklab, var(--brand-2) 25%, transparent), transparent 70%);
+  }
+  .wp-media .tag-top {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    padding: 6px 10px; border-radius: 8px; background: var(--surface); color: var(--ink);
+    font-family: "Fragment Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+    border: 1px solid var(--hair); box-shadow: var(--shadow-sm);
+  }
+  .wp-media .num-corner {
+    position: absolute; bottom: 14px; right: 14px; z-index: 2;
+    font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--ink);
+    padding: 4px 8px; border-radius: 6px;
+    background: color-mix(in oklab, var(--surface) 80%, transparent); backdrop-filter: blur(8px);
+  }
+  .wp-media .mini {
+    position: absolute; inset: 42px 28px 28px; border-radius: 8px;
+    background: rgba(255, 255, 255, .7); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, .5);
+    display: grid; grid-template-rows: 20px 1fr;
+  }
+  .wp-media .mini::before { content: ""; display: block; margin: 6px; border-radius: 4px; background: rgba(17, 16, 13, .06); }
+  .wp-media.dark .mini { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .08); }
+  .wp-media.dark .mini::before { background: rgba(255, 255, 255, .08); }
+  .wp-body { padding: 20px 22px 14px; display: grid; gap: 8px; }
+  .wp-body .meta { display: flex; justify-content: space-between; align-items: center; font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-dim); text-transform: uppercase; letter-spacing: .14em; }
+  .wp-body h3 { font-size: 22px; line-height: 1.08; margin: 0; }
+  .wp-body p { color: var(--muted); margin: 0; font-size: 14px; line-height: 1.5; }
+  .wp-foot { display: flex; justify-content: space-between; align-items: center; padding: 14px 22px 18px; border-top: 1px solid var(--hair-2); }
+  .wp-foot .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .wp-foot .t { font-family: "Fragment Mono", monospace; font-size: 11px; padding: 4px 8px; border: 1px solid var(--hair); border-radius: 6px; color: var(--muted); }
+
+  /* ============== PROCESS BAND ============== */
+  .proc-band { background: var(--ink); color: var(--surface); padding: 110px 0; border-radius: 32px; margin: 0 24px; position: relative; overflow: hidden; }
+  @media (min-width: 900px) { .proc-band { margin: 0 40px; } }
+  .proc-band::before {
+    content: ""; position: absolute; inset: -20%;
+    background:
+      radial-gradient(30% 30% at 80% 10%, color-mix(in oklab, var(--brand-2) 50%, transparent), transparent 70%),
+      radial-gradient(30% 30% at 10% 90%, color-mix(in oklab, var(--brand) 50%, transparent), transparent 70%);
+    filter: blur(40px); opacity: .6;
+  }
+  .proc-band .wrap { position: relative; z-index: 1; }
+  .proc-band .sec-title { color: var(--surface); }
+  .proc-band .sec-blurb { color: rgba(255, 255, 255, .7); }
+  .proc-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 800px) { .proc-grid { grid-template-columns: repeat(4, 1fr); } }
+  .proc {
+    background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 16px; padding: 28px 24px; display: grid; gap: 14px; align-content: start;
+    min-height: 240px; position: relative; transition: background .2s ease;
+  }
+  .proc:hover { background: rgba(255, 255, 255, .07); }
+  .proc .pn { font-family: "Fragment Mono", monospace; color: color-mix(in oklab, var(--mint) 80%, white); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; }
+  .proc h4 { font-family: "Gloock", serif; font-size: 32px; font-weight: 400; letter-spacing: -.045em; margin: 0; line-height: .98; }
+  .proc p { color: rgba(255, 255, 255, .65); font-size: 14px; line-height: 1.55; margin: 0; }
+  .proc .num { position: absolute; top: 24px; right: 24px; font-size: 56px; font-weight: 600; letter-spacing: -.04em; line-height: .8; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, .18); font-family: "Gloock", serif; }
+
+  /* ============== TESTIMONIALS ============== */
+  .quote-rail {
+    display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 8px 24px 24px; margin: 0 -24px; scrollbar-width: none;
+  }
+  @media (min-width: 900px) { .quote-rail { padding: 8px 40px 24px; margin: 0 -40px; } }
+  .quote-rail::-webkit-scrollbar { display: none; }
+  .quote {
+    flex: 0 0 auto; scroll-snap-align: start; width: min(460px, 84vw);
+    background: var(--surface); color: var(--ink); border-radius: var(--r-lg);
+    padding: 28px; display: flex; flex-direction: column; gap: 18px;
+    border: 1px solid var(--hair); box-shadow: var(--shadow-sm);
+  }
+  .quote:nth-child(3n+2) { background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%); color: var(--surface); border-color: transparent; }
+  .quote:nth-child(3n+3) { background: var(--ink); color: var(--surface); border-color: transparent; }
+  .quote .big { font-size: 18px; line-height: 1.5; letter-spacing: -.01em; text-wrap: balance; margin: 0; font-weight: 500; }
+  .quote .who { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+  .quote .av { width: 40px; height: 40px; border-radius: 99px; }
+  .quote .name { font-weight: 500; font-size: 14px; }
+  .quote .role { font-family: "Fragment Mono", monospace; font-size: 11px; opacity: .7; letter-spacing: .06em; margin-top: 1px; }
+  .quote .stars { display: flex; gap: 2px; color: #A55E3E; }
+  .quote:nth-child(3n+2) .stars { color: #FFD8C2; }
+  .quote .stars svg { width: 14px; height: 14px; }
+
+  /* FAQ short */
+  .faqs { display: grid; gap: 8px; max-width: 880px; margin: 0 auto; }
+  details.faq { border: 1px solid var(--hair); border-radius: var(--r-md); background: var(--surface); transition: border-color .2s ease, box-shadow .2s ease; }
+  details.faq:hover { border-color: color-mix(in oklab, var(--ink) 14%, transparent); }
+  details.faq[open] { box-shadow: var(--shadow-md); }
+  details.faq summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 20px 22px; align-items: center; }
+  details.faq summary::-webkit-details-marker { display: none; }
+  details.faq .qt { font-size: 16.5px; line-height: 1.35; letter-spacing: -.01em; font-weight: 500; }
+  details.faq .plus { width: 28px; height: 28px; border-radius: 99px; background: var(--bg-2); display: inline-flex; align-items: center; justify-content: center; color: var(--muted); transition: all .2s ease; }
+  details.faq[open] .plus { background: var(--ink); color: var(--surface); transform: rotate(45deg); }
+  details.faq .plus svg { width: 14px; height: 14px; }
+  details.faq .ans { padding: 0 22px 22px; color: var(--muted); line-height: 1.65; max-width: 680px; font-size: 15px; }
+</style>
+</head>
+<body data-page="home">
+
+<div data-slot="topbar"></div>
+<div data-slot="nav"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-text" data-reveal>
+      <div class="hero-tag">
+        <span class="pill-new">New</span>
+        <span>Now offering AI &amp; automation packages →</span>
+        <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+      <h1 class="head">
+        Websites, ecommerce<br/>
+        &amp; <span class="grad">automations</span><br/>
+        for modern businesses.
+      </h1>
+      <p class="hero-sub">
+        A small studio that designs premium websites and quietly powerful workflows —
+        so you take more bookings, sell more products and spend less time in your inbox.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="contact.html">
+          Start a project
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="work.html">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          See our work
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-product" data-reveal>
+      <div class="hp-bar">
+        <span class="d"></span><span class="d"></span><span class="d"></span>
+        <span class="url">studioduo.co — live dashboard</span>
+      </div>
+      <div class="hp-body">
+        <aside class="hp-side">
+          <div class="ico active"><span class="sq"></span>Overview</div>
+          <div class="ico"><span class="sq"></span>Bookings</div>
+          <div class="ico"><span class="sq"></span>Orders</div>
+          <div class="ico"><span class="sq"></span>Automations</div>
+          <div class="ico"><span class="sq"></span>AI inbox</div>
+          <div class="ico"><span class="sq"></span>Settings</div>
+        </aside>
+        <div class="hp-main">
+          <div class="hp-row">
+            <span class="t">This week</span>
+            <span class="s">Mon — Sun</span>
+          </div>
+          <div class="hp-graph">
+            <div style="height:35%"></div>
+            <div style="height:55%"></div>
+            <div style="height:48%"></div>
+            <div style="height:70%"></div>
+            <div style="height:62%"></div>
+            <div style="height:80%"></div>
+            <div style="height:74%"></div>
+            <div style="height:90%"></div>
+            <div style="height:68%"></div>
+            <div style="height:85%"></div>
+            <div style="height:78%"></div>
+            <div style="height:96%"></div>
+          </div>
+          <div class="hp-cards">
+            <div class="hp-card">
+              <span class="ck">Bookings</span>
+              <span class="cv">142<span class="pos">+18%</span></span>
+            </div>
+            <div class="hp-card">
+              <span class="ck">Revenue</span>
+              <span class="cv">£<em>9,240</em><span class="pos">+12%</span></span>
+            </div>
+            <div class="hp-card">
+              <span class="ck">Auto-handled</span>
+              <span class="cv">68%<span class="pos">+4%</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats" data-reveal>
+      <div class="hstat"><div class="v">150<em>+</em></div><div class="l">Projects shipped</div></div>
+      <div class="hstat"><div class="v">98<em>%</em></div><div class="l">Client retention</div></div>
+      <div class="hstat"><div class="v">4–8<em>w</em></div><div class="l">Avg delivery</div></div>
+      <div class="hstat"><div class="v">2<em>·</em>2</div><div class="l">The whole team</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOGOS ============ -->
+<section class="logos">
+  <div class="wrap">
+    <p class="logos-title">Built with the tools you already trust</p>
+    <div class="logo-row">
+      <span><span class="sq"></span>Shopify</span>
+      <span><span class="sq"></span>n8n</span>
+      <span><span class="sq"></span>Stripe</span>
+      <span><span class="sq"></span>OpenAI</span>
+      <span><span class="sq"></span>Notion</span>
+      <span><span class="sq"></span>Astro</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES (Bento) ============ -->
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">01 · Services</span>
+      <h2 class="sec-title">Four focused services that <em>compound.</em></h2>
+      <p class="sec-blurb">Each stands on its own — together they form a small, opinionated stack that turns a website into a sales channel and the sales channel into a quiet machine.</p>
+    </div>
+
+    <div class="bento" data-reveal>
+      <a class="b-card b-a" href="services.html#ecommerce">
+        <span class="b-eyebrow">Ecommerce</span>
+        <h3>Stores that look <em style="font-style:italic">handpicked,</em> not built.</h3>
+        <p>Clean Shopify &amp; WooCommerce builds with checkout polish, reviews, email capture and the trust details that move conversion.</p>
+        <div class="b-vis"><div class="vis-store"><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+        <div class="row">
+          <span class="price">From <b>£3,500</b></span>
+          <span class="arrow" aria-hidden="true">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="b-card b-b" href="services.html#booking">
+        <span class="b-eyebrow">Booking</span>
+        <h3>Pages people actually finish.</h3>
+        <p>Salon, spa, gym or golf club — calendar flows with deposits and reminders.</p>
+        <div class="b-vis">
+          <div class="vis-cal">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+            <div></div><div class="h"></div><div class="act"></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div class="act"></div><div class="act"></div><div class="h"></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div><div class="act"></div><div></div><div></div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="price">From <b>£2,500</b></span>
+          <span class="arrow" aria-hidden="true">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="b-card b-c" href="services.html#ai">
+        <span class="b-eyebrow">AI tools</span>
+        <h3>Practical AI that earns its keep.</h3>
+        <p>Chatbots, enquiry summarisers, content drafts.</p>
+        <div class="row" style="margin-top:auto">
+          <span class="price">From <b>£900</b></span>
+          <span class="arrow" aria-hidden="true">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="b-card b-d" href="services.html#automation">
+        <span class="b-eyebrow">Automation · n8n</span>
+        <h3>Workflows that do the admin at 3am.</h3>
+        <p>Built in n8n so they're visible and editable. Forms enrich themselves, bookings confirm themselves, follow-ups go out on their own.</p>
+        <div class="b-vis">
+          <div class="vis-flow">
+            <div class="node">Form</div>
+            <div class="ln"></div>
+            <div class="node">Enrich</div>
+            <div class="ln"></div>
+            <div class="node acc">AI summary</div>
+            <div class="ln"></div>
+            <div class="node">CRM + Slack</div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="price">From <b>£1,200</b></span>
+          <span class="arrow" aria-hidden="true">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK CAROUSEL ============ -->
+<section class="section" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:90px 0" id="work">
+  <div class="wrap">
+    <div data-reveal style="display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;margin-bottom:36px">
+      <div>
+        <span class="eyebrow">02 · Featured work</span>
+        <h2 class="sec-title" style="margin:8px 0 0;font-size:clamp(36px,4.6vw,56px);text-align:left">Real builds across <em>real businesses.</em></h2>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a class="link-arrow" href="work.html" style="margin-right:8px">All work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <button class="arrow-btn" id="wpv-prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="arrow-btn" id="wpv-next" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="work-rail" id="wpv-rail" role="region" aria-roledescription="carousel" aria-label="Featured work">
+    <div class="lead" aria-hidden="true"></div>
+
+    <a class="wp-card" href="case-study.html" data-card>
+      <div class="wp-media peach">
+        <span class="tag-top">Ecommerce</span>
+        <span class="num-corner">01 / 06</span>
+        <div class="mini"></div>
+      </div>
+      <div class="wp-body">
+        <div class="meta"><span>Roma Supplements</span><span>2026</span></div>
+        <h3>Subscription store, doubled.</h3>
+        <p>Subscribe-and-save with bundle discounts and churn-saver emails.</p>
+      </div>
+      <div class="wp-foot">
+        <div class="tags"><span class="t">Shopify</span><span class="t">Klaviyo</span></div>
+        <span class="link-arrow">Case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a class="wp-card" href="case-study.html" data-card>
+      <div class="wp-media stone">
+        <span class="tag-top">Booking</span>
+        <span class="num-corner">02 / 06</span>
+        <div class="mini"></div>
+      </div>
+      <div class="wp-body">
+        <div class="meta"><span>Bloom Hair &amp; Beauty</span><span>2026</span></div>
+        <h3>Bookings paid in the first weekend.</h3>
+        <p>Salon booking with deposits, reminders and a stylist flow.</p>
+      </div>
+      <div class="wp-foot">
+        <div class="tags"><span class="t">Booking</span><span class="t">Stripe</span></div>
+        <span class="link-arrow">Case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a class="wp-card" href="case-study.html" data-card>
+      <div class="wp-media dark">
+        <span class="tag-top">Automation</span>
+        <span class="num-corner">03 / 06</span>
+        <div class="mini"></div>
+      </div>
+      <div class="wp-body">
+        <div class="meta"><span>Ledger &amp; Co</span><span>2026</span></div>
+        <h3>An n8n flow that runs admin.</h3>
+        <p>Enquiry → enrichment → AI summary → CRM with Slack alerts.</p>
+      </div>
+      <div class="wp-foot">
+        <div class="tags"><span class="t">n8n</span><span class="t">AI</span></div>
+        <span class="link-arrow">Case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a class="wp-card" href="case-study.html" data-card>
+      <div class="wp-media">
+        <span class="tag-top">Booking</span>
+        <span class="num-corner">04 / 06</span>
+        <div class="mini"></div>
+      </div>
+      <div class="wp-body">
+        <div class="meta"><span>Concept · Yoga studio</span><span>2026</span></div>
+        <h3>Class schedule that fills itself.</h3>
+        <p>Capacity, waitlists, member passes and reminders.</p>
+      </div>
+      <div class="wp-foot">
+        <div class="tags"><span class="t">Booking</span><span class="t">Members</span></div>
+        <span class="link-arrow">Case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a class="wp-card" href="case-study.html" data-card>
+      <div class="wp-media peach">
+        <span class="tag-top">AI</span>
+        <span class="num-corner">05 / 06</span>
+        <div class="mini"></div>
+      </div>
+      <div class="wp-body">
+        <div class="meta"><span>Stille Skincare</span><span>2026</span></div>
+        <h3>Chatbot that answers 70%.</h3>
+        <p>Trained on FAQs, product docs &amp; order history. Honest fallback mode.</p>
+      </div>
+      <div class="wp-foot">
+        <div class="tags"><span class="t">OpenAI</span><span class="t">Zendesk</span></div>
+        <span class="link-arrow">Case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a class="wp-card" href="case-study.html" data-card>
+      <div class="wp-media stone">
+        <span class="tag-top">Ecommerce</span>
+        <span class="num-corner">06 / 06</span>
+        <div class="mini"></div>
+      </div>
+      <div class="wp-body">
+        <div class="meta"><span>Northline Studio</span><span>2026</span></div>
+        <h3>Editorial storefront, headless.</h3>
+        <p>Hand-set sections, CMS-driven cadence and a one-page checkout.</p>
+      </div>
+      <div class="wp-foot">
+        <div class="tags"><span class="t">Shopify</span><span class="t">Sanity</span></div>
+        <span class="link-arrow">Case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <div class="tail" aria-hidden="true"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="work-controls">
+      <span class="counter" id="wpv-counter">01 / 06</span>
+      <div class="progress" id="wpv-progress"></div>
+      <a class="link-arrow" href="work.html" style="font-size:13px">View all
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="section" id="process" style="padding-left:0;padding-right:0">
+  <div class="proc-band">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow light">03 · Process</span>
+        <h2 class="sec-title">Plan, design, build, <em>automate.</em></h2>
+        <p class="sec-blurb">The same four steps whether you need a store, a booking page or a workflow. No mystery, no theatre — just a clear path from kickoff to launch.</p>
+      </div>
+      <div class="proc-grid" data-reveal>
+        <div class="proc">
+          <span class="num">01</span>
+          <span class="pn">01 · Plan</span>
+          <h4>Audit &amp; align</h4>
+          <p>We audit the offer, the tools and the workflows you want to fix. Agree what success looks like before opening Figma.</p>
+        </div>
+        <div class="proc">
+          <span class="num">02</span>
+          <span class="pn">02 · Design</span>
+          <h4>Wireframe &amp; ship</h4>
+          <p>Wireframes, then visual designs for every page or screen. You see and sign off the whole thing before code.</p>
+        </div>
+        <div class="proc">
+          <span class="num">03</span>
+          <span class="pn">03 · Build</span>
+          <h4>Production-ready</h4>
+          <p>Fast, accessible builds with payments, SEO and analytics wired in. Mobile-first, easy to update.</p>
+        </div>
+        <div class="proc">
+          <span class="num">04</span>
+          <span class="pn">04 · Automate</span>
+          <h4>Quiet machine</h4>
+          <p>n8n flows and AI assistants take over the repetitive parts. We monitor for 30 days and tune the edges.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="testimonials">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">04 · Clients</span>
+      <h2 class="sec-title">Not case studies, just <em>kind words.</em></h2>
+      <p class="sec-blurb">A small selection from founders, salon owners and small-team operators we've worked with over the past two years.</p>
+    </div>
+  </div>
+
+  <div class="quote-rail" id="quote-rail">
+    <article class="quote">
+      <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg></div>
+      <p class="big">"The bookings page paid for itself in the first weekend. Customers stopped DMing us — they just booked, paid the deposit and showed up."</p>
+      <div class="who">
+        <div class="av" style="background:linear-gradient(135deg,#D9A17E,#9B5A36)"></div>
+        <div>
+          <div class="name">Priya Shah</div>
+          <div class="role">OWNER · BLOOM HAIR &amp; BEAUTY</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="quote">
+      <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg></div>
+      <p class="big">"The n8n flow quietly does the work of a part-time admin. We forgot it existed — which is exactly the point."</p>
+      <div class="who">
+        <div class="av" style="background:linear-gradient(135deg,#fff,#D8CEBE)"></div>
+        <div>
+          <div class="name">Tom Whittaker</div>
+          <div class="role">FOUNDER · LEDGER &amp; CO</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="quote">
+      <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg></div>
+      <p class="big">"First studio I've worked with that treats 'automate it' as a real deliverable — not a wishlist item buried in slide 30."</p>
+      <div class="who">
+        <div class="av" style="background:linear-gradient(135deg,#fff,#aaa)"></div>
+        <div>
+          <div class="name">Esmé Carter</div>
+          <div class="role">COO · NORTHLINE STUDIO</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="quote">
+      <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .8-5.4 4.8 1.6 7L12 18l-6.2 3.6 1.6-7L2 9.8 9 9z"/></svg></div>
+      <p class="big">"Best money we've spent on a website. The reviews module alone bumped repeat orders ~22% in the first quarter."</p>
+      <div class="who">
+        <div class="av" style="background:linear-gradient(135deg,#C7754E,#6B3B2E)"></div>
+        <div>
+          <div class="name">Marco Inglese</div>
+          <div class="role">FOUNDER · ROMA SUPPLEMENTS</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq" style="background:var(--bg-2);border-top:1px solid var(--hair);padding-top:90px;padding-bottom:90px">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">05 · FAQ</span>
+      <h2 class="sec-title">Questions, before <em>the form.</em></h2>
+      <p class="sec-blurb">The things we get asked most. If yours isn't here, the contact form takes about 60 seconds.</p>
+    </div>
+
+    <div class="faqs" data-reveal>
+      <details class="faq" open>
+        <summary><span class="qt">How long does a typical project take?</span>
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="ans">Most websites and stores ship in 4–8 weeks. Booking and automation builds usually take 2–4 weeks depending on integrations and volume of test data.</div>
+      </details>
+      <details class="faq">
+        <summary><span class="qt">Shopify or WooCommerce — which one?</span>
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="ans">Both. Shopify is our default for product brands because checkout, payments and shipping are built in. WooCommerce works well when you already have a WordPress site you want to keep.</div>
+      </details>
+      <details class="faq">
+        <summary><span class="qt">What does workflow automation actually look like?</span>
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="ans">A real example: new enquiry → enriched with company data → summarised by AI → pushed to CRM with a Slack alert. Or: booking → confirmation → calendar event → reminder the day before. Built in n8n so they're visible and editable.</div>
+      </details>
+      <details class="faq">
+        <summary><span class="qt">Do you provide ongoing support?</span>
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="ans">Yes. Maintenance packages cover updates, content edits, automation tuning and bug fixes. You can also just hire us per-change at an hourly rate — no minimum retainer.</div>
+      </details>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <a class="link-arrow" href="contact.html" style="font-size:14px">
+        Ask your own question
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="wrap cta-inner">
+    <span class="eyebrow">Start a project</span>
+    <h2>Let's build the <em>quiet machine.</em></h2>
+    <p>Tell us what you want to ship — store, booking page, automation, AI tool — and we'll come back inside 24 hours with a plan and a price.</p>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href="contact.html">
+        Start a project
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="contact.html#call">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Book a 20-min intro call
+      </a>
+    </div>
+  </div>
+</section>
+
+<div data-slot="footer"></div>
+
+<script src="assets/partials.js"></script>
+<script>
+  // Smooth work carousel — single-card stepping with cubic-bezier easing
+  (function () {
+    const rail = document.getElementById("wpv-rail");
+    if (!rail) return;
+    const prevBtn = document.getElementById("wpv-prev");
+    const nextBtn = document.getElementById("wpv-next");
+    const counter = document.getElementById("wpv-counter");
+    const progress = document.getElementById("wpv-progress");
+
+    const EASE = (() => {
+      const A=(a,b)=>1-3*b+3*a, B=(a,b)=>3*b-6*a, C=a=>3*a;
+      const calc=(t,a,b)=>((A(a,b)*t+B(a,b))*t+C(a))*t;
+      const slope=(t,a,b)=>3*A(a,b)*t*t+2*B(a,b)*t+C(a);
+      const p1x=0.32,p2x=0;
+      return (x) => {
+        let t=x;
+        for(let i=0;i<6;i++){const s=slope(t,p1x,p2x);if(s===0)break;t-=(calc(t,p1x,p2x)-x)/s;}
+        return calc(t,0.72,1);
+      };
+    })();
+
+    let idx = 0; let animId = null;
+    const cards = () => [...rail.querySelectorAll("[data-card]")];
+
+    function targetFor(i) {
+      const list = cards();
+      if (!list[i]) return null;
+      const padL = parseFloat(getComputedStyle(rail).scrollPaddingLeft) || 0;
+      const railLeft = rail.getBoundingClientRect().left;
+      const cardLeft = list[i].getBoundingClientRect().left;
+      const contentX = (cardLeft - railLeft) + rail.scrollLeft;
+      const max = rail.scrollWidth - rail.clientWidth;
+      return Math.max(0, Math.min(max, contentX - padL));
+    }
+
+    function animate(target) {
+      if (animId != null) { cancelAnimationFrame(animId); animId = null; }
+      const from = rail.scrollLeft;
+      const dx = target - from;
+      if (Math.abs(dx) < 1) { rail.classList.remove("scrolling"); return; }
+      const dur = Math.max(480, Math.min(900, Math.abs(dx)/2.4));
+      const t0 = performance.now();
+      rail.classList.add("scrolling");
+      const tick = (now) => {
+        const t = Math.min(1, (now-t0)/dur);
+        rail.scrollLeft = from + dx * EASE(t);
+        if (t < 1) animId = requestAnimationFrame(tick);
+        else { animId = null; rail.classList.remove("scrolling"); }
+      };
+      animId = requestAnimationFrame(tick);
+    }
+
+    function refresh() {
+      const total = cards().length;
+      prevBtn.disabled = idx <= 0;
+      nextBtn.disabled = idx >= total - 1;
+      counter.textContent = String(idx+1).padStart(2,"0") + " / " + String(total).padStart(2,"0");
+      const pct = total > 1 ? (idx/(total-1))*100 : 0;
+      progress.style.setProperty("--p", pct + "%");
+    }
+
+    function closestIdx() {
+      const list = cards(); if (!list.length) return 0;
+      const padL = parseFloat(getComputedStyle(rail).scrollPaddingLeft) || 0;
+      const railLeft = rail.getBoundingClientRect().left;
+      let bi = 0, bd = Infinity;
+      list.forEach((c,i)=>{ const d=Math.abs((c.getBoundingClientRect().left-railLeft)-padL); if(d<bd){bd=d;bi=i;} });
+      return bi;
+    }
+
+    function step(dir) {
+      const total = cards().length;
+      const next = Math.max(0, Math.min(total-1, idx+dir));
+      if (next === idx) return;
+      idx = next;
+      const t = targetFor(idx);
+      if (t != null) animate(t);
+      refresh();
+    }
+
+    prevBtn.addEventListener("click", () => step(-1));
+    nextBtn.addEventListener("click", () => step(1));
+
+    let settle;
+    rail.addEventListener("scroll", () => {
+      if (animId != null) return;
+      clearTimeout(settle);
+      settle = setTimeout(() => { idx = closestIdx(); refresh(); }, 140);
+    }, { passive: true });
+
+    rail.tabIndex = 0;
+    rail.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+    });
+
+    refresh();
+  })();
+</script>
+</body>
+</html>

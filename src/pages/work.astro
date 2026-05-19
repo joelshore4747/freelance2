@@ -1,419 +1,429 @@
 ---
-import { ArrowRight, CheckCircle2, Code2, Film, Handshake, Layers, Orbit, PenTool, Play, Rocket, Search, ShoppingBag, Sparkles, TrendingUp } from "lucide-react"
 import Layout from "@/layouts/Layout.astro"
 import Navigation from "@/components/Navigation.astro"
 import Footer from "@/components/Footer.astro"
-import Badge from "@/components/ui/Badge.astro"
-import { SpotlightCarousel } from "@/components/SpotlightCarousel"
-import { ShowcaseCarousel } from "@/components/ShowcaseCarousel"
-import { CornerVideoPlayer } from "@/components/CornerVideoPlayer"
 
-const heroStats = [
-  { label: "Bookings handled", value: "120k+", Icon: Rocket, tone: "bg-primary/10 text-primary" },
-  { label: "Ecommerce builds shipped", value: "60+", Icon: ShoppingBag, tone: "bg-standout/10 text-standout" },
-  { label: "Hours saved per month", value: "1.4k", Icon: TrendingUp, tone: "bg-accent/10 text-accent" },
-  { label: "Automations running", value: "200+", Icon: Handshake, tone: "bg-standout-2-10 text-standout-2" },
+type Work = {
+  id: number
+  title: string
+  company: string
+  category: string
+  desc: string
+  tags: string[]
+  media: string
+  mark: string
+  feature?: boolean
+  image?: string
+  live?: string
+}
+
+const works: Work[] = [
+  { id: 1,  title: "Estate site for a heritage golf club", company: "Lyndhurst Park",       category: "Ecommerce",
+    desc: "A full-bleed brochure site for the estate — course, clubhouse, membership, society days — built to feel hand-set.",
+    tags: ["Landing","Editorial","Responsive"],          media: "olive", feature: true, mark: "Lyndhurst",
+    image: "/portfolio/assets/01-hero-course-at-first-light.png", live: "/portfolio/lyndhurst-park.html" },
+  { id: 2,  title: "Tee-time booking, member-aware",     company: "Lyndhurst Park",        category: "Booking",
+    desc: "Packages, member rates, deposits and a calm summary panel — the booking flow that runs the day.",
+    tags: ["Booking","Stripe","Calendar"],               media: "olive", mark: "Tee-time",
+    image: "/portfolio/website_snippet_images/golfbooking.png", live: "/portfolio/book-a-tee-time.html" },
+  { id: 3,  title: "Class booking that fills the mats",  company: "Hollowford Yoga",       category: "Booking",
+    desc: "Schedule, capacity, member passes and the reminder cadence — class booking with a quiet, considered feel.",
+    tags: ["Booking","Memberships","SMS"],               media: "stone", mark: "Hollowford",
+    image: "/portfolio/yoga_assets/yoga1.jpeg", live: "/portfolio/yoga-booking.html" },
+  { id: 4,  title: "Subscription store, doubled",        company: "Roma Supplements",     category: "Ecommerce",
+    desc: "Subscribe-and-save flow with bundle discounts, account portal and churn-saver emails.",
+    tags: ["Shopify","Subscriptions","Klaviyo"],         media: "peach", mark: "Roma" },
+  { id: 5,  title: "Bookings paid in the first weekend", company: "Bloom Hair & Beauty",   category: "Booking",
+    desc: "Salon booking with deposits, reminders and a stylist-by-stylist flow.",
+    tags: ["Booking","Stripe","SMS"],                    media: "stone", mark: "Bloom" },
+  { id: 6,  title: "An n8n flow that runs admin",        company: "Ledger & Co",           category: "Automation",
+    desc: "Enquiry → enrichment → AI summary → CRM, with a Slack alert at every step.",
+    tags: ["n8n","AI","HubSpot"],                        media: "dark",  mark: "Ledger" },
+  { id: 7,  title: "Support chatbot that answers 70%",   company: "Stille Skincare",       category: "AI",
+    desc: "Trained on FAQs, product docs and order history. Honest 'I don't know' mode included.",
+    tags: ["OpenAI","Zendesk","Shopify"],                media: "copper",mark: "Stille" },
+  { id: 8,  title: "Northline editorial relaunch",       company: "Northline Studio",      category: "Ecommerce",
+    desc: "Headless storefront with editorial cadence — sections feel hand-set, but they're CMS-driven.",
+    tags: ["Shopify","Sanity","Tailwind"],               media: "stone", mark: "Northline" },
+  { id: 9,  title: "Enquiry triage with AI summaries",   company: "Northwind Studio",      category: "Automation",
+    desc: "Form → enriched → AI summary → assigned to the right partner. 3-minute response promise.",
+    tags: ["n8n","OpenAI","Slack"],                      media: "dark",  mark: "Triage" },
+  { id: 10, title: "Outbound copilot for SDRs",          company: "Reach (internal tool)", category: "AI",
+    desc: "Human-in-the-loop assistant with hard guardrails and a complete audit trail.",
+    tags: ["Python","FastAPI","LLM"],                    media: "copper",mark: "Reach" },
+  { id: 11, title: "Maple onboarding rebuilt",           company: "Maple",                  category: "Ecommerce",
+    desc: "From cold visitor to verified account in under three minutes — measured across 8,000 sessions.",
+    tags: ["TypeScript","Stripe","Plaid"],               media: "peach", mark: "Maple" },
+  { id: 12, title: "Clinic intake & reminders",          company: "Atlas Health",           category: "Booking",
+    desc: "Frictionless intake form, calmer scheduling flow, measurable drop-off reductions.",
+    tags: ["Booking","HIPAA-style","SMS"],               media: "",      mark: "Atlas" },
+  { id: 13, title: "Product description generator",      company: "Field & Foundry",        category: "AI",
+    desc: "Brand-trained generator that drafts product copy in three voices, with editor approval.",
+    tags: ["OpenAI","Notion","Shopify"],                 media: "olive", mark: "F&F" },
 ]
 
-const showreelHighlights = [
-  { title: "Booking pages that convert", description: "Clean flows for golf, yoga, spa, gym and restaurant reservations — designed to remove the back-and-forth.", Icon: Layers, tone: "bg-primary/10 text-primary" },
-  { title: "Ecommerce that sells", description: "Premium product pages, trust signals, frictionless checkout, and email capture wired in from day one.", Icon: ShoppingBag, tone: "bg-standout/10 text-standout" },
-  { title: "Automation that pays back", description: "n8n flows that remove copy-paste admin and chase leads while you sleep.", Icon: Orbit, tone: "bg-accent/10 text-accent" },
-  { title: "AI where it earns its keep", description: "Chatbots, summaries, drafts and qualification — scoped, not sprayed across every page.", Icon: Handshake, tone: "bg-standout-2-10 text-standout-2" },
-]
-
-const spotlightProjects = [
-  { id: "golf-booking", category: "Booking", title: "Golf tee-time booking", description: "Member rates, weather-aware availability, deposit-on-book and instant confirmations. Includes a clean admin view for the pro shop.", image: "/saas-dashboard-analytics-interface.jpg", video: "/videos/atlas.mp4", outcomes: ["Tee-time bookings up 3.2×", "Phone enquiries down 70%", "Deposits captured at the point of booking"], link: "/contact?project=golf-booking" },
-  { id: "beauty-store", category: "Ecommerce", title: "Hair & beauty product store", description: "Premium product storytelling, reviews, subscription flow, and a fast one-page checkout on Shopify.", image: "/modern-ecommerce-interface.png", video: "/videos/lumos.mp4", outcomes: ["4.1% visitor-to-purchase", "Subscriptions on 28% of orders", "Repeat purchase rate up 35%"], link: "/contact?project=beauty-store" },
-  { id: "enquiry-automation", category: "Automation", title: "Enquiry → CRM automation", description: "Every form submission enriched, summarised by AI, scored, and pushed to the right person on Slack within 60 seconds.", image: "/mobile-fitness-app-interface-design.jpg", video: "/videos/pulse.mp4", outcomes: ["Lead response time: 47s avg", "Manual data entry eliminated", "Pipeline visibility per-channel"], link: "/contact?project=enquiry-automation" },
-]
-
-const projects = [
-  { id: "yoga-booking", title: "Yoga studio class booking", category: "Booking", summary: "Class schedule with capacity, waitlists, member passes, drop-in payments and email reminders.", image: "/mobile-fitness-app-interface-design.jpg", metrics: [{ label: "No-shows", value: "-40%" }, { label: "Class fill rate", value: "92%" }, { label: "Pass renewals", value: "+22%" }], stack: ["Astro", "Stripe", "Calendly", "n8n"] },
-  { id: "fashion-store", title: "Fashion brand storefront", category: "Ecommerce", summary: "Clean collection navigation, lookbook product pages, reviews, email capture, and a one-page checkout.", image: "/placeholder-95zgk.png", metrics: [{ label: "Conversion rate", value: "3.8%" }, { label: "AOV", value: "+18%" }, { label: "Launch", value: "5 weeks" }], stack: ["Shopify", "Klaviyo", "Tailwind", "Analytics"] },
-  { id: "spa-booking", title: "Spa treatment booking", category: "Booking", summary: "Treatment picker with stylist preferences, deposits, gift cards, and SMS reminders the morning of.", image: "/placeholder-ks40r.png", metrics: [{ label: "Bookings online", value: "78%" }, { label: "Phone calls", value: "-60%" }, { label: "Gift cards", value: "+£18k/mo" }], stack: ["Astro", "Stripe", "Twilio", "Sheets"] },
-  { id: "order-automation", title: "Ecommerce order automation", category: "Automation", summary: "Order placed → fulfilment alert → label printed → branded receipt → review request 7 days later. All visible in n8n.", image: "/placeholder-49g40.png", metrics: [{ label: "Order handling", value: "Fully auto" }, { label: "Review requests", value: "100%" }, { label: "Manual steps", value: "0" }], stack: ["Shopify", "n8n", "ShipStation", "Klaviyo"] },
-  { id: "fitness-supplements", title: "Fitness supplement store", category: "Ecommerce", summary: "Bundle builder, subscription flow, ingredient transparency, and trust signals tuned for repeat purchase.", image: "/placeholder-7fi4h.png", metrics: [{ label: "Subscription rate", value: "31%" }, { label: "AOV", value: "+24%" }, { label: "Returning", value: "44%" }], stack: ["Shopify", "Recharge", "Klaviyo", "PostgreSQL"] },
-  { id: "ai-support", title: "AI customer support assistant", category: "AI", summary: "Chatbot trained on FAQs, products, returns policy and order data. Hands off to a human with full context when needed.", image: "/data-analytics-dashboard.png", metrics: [{ label: "Auto-resolved", value: "62%" }, { label: "First reply", value: "Instant" }, { label: "CSAT", value: "4.7/5" }], stack: ["OpenAI", "Pinecone", "n8n", "Zendesk"] },
-]
-
-const categories = ["All", "Booking", "Ecommerce", "Automation", "AI"]
-
-const focusAreas = [
-  { title: "Booking websites", description: "Clean booking flows for service businesses that want customers to book without calling.", Icon: Layers, tone: "bg-primary/10 text-primary", points: ["Appointment / class / reservation flows", "Deposit & gift-card payment setup", "Calendar + email/SMS confirmations"] },
-  { title: "Ecommerce stores", description: "Shopify and WooCommerce builds tuned for trust, clarity and checkout speed.", Icon: ShoppingBag, tone: "bg-standout/10 text-standout", points: ["Product, collection and cart polish", "Reviews, trust and email capture", "Subscriptions, bundles, lifecycle emails"] },
-  { title: "Automation + AI", description: "n8n workflows and practical AI tools that remove repetitive admin and chase leads.", Icon: Sparkles, tone: "bg-accent/10 text-accent", points: ["Form → CRM → Slack alerts", "AI chatbots and enquiry summaries", "Order, booking and email automations"] },
-]
-
-const processSteps = [
-  { title: "Plan", description: "Understand the offer, current tools and the workflows you want to fix or build.", detail: "Audit + scope + success metrics", Icon: Search, tone: "bg-primary/10 text-primary" },
-  { title: "Design", description: "Clear pages, simple flows, and visual examples before any code.", detail: "Wireframes, UI mocks, copy direction", Icon: PenTool, tone: "bg-standout/10 text-standout" },
-  { title: "Build", description: "Production-ready websites and stores with analytics, SEO and payment wiring.", detail: "Astro, Shopify, Next.js, Stripe", Icon: Code2, tone: "bg-accent/10 text-accent" },
-  { title: "Automate", description: "n8n flows and AI assistants that handle the repetitive parts after launch.", detail: "n8n, OpenAI, integrations, monitoring", Icon: Rocket, tone: "bg-standout-2-10 text-standout" },
-]
-
-const toolkit = ["Shopify", "WooCommerce", "Astro", "Next.js", "Tailwind", "TypeScript", "Stripe", "Klaviyo", "Calendly", "Cal.com", "n8n", "OpenAI", "Anthropic", "Notion", "Airtable", "Google Sheets", "Slack", "HubSpot", "Pipedrive", "PostgreSQL", "Resend", "Twilio"]
-const TOOLKIT_TONE = ["border-primary bg-primary/10 text-primary", "border-standout bg-standout/10 text-standout", "border-accent bg-accent/10 text-accent", "border-standout-2 bg-standout-2-10 text-standout-2"]
-
-const galleryShots = [
-  { title: "Golf tee-time booking", category: "Booking", description: "Member rates, deposit-on-book, weather-aware availability.", image: "/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg" },
-  { title: "Premium product page", category: "Ecommerce", description: "Lookbook imagery, reviews, trust signals, fast checkout.", image: "/placeholder-ks40r.png" },
-  { title: "Booking admin view", category: "Booking", description: "All bookings, statuses, and payments at a glance for staff.", image: "/placeholder-49g40.png" },
-  { title: "Automation flow in n8n", category: "Automation", description: "Real workflow visible — triggers, AI step, branching, alerts.", image: "/placeholder-95zgk.png" },
-]
-
-const testimonials = [
-  { name: "Lisa Patel", role: "Owner, CargoLine Spa", quote: "Our new booking page took the phone calls down to almost zero. Customers love being able to pick a treatment and stylist in 30 seconds.", outcome: "Online bookings now 78% of total revenue", avatar: "/professional-woman-portrait.png" },
-  { name: "Andre Miller", role: "Founder, Northbeam Apparel", quote: "The Shopify rebuild repositioned the brand and turned the homepage into a sales engine. Subscriptions are now our biggest channel.", outcome: "Conversion up 2.4× and AOV up 18% in the first quarter", avatar: "/professional-man-portrait.png" },
-  { name: "Rachel Gomez", role: "Director, Brevity Yoga", quote: "The automations they built handle every booking confirmation, reminder and renewal email. I genuinely don't think about it anymore.", outcome: "No-shows down 40% and pass renewals up 22%", avatar: "/professional-woman-portrait.png" },
-]
+const cats = ["All", "Ecommerce", "Booking", "Automation", "AI"]
 ---
 
-<Layout title="Work — Studio Duo | Booking pages, ecommerce stores, automations" description="Selected work across booking pages, ecommerce stores, automation flows and AI tools — with the outcomes they produced.">
-  <div class="min-h-screen bg-background">
-    <Navigation />
+<Layout
+  title="Work — Studio Duo"
+  description="A selection of recent builds across ecommerce, booking, automation and AI."
+>
+  <Navigation />
 
-    <main>
-      <section class="relative overflow-hidden bg-section-white py-24 sm:py-32 text-section-white-foreground">
-        <div class="absolute inset-0">
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_transparent_70%)]"></div>
-          <div class="absolute -bottom-24 left-1/2 h-80 w-[36rem] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl"></div>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="/">Studio Duo</a>
+        <span class="sep">/</span>
+        <span>Work</span>
+      </div>
+      <div class="page-head-grid">
+        <div data-reveal>
+          <span class="eyebrow">Selected work</span>
+          <h1>A small portfolio of <em>real builds.</em></h1>
+          <p class="lede">Every project below is a live build. Most are still running. Filter by service or browse the lot — case studies open with the brief, the problem, the build and the numbers.</p>
         </div>
-        <div class="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <Badge variant="secondary" class="mb-6 inline-flex items-center gap-2 bg-standout/20 text-standout border border-standout/30">
-            <Sparkles className="h-4 w-4" /> Bookings • Ecommerce • Automation • AI
-          </Badge>
-          <h1 class="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Booking pages, ecommerce stores and automations — built to drive bookings, sales and time saved.
-          </h1>
-          <p class="mt-6 max-w-3xl text-lg text-muted-foreground sm:text-xl leading-relaxed">
-            Every project below pairs design with a measurable outcome. Filter by what you're after — appointments, products, automations or AI assistants.
-          </p>
-          <div class="mt-10 flex flex-wrap gap-4">
-            <a href="/contact" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium bg-standout text-white hover:bg-standout/90 shadow-lg">
-              Start a project <ArrowRight className="h-5 w-5" />
-            </a>
-          </div>
-
-          <div class="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {
-              heroStats.map(stat => (
-                <div class="card-universal border border-border bg-card/50 backdrop-blur hover:shadow-lg transition-all rounded-xl py-6">
-                  <div class="flex items-start gap-4 px-6">
-                    <div class={`flex h-11 w-11 items-center justify-center rounded-full ${stat.tone}`}>
-                      <stat.Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p class="text-sm uppercase tracking-wider text-muted-foreground">{stat.label}</p>
-                      <p class="mt-2 text-3xl font-bold text-foreground">{stat.value}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
+        <div class="page-head-meta" data-reveal>
+          <div><div class="k">Total shipped</div><div class="v">150+ projects</div></div>
+          <div><div class="k">Retention</div><div class="v">98%</div></div>
+          <div><div class="k">Industries</div><div class="v">Retail, wellness, B2B</div></div>
+          <div><div class="k">Years active</div><div class="v">Since 2021</div></div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <section class="border-b border-border bg-section-muted py-20 sm:py-24">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <div class="space-y-8">
-              <div class="space-y-4">
-                <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Showreel</Badge>
-                <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
-                  Booking, ecommerce and automation — <span class="text-primary">in motion</span>
-                </h2>
-                <p class="max-w-xl text-base text-muted-foreground leading-relaxed">
-                  Watch the actual flows we ship — booking funnels, checkout pages and live n8n automations — so you know exactly what shows up in production.
-                </p>
-              </div>
-              <div class="grid gap-4 sm:grid-cols-2">
-                {
-                  showreelHighlights.map(item => (
-                    <div class="card-universal border border-border bg-card/80 backdrop-blur hover:shadow-md transition-all rounded-xl py-6">
-                      <div class="flex gap-4 px-5">
-                        <div class={`flex h-12 w-12 items-center justify-center rounded-full ${item.tone}`}>
-                          <item.Icon className="h-5 w-5" />
-                        </div>
-                        <div>
-                          <p class="text-sm font-semibold text-foreground">{item.title}</p>
-                          <p class="mt-1 text-sm text-muted-foreground">{item.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                }
-              </div>
-              <a href="/contact?demo=showreel" class="inline-flex items-center gap-2 h-10 px-6 rounded-md font-medium bg-standout text-white hover:bg-standout/90 shadow-lg">
-                Request the private reel
-              </a>
+  <section class="section work-section">
+    <div class="wrap">
+      <div class="work-toolbar">
+        <div class="pills" id="work-pills">
+          {cats.map((c, i) => (
+            <button class={`pill ${i === 0 ? "active" : ""}`} data-cat={c} type="button">{c === "AI" ? "AI tools" : c}</button>
+          ))}
+        </div>
+        <div class="work-count"><span id="work-count">{works.length}</span> projects · 2024 — 2026</div>
+      </div>
+    </div>
+
+    <div class="rail-head wrap">
+      <div data-reveal>
+        <span class="eyebrow">Browse the rail</span>
+        <h2 class="sec-title left">Recent projects, <em>swipe through.</em></h2>
+      </div>
+      <div class="rail-arrows">
+        <button class="arrow-btn" id="work-prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="arrow-btn" id="work-next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="dv2-rail work-rail" id="work-rail" role="region" aria-roledescription="carousel" aria-label="Work projects">
+      <div class="lead" aria-hidden="true"></div>
+      {works.map((w, i) => (
+        <a
+          class={`wcard ${w.feature ? "feature" : ""} ${w.live ? "has-shot" : ""}`}
+          href={w.live ?? "/case-study"}
+          data-preview={w.live ?? undefined}
+          data-preview-title={w.live ? `${w.company} — ${w.title}` : undefined}
+          data-card
+          data-cat={w.category}
+        >
+          <div class={`media ${w.media}`}>
+            {w.image && <img src={w.image} alt={`${w.company} — ${w.title}`} loading="lazy" />}
+            <span class="tag-top">{w.category}</span>
+            <span class="num-corner">{String(i + 1).padStart(2, "0")} / {String(works.length).padStart(2, "0")}</span>
+            {!w.image && <div class="mark">{w.mark}</div>}
+            {w.live && <span class="live-dot" aria-hidden="true">Live</span>}
+          </div>
+          <div class="body">
+            <div class="meta"><span>{w.company}</span><span>2026</span></div>
+            <h3>{w.title}</h3>
+            <p>{w.desc}</p>
+          </div>
+          <div class="foot">
+            <div class="tags">
+              {w.tags.map(t => <span class="t">{t}</span>)}
             </div>
-            <div class="relative">
-              <div class="relative overflow-hidden rounded-3xl border border-border bg-card shadow-xl">
-                <video class="h-full w-full object-cover opacity-80" autoplay loop muted playsinline preload="none" poster="/modern-saas-dashboard-with-dark-blue-and-orange-ge.jpg">
-                  <source src="/background-video.mp4" type="video/mp4" />
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-tr from-black/50 via-black/20 to-transparent pointer-events-none z-0"></div>
-                <div class="absolute top-6 right-6 z-10">
-                  <button type="button" data-open-reel class="group inline-flex items-center gap-2 rounded-2xl bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur transition hover:bg-card hover:text-card-foreground">
-                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-card text-card-foreground">
-                      <Play className="h-3 w-3" />
-                    </span>
-                    Watch reel
-                  </button>
-                </div>
-                <div class="absolute bottom-6 left-6 right-6">
-                  <div class="flex items-center gap-3 text-sm uppercase tracking-wider text-white/80 mb-3">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white">
-                      <Film className="h-4 w-4" />
-                    </div>
-                    In motion
-                  </div>
-                  <p class="text-xl font-semibold text-white">
-                    Automations with safeguards, fast UIs, and clear paths to action on every surface.
-                  </p>
-                </div>
+            <span class="link-arrow">{w.live ? "Preview build" : "Case study"}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      ))}
+      <div class="tail" aria-hidden="true"></div>
+    </div>
+
+    <div class="wrap">
+      <div class="rail-controls">
+        <span class="counter" id="work-counter">01 / {String(works.length).padStart(2, "0")}</span>
+        <div class="progress" id="work-progress"></div>
+        <a class="link-arrow" href="/contact" style="font-size:13px">Ask for the full list →</a>
+      </div>
+    </div>
+
+    <div class="wrap" style="margin-top:90px">
+      <div class="sec-head left" data-reveal style="margin-bottom:32px">
+        <span class="eyebrow">Or browse the grid</span>
+        <h2 class="sec-title">The whole <em>portfolio.</em></h2>
+      </div>
+      <div class="grid-work" id="work-grid">
+        {works.map(w => (
+          <a
+            class={`wcard ${w.feature ? "feature" : ""} ${w.live ? "has-shot" : ""}`}
+            href={w.live ?? "/case-study"}
+            data-preview={w.live ?? undefined}
+            data-preview-title={w.live ? `${w.company} — ${w.title}` : undefined}
+            data-grid-card
+            data-cat={w.category}
+          >
+            <div class={`media ${w.media}`}>
+              {w.image && <img src={w.image} alt={`${w.company} — ${w.title}`} loading="lazy" />}
+              <span class="tag-top">{w.category}</span>
+              {!w.image && <div class="mark">{w.mark}</div>}
+              {w.live && <span class="live-dot" aria-hidden="true">Live</span>}
+            </div>
+            <div class="body">
+              <div class="meta"><span>{w.company}</span><span>2026</span></div>
+              <h3>{w.title}</h3>
+              <p>{w.desc}</p>
+            </div>
+            <div class="foot">
+              <div class="tags">
+                {w.tags.map(t => <span class="t">{t}</span>)}
               </div>
+              <span class="link-arrow">Case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </span>
             </div>
-          </div>
-        </div>
-      </section>
+          </a>
+        ))}
+      </div>
 
-      <section class="bg-section-white py-20 sm:py-24">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
-            <div>
-              <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Spotlight builds</Badge>
-              <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
-                Bookings, stores and automations — built for real businesses
-              </h2>
-              <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
-                Each build pairs automation, web, and internal tooling so teams see value quickly without juggling multiple vendors.
-              </p>
-            </div>
-            <a href="/contact?request=build-walkthrough" class="inline-flex items-center gap-2 h-10 px-6 rounded-md font-medium text-base border-2 border-primary text-primary hover:bg-primary/10 bg-transparent">
-              Book a tailored walkthrough
-            </a>
-          </div>
-        </div>
-        <SpotlightCarousel client:visible projects={spotlightProjects} />
-      </section>
+      <div class="work-empty" id="work-empty" hidden>
+        <p>Nothing in this category yet — but we've probably built something close.</p>
+        <a class="btn btn-ghost" href="/contact">Ask for the full list</a>
+      </div>
 
-      <section id="library" class="border-b border-border bg-section-muted py-20 sm:py-24">
-        <span id="ecommerce" class="block -mt-24 pt-24" aria-hidden="true"></span>
-        <span id="booking" class="block -mt-24 pt-24" aria-hidden="true"></span>
-        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div class="flex flex-wrap items-center justify-between gap-6">
-            <div>
-              <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Project library</Badge>
-              <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
-                Featured <span class="text-primary">outcomes</span> across bookings, ecommerce, automation and AI
-              </h2>
-              <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
-                Filter by the type of build you need. Every project includes discovery, build, analytics, and safeguards so you get production-ready outcomes.
-              </p>
-            </div>
-          </div>
-        </div>
-        <ShowcaseCarousel client:visible projects={projects} categories={categories} />
-      </section>
+      <div style="margin-top:48px;text-align:center">
+        <span class="work-count" style="display:block;margin-bottom:14px">That's the public selection.</span>
+        <a class="btn btn-ghost" href="/contact">Ask for the full list (under NDA)
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
 
-      <section class="bg-section-white py-20 sm:py-24">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div class="text-center">
-            <Badge variant="secondary" class="mx-auto mb-6 bg-standout/20 text-standout border border-standout/30">Areas of focus</Badge>
-            <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
-              Three focused areas: <span class="text-primary">bookings, ecommerce, and automation + AI</span>
-            </h2>
-            <p class="mt-4 max-w-3xl mx-auto text-base text-muted-foreground leading-relaxed">
-              We join as a hands-on partner — mapping the workflows, designing the experience, and shipping the code so your team moves faster without extra headcount.
-            </p>
-          </div>
-          <div class="mt-14 grid gap-8 md:grid-cols-3">
-            {
-              focusAreas.map(a => (
-                <div class="card-universal h-full border border-border bg-card/80 backdrop-blur hover:shadow-lg transition-all rounded-xl py-6">
-                  <div class="px-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 space-y-4">
-                    <div class={`flex h-12 w-12 items-center justify-center rounded-full ${a.tone}`}>
-                      <a.Icon className="h-6 w-6" />
-                    </div>
-                    <div class="text-xl text-foreground leading-none font-semibold">{a.title}</div>
-                    <div class="text-base text-muted-foreground leading-relaxed">{a.description}</div>
-                  </div>
-                  <div class="px-6 space-y-3">
-                    {a.points.map(p => (
-                      <div class="flex items-start gap-3 text-sm text-muted-foreground">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary flex-shrink-0" />
-                        <span>{p}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </section>
+  <section class="section" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:80px 0">
+    <div class="wrap">
+      <div class="sec-head left" data-reveal style="margin-bottom:32px">
+        <span class="eyebrow">By the numbers</span>
+        <h2 class="sec-title">Outcomes across <em>the portfolio.</em></h2>
+      </div>
+      <div class="stats-strip">
+        <div class="cell"><div class="v">+34<em>%</em></div><div class="l">Avg conversion lift</div></div>
+        <div class="cell"><div class="v">−42<em>%</em></div><div class="l">Avg drop-off reduction</div></div>
+        <div class="cell"><div class="v">68<em>%</em></div><div class="l">Enquiries auto-handled</div></div>
+        <div class="cell"><div class="v">98<em>%</em></div><div class="l">Client retention</div></div>
+      </div>
+    </div>
+  </section>
 
-      <section class="bg-section-muted py-20 sm:py-24">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div class="grid gap-10 lg:grid-cols-2">
-            <div class="card-universal border border-border bg-card/80 backdrop-blur shadow-lg hover:shadow-xl transition-all rounded-xl py-6">
-              <div class="px-6 space-y-3">
-                <Badge variant="secondary" class="w-fit bg-standout/20 text-standout border border-standout/30">Process</Badge>
-                <div class="text-2xl text-foreground leading-none font-semibold">
-                  From <span class="text-primary">audit</span> to live automations and web launches
-                </div>
-                <div class="text-base text-muted-foreground leading-relaxed">
-                  Clear milestones, shared notes, and weekly demos so you always know what shipped and what is next.
-                </div>
-              </div>
-              <div class="px-6 space-y-6 mt-6">
-                {
-                  processSteps.map((step, i) => (
-                    <div class="flex gap-4">
-                      <div class={`flex h-12 w-12 items-center justify-center rounded-full font-semibold flex-shrink-0 ${step.tone}`}>
-                        {String(i + 1).padStart(2, "0")}
-                      </div>
-                      <div class="space-y-2">
-                        <div class="flex items-center gap-2">
-                          <step.Icon className="h-5 w-5 text-primary" />
-                          <h3 class="text-lg font-semibold text-foreground">{step.title}</h3>
-                        </div>
-                        <p class="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-                        <p class="text-xs uppercase tracking-wider text-primary">{step.detail}</p>
-                      </div>
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
+  <section class="cta">
+    <div class="cta-inner">
+      <span class="eyebrow">Start a project</span>
+      <h2>Yours next, <em>maybe?</em></h2>
+      <p>Tell us what you want to ship — we'll come back with a plan and a price inside 24 hours.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="/contact">
+          Start a project
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="/services">Browse services</a>
+      </div>
+    </div>
+  </section>
 
-            <div class="card-universal border border-border bg-card/80 backdrop-blur shadow-lg hover:shadow-xl transition-all rounded-xl py-6">
-              <div class="px-6 space-y-3">
-                <Badge variant="secondary" class="w-fit bg-standout/20 text-standout border border-standout/30">Toolkit</Badge>
-                <div class="text-2xl text-foreground leading-none font-semibold">
-                  Tools I <span class="text-primary">reach for</span> often
-                </div>
-                <div class="text-base text-muted-foreground leading-relaxed">
-                  A flexible stack that covers automation, web, and system builds with maintainable handoffs.
-                </div>
-              </div>
-              <div class="px-6 mt-6">
-                <div class="flex flex-wrap gap-3">
-                  {toolkit.map((item, i) => (
-                    <span class={`rounded-full border px-4 py-1 text-sm font-medium transition-colors ${TOOLKIT_TONE[i % TOOLKIT_TONE.length]}`}>{item}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="border-t border-border bg-section-white py-20 sm:py-24">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div class="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <Badge variant="secondary" class="bg-standout/20 text-standout border border-standout/30">Visual gallery</Badge>
-              <h2 class="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
-                Screens from <span class="text-primary">recent booking pages</span>, stores, and automation builds
-              </h2>
-              <p class="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
-                A quick look at the interfaces, dashboards, and flows clients use to run their day-to-day.
-              </p>
-            </div>
-            <a href="/contact?request=portfolio-deck" class="inline-flex items-center gap-2 h-10 px-6 rounded-md font-medium text-base border-2 border-primary text-primary hover:bg-primary/10 bg-transparent">
-              Request full deck
-            </a>
-          </div>
-          <div class="mt-14 grid gap-6 lg:grid-cols-3">
-            {
-              galleryShots.map((shot, i) => (
-                <div class={`group relative overflow-hidden rounded-3xl border border-border bg-muted hover:shadow-xl transition-all ${i === 0 ? "lg:row-span-2" : ""}`}>
-                  <img src={shot.image} alt={shot.title} loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-700 group-hover:opacity-95"></div>
-                  <div class="absolute bottom-6 left-6 right-6 text-white">
-                    <p class="text-xs uppercase tracking-wider text-white/60">{shot.category}</p>
-                    <p class="mt-2 text-xl font-semibold leading-tight">{shot.title}</p>
-                    <p class="mt-3 text-sm text-white/80 leading-relaxed">{shot.description}</p>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </section>
-
-      <section class="bg-section-muted py-20 sm:py-24">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div class="text-center">
-            <Badge variant="secondary" class="mx-auto mb-6 bg-standout/20 text-standout border border-standout/30">Client reflections</Badge>
-            <h2 class="text-3xl font-bold text-foreground sm:text-4xl">
-              Businesses pick us when <span class="text-primary">outcomes</span> matter more than headcount
-            </h2>
-            <p class="mt-4 max-w-3xl mx-auto text-base text-muted-foreground leading-relaxed">
-              Highlights from leaders who needed automation, web, and internal tools shipped by one accountable partner.
-            </p>
-          </div>
-          <div class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {
-              testimonials.map(t => (
-                <div class="card-universal border border-border bg-card/80 backdrop-blur shadow-lg hover:shadow-xl transition-all rounded-xl py-6">
-                  <div class="space-y-6 p-6">
-                    <div class="flex items-center gap-4">
-                      <img src={t.avatar} alt={t.name} loading="lazy" class="h-12 w-12 rounded-full border border-primary/30 object-cover" />
-                      <div>
-                        <p class="font-semibold text-foreground">{t.name}</p>
-                        <p class="text-sm text-muted-foreground">{t.role}</p>
-                      </div>
-                    </div>
-                    <p class="text-base leading-relaxed text-foreground">“{t.quote}”</p>
-                    <div class="flex items-center gap-2 text-sm font-medium text-primary">
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>{t.outcome}</span>
-                    </div>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </section>
-
-      <section class="relative overflow-hidden bg-section-primary py-20 sm:py-24 text-section-primary-foreground">
-        <div class="absolute inset-0">
-          <div class="absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl"></div>
-          <div class="absolute -bottom-40 right-0 h-80 w-80 rounded-full bg-standout/30 blur-3xl"></div>
-        </div>
-        <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <Badge variant="secondary" class="mx-auto mb-6 bg-white/20 text-white border border-white/30">Let’s collaborate</Badge>
-          <h2 class="text-3xl font-bold sm:text-5xl">
-            Ready to take more bookings, sell more products or kill more admin?
-          </h2>
-          <p class="mt-5 text-lg text-section-primary-foreground/90 leading-relaxed">
-            Share the workflows, pages, or tools that need to run better. We'll map the plan, build it, and launch it with instrumentation so you see the impact fast.
-          </p>
-          <div class="mt-8 flex flex-wrap justify-center gap-4">
-            <a href="/contact" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium bg-card text-card-foreground hover:bg-card/90 shadow-lg">Plan my build</a>
-            <a href="/contact" class="inline-flex items-center gap-2 h-10 px-8 rounded-md font-medium border border-white/30 bg-transparent text-white hover:bg-white/10">
-              Get a tailored plan <ArrowRight className="h-5 w-5" />
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <CornerVideoPlayer client:visible />
-    <Footer />
-  </div>
+  <Footer />
 </Layout>
 
+<style is:global>
+  .work-section { padding: 64px 0 110px; }
+  .work-toolbar { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin: 0 0 40px; }
+  .work-count { font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim); letter-spacing: .12em; text-transform: uppercase; }
+  .work-count b { color: var(--ink); font-weight: 500; }
+
+  .rail-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin: 12px auto 30px; }
+  .rail-arrows { display: flex; gap: 10px; align-items: center; }
+  .sec-title.left { text-align: left; max-width: 18ch; }
+
+  /* Carousel rail card sizing --------------------------------- */
+  .work-rail .wcard { width: min(420px, 84vw); flex: 0 0 auto; scroll-snap-align: start; scroll-snap-stop: always; }
+
+  /* Grid view ------------------------------------------------- */
+  .grid-work { display: grid; gap: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 720px)  { .grid-work { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .grid-work { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .grid-work .wcard.feature { grid-column: span 1; }
+  @media (min-width: 1100px) { .grid-work .wcard.feature { grid-column: span 2; } }
+
+  /* Cards (shared by rail + grid) ----------------------------- */
+  .wcard {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: var(--r-lg);
+    overflow: hidden; display: grid; grid-template-rows: auto 1fr auto;
+    transition: transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s cubic-bezier(.32,.72,0,1);
+    text-decoration: none; color: inherit;
+  }
+  .wcard:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .wcard .media { position: relative; aspect-ratio: 16/9; overflow: hidden; background: linear-gradient(135deg, #F7F3EA 0%, #EBD9CC 100%); }
+  .wcard .media.stone  { background: linear-gradient(135deg, #F7F3EA 0%, #E7DED2 100%); }
+  .wcard .media.peach  { background: linear-gradient(135deg, #FFF9EF 0%, #EBD6C8 100%); }
+  .wcard .media.dark   { background: linear-gradient(135deg, #1A1815 0%, #2F2A24 100%); }
+  .wcard .media.copper { background: linear-gradient(135deg, var(--brand), #6B3B2E); }
+  .wcard .media.olive  { background: linear-gradient(135deg, #BFAE8F, #6E6845); }
+  .wcard .media::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(60% 80% at 80% 20%, color-mix(in oklab, var(--brand) 30%, transparent), transparent 70%),
+      radial-gradient(60% 80% at 20% 80%, color-mix(in oklab, var(--brand-2) 25%, transparent), transparent 70%);
+  }
+  .wcard .media .tag-top {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    padding: 6px 10px; border-radius: 8px; background: var(--surface); color: var(--ink);
+    font-family: "Fragment Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+    border: 1px solid var(--hair); box-shadow: var(--shadow-sm);
+  }
+  .wcard .media .num-corner {
+    position: absolute; bottom: 14px; right: 14px; z-index: 2;
+    font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--ink);
+    padding: 4px 8px; border-radius: 6px;
+    background: color-mix(in oklab, var(--surface) 80%, transparent); backdrop-filter: blur(8px);
+  }
+  .wcard .media .mark {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: "Gloock", serif; font-size: 64px; letter-spacing: -.04em;
+    color: var(--ink); opacity: .14; z-index: 1; pointer-events: none;
+    text-align: center; padding: 0 32px; font-weight: 400;
+  }
+  .wcard .media.dark .mark,
+  .wcard .media.copper .mark,
+  .wcard .media.olive .mark { color: var(--surface); opacity: .25; }
+
+  /* Real-build card variant — full-bleed screenshot + live dot */
+  .wcard .media img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
+    transition: transform .6s cubic-bezier(.32,.72,0,1);
+  }
+  .wcard.has-shot:hover .media img { transform: scale(1.03); }
+  .wcard.has-shot .media::before {
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%),
+      radial-gradient(60% 80% at 80% 20%, color-mix(in oklab, var(--brand) 14%, transparent), transparent 70%);
+  }
+  .wcard.has-shot .media .tag-top,
+  .wcard.has-shot .media .num-corner,
+  .wcard.has-shot .media .live-dot { z-index: 2; }
+  .wcard .media .live-dot {
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 10px; border-radius: 999px;
+    background: color-mix(in oklab, #0E1410 70%, transparent); color: #F6F2E8;
+    font-family: "Fragment Mono", monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .14em;
+    backdrop-filter: blur(6px);
+  }
+  .wcard .media .live-dot::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: #7CD08F; box-shadow: 0 0 0 3px color-mix(in oklab, #7CD08F 35%, transparent);
+  }
+
+  .wcard .body { padding: 22px 24px 16px; display: grid; gap: 10px; }
+  .wcard .body .meta { display: flex; justify-content: space-between; align-items: center; font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-dim); text-transform: uppercase; letter-spacing: .14em; }
+  .wcard .body h3 { font-family: "Gloock", serif; font-weight: 400; font-size: 24px; line-height: 1.04; margin: 0; letter-spacing: -.03em; }
+  .wcard .body p { color: var(--muted-ink); margin: 0; font-size: 14.5px; line-height: 1.55; }
+  .wcard .foot { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px 18px; border-top: 1px solid var(--hair-2); }
+  .wcard .foot .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .wcard .foot .t { font-family: "Fragment Mono", monospace; font-size: 11px; padding: 4px 8px; border: 1px solid var(--hair); border-radius: 6px; color: var(--muted-ink); }
+
+  /* Empty filter state ---------------------------------------- */
+  .work-empty { text-align: center; padding: 60px 24px; }
+  .work-empty p { color: var(--muted-ink); margin: 0 0 20px; }
+
+  /* Stats strip ----------------------------------------------- */
+  .stats-strip { display: grid; grid-template-columns: repeat(2,1fr); gap: 0; border: 1px solid var(--hair); border-radius: 16px; overflow: hidden; background: var(--surface); }
+  @media (min-width: 800px) { .stats-strip { grid-template-columns: repeat(4,1fr); } }
+  .stats-strip .cell { padding: 28px 20px; text-align: center; border-right: 1px solid var(--hair); }
+  .stats-strip .cell:last-child { border-right: 0; }
+  .stats-strip .v { font-family: "Gloock", serif; font-size: 38px; letter-spacing: -.04em; line-height: 1; font-weight: 400; }
+  .stats-strip .v em { font-style: normal; background: linear-gradient(135deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stats-strip .l { margin-top: 8px; font-size: 12px; color: var(--muted-ink); font-family: "Fragment Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
+</style>
+
 <script>
-  document.querySelector("[data-open-reel]")?.addEventListener("click", () => {
-    window.dispatchEvent(
-      new CustomEvent("portfolio:open-video", { detail: { url: "/background-video.mp4", title: "Showreel" } }),
-    )
+  import { measureRail, railStep, railSettleIdx } from "@/lib/carouselRail"
+
+  /* ===== Filter pills ===== */
+  const pillsBox = document.getElementById("work-pills")
+  const grid = document.getElementById("work-grid")
+  const countEl = document.getElementById("work-count")
+  const empty = document.getElementById("work-empty")
+  const gridCards = grid ? Array.from(grid.querySelectorAll<HTMLElement>("[data-grid-card]")) : []
+
+  const applyFilter = (cat: string) => {
+    if (!grid || !countEl || !empty) return
+    pillsBox?.querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.cat === cat))
+    let shown = 0
+    for (const card of gridCards) {
+      const match = cat === "All" || card.dataset.cat === cat
+      card.style.display = match ? "" : "none"
+      if (match) shown += 1
+    }
+    countEl.textContent = String(shown)
+    empty.toggleAttribute("hidden", shown > 0)
+  }
+
+  pillsBox?.addEventListener("click", (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>("button")
+    if (b?.dataset.cat) applyFilter(b.dataset.cat)
   })
+
+  const params = new URLSearchParams(window.location.search)
+  const initialCat = params.get("cat") || "All"
+  applyFilter(initialCat)
+
+  /* ===== Smooth-carousel rail ===== */
+  const pad = (n: number) => String(n).padStart(2, "0")
+  const rail = document.getElementById("work-rail") as HTMLElement | null
+  const prev = document.getElementById("work-prev") as HTMLButtonElement | null
+  const next = document.getElementById("work-next") as HTMLButtonElement | null
+  const counter = document.getElementById("work-counter")
+  const progress = document.getElementById("work-progress")
+
+  if (rail && prev && next && counter && progress) {
+    const refresh = () => {
+      const s = measureRail(rail)
+      prev.disabled = !s.canPrev
+      next.disabled = !s.canNext
+      counter.textContent = `${pad(s.index + 1)} / ${pad(s.total)}`
+      const pct = s.total > 1 ? (s.index / (s.total - 1)) * 100 : 0
+      progress.style.setProperty("--p", `${pct}%`)
+    }
+    prev.addEventListener("click", () => { railStep(rail, -1); refresh() })
+    next.addEventListener("click", () => { railStep(rail, 1); refresh() })
+    let settle: number | undefined
+    rail.addEventListener("scroll", () => {
+      if (rail.__animId != null) return
+      if (settle) window.clearTimeout(settle)
+      settle = window.setTimeout(() => {
+        if (rail.__animId == null) railSettleIdx(rail)
+        refresh()
+      }, 140)
+    }, { passive: true })
+    rail.tabIndex = 0
+    rail.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); railStep(rail, -1); refresh() }
+      else if (e.key === "ArrowRight") { e.preventDefault(); railStep(rail, 1); refresh() }
+    })
+    new ResizeObserver(refresh).observe(rail)
+    refresh()
+  }
 </script>

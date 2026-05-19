@@ -20,6 +20,26 @@ function initScrollFade() {
   targets.forEach(el => io.observe(el))
 }
 
+function initDesignV2Reveal() {
+  const targets = document.querySelectorAll<HTMLElement>("[data-reveal]")
+  if (!targets.length || !supportsIO) {
+    targets.forEach(el => el.classList.add("in"))
+    return
+  }
+  const io = new IntersectionObserver(
+    entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in")
+          io.unobserve(entry.target)
+        }
+      }
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+  )
+  targets.forEach(el => io.observe(el))
+}
+
 function initParallax() {
   const els = Array.from(document.querySelectorAll<HTMLElement>(".parallax-bg"))
   if (!els.length) return
@@ -45,6 +65,7 @@ function initParallax() {
 function run() {
   initScrollFade()
   initParallax()
+  initDesignV2Reveal()
 }
 
 if (document.readyState === "loading") {

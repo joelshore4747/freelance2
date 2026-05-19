@@ -1983,8 +1983,9 @@ html[data-env="development"] .bg-standout-subtle {
     radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 40%),
     radial-gradient(circle at 70% 80%, rgba(189,166,155,.35), transparent 45%);
 }
-.sd-nav-center { display: none; align-items: center; gap: 4px; }
+.sd-nav-center { display: none; align-items: center; gap: 2px; }
 @media (min-width: 900px) { .sd-nav-center { display: flex; } }
+@media (min-width: 1100px) { .sd-nav-center { gap: 6px; } }
 .sd-nav-link {
   display: inline-flex;
   align-items: center;

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Work — Studio Duo</title>
+<meta name="description" content="A selection of recent builds across ecommerce, booking, automation and AI." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .work-toolbar {
+    display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    margin: 0 0 40px;
+  }
+  .work-count { font-family: "Fragment Mono", monospace; font-size: 12px; color: var(--muted-dim); letter-spacing: .12em; text-transform: uppercase; }
+  .work-count b { color: var(--ink); font-weight: 500; }
+
+  .grid-work {
+    display: grid; gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) { .grid-work { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .grid-work { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .wcard {
+    background: var(--surface); border: 1px solid var(--hair); border-radius: var(--r-lg);
+    overflow: hidden; display: grid; grid-template-rows: auto 1fr auto;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .wcard:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .wcard.feature { grid-column: span 1; }
+  @media (min-width: 1100px) { .wcard.feature { grid-column: span 2; } }
+
+  .wcard .media {
+    position: relative; aspect-ratio: 16/9; overflow: hidden;
+    background: linear-gradient(135deg, #F7F3EA 0%, #EBD9CC 100%);
+  }
+  .wcard .media.stone { background: linear-gradient(135deg, #F7F3EA 0%, #E7DED2 100%); }
+  .wcard .media.peach { background: linear-gradient(135deg, #FFF9EF 0%, #EBD6C8 100%); }
+  .wcard .media.dark { background: linear-gradient(135deg, #1A1815 0%, #2F2A24 100%); }
+  .wcard .media.copper { background: linear-gradient(135deg, var(--brand), #6B3B2E); }
+  .wcard .media.olive { background: linear-gradient(135deg, #BFAE8F, #6E6845); }
+  .wcard .media::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(60% 80% at 80% 20%, color-mix(in oklab, var(--brand) 30%, transparent), transparent 70%),
+      radial-gradient(60% 80% at 20% 80%, color-mix(in oklab, var(--brand-2) 25%, transparent), transparent 70%);
+  }
+
+  .wcard .media .tag-top {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    padding: 6px 10px; border-radius: 8px; background: var(--surface); color: var(--ink);
+    font-family: "Fragment Mono", monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: .1em;
+    border: 1px solid var(--hair); box-shadow: var(--shadow-sm);
+  }
+  .wcard .media .num-corner {
+    position: absolute; bottom: 14px; right: 14px; z-index: 2;
+    font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--ink);
+    padding: 4px 8px; border-radius: 6px;
+    background: color-mix(in oklab, var(--surface) 80%, transparent); backdrop-filter: blur(8px);
+  }
+  .wcard .media .mark {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: "Gloock", serif; font-size: 64px; letter-spacing: -.04em;
+    color: var(--ink); opacity: .14; z-index: 1; pointer-events: none;
+    text-align: center; padding: 0 32px;
+  }
+  .wcard .media.dark .mark, .wcard .media.copper .mark, .wcard .media.olive .mark { color: var(--surface); opacity: .25; }
+
+  .wcard .body { padding: 22px 24px 16px; display: grid; gap: 10px; }
+  .wcard .body .meta { display: flex; justify-content: space-between; align-items: center; font-family: "Fragment Mono", monospace; font-size: 11px; color: var(--muted-dim); text-transform: uppercase; letter-spacing: .14em; }
+  .wcard .body h3 { font-size: 24px; line-height: 1.04; margin: 0; }
+  .wcard .body p { color: var(--muted); margin: 0; font-size: 14.5px; line-height: 1.55; }
+
+  .wcard .foot { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px 18px; border-top: 1px solid var(--hair-2); }
+  .wcard .foot .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .wcard .foot .t { font-family: "Fragment Mono", monospace; font-size: 11px; padding: 4px 8px; border: 1px solid var(--hair); border-radius: 6px; color: var(--muted); }
+
+  /* Stats strip */
+  .stats-strip { display: grid; grid-template-columns: repeat(2,1fr); gap: 0; border: 1px solid var(--hair); border-radius: 16px; overflow: hidden; background: var(--surface); }
+  @media (min-width: 800px) { .stats-strip { grid-template-columns: repeat(4,1fr); } }
+  .stats-strip .cell { padding: 28px 20px; text-align: center; border-right: 1px solid var(--hair); }
+  .stats-strip .cell:last-child { border-right: 0; }
+  .stats-strip .v { font-family: "Gloock", serif; font-size: 38px; letter-spacing: -.04em; line-height: 1; }
+  .stats-strip .v em { font-style: normal; background: linear-gradient(135deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stats-strip .l { margin-top: 8px; font-size: 12px; color: var(--muted); font-family: "Fragment Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
+</style>
+</head>
+<body data-page="work">
+
+<div data-slot="topbar"></div>
+<div data-slot="nav"></div>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumb">
+      <a href="index.html">Studio Duo</a>
+      <span class="sep">/</span>
+      <span>Work</span>
+    </div>
+    <div class="page-head-grid">
+      <div>
+        <span class="eyebrow">Selected work</span>
+        <h1>A small portfolio of <em>real builds.</em></h1>
+        <p class="lede">Every project below is a live build. Most are still running. Filter by service or browse the lot — case studies open with the brief, the problem, the build and the numbers.</p>
+      </div>
+      <div class="page-head-meta">
+        <div><div class="k">Total shipped</div><div class="v">150+ projects</div></div>
+        <div><div class="k">Retention</div><div class="v">98%</div></div>
+        <div><div class="k">Industries</div><div class="v">Retail, wellness, B2B</div></div>
+        <div><div class="k">Years active</div><div class="v">Since 2021</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding:64px 0 110px">
+  <div class="wrap">
+
+    <div class="work-toolbar">
+      <div class="pills" id="work-pills">
+        <button class="pill active" data-cat="All">All</button>
+        <button class="pill" data-cat="Ecommerce">Ecommerce</button>
+        <button class="pill" data-cat="Booking">Booking</button>
+        <button class="pill" data-cat="Automation">Automation</button>
+        <button class="pill" data-cat="AI">AI tools</button>
+      </div>
+      <div class="work-count"><span id="work-count">12</span> projects · 2024 — 2026</div>
+    </div>
+
+    <div class="grid-work" id="work-grid"></div>
+
+    <div style="margin-top:48px;text-align:center">
+      <span class="work-count" style="display:block;margin-bottom:14px">That's the public selection.</span>
+      <a class="btn btn-ghost" href="contact.html">Ask for the full list (under NDA)
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Outcomes strip -->
+<section class="section" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:80px 0">
+  <div class="wrap">
+    <div class="sec-head left" data-reveal style="margin-bottom:32px;text-align:left;justify-items:start">
+      <span class="eyebrow">By the numbers</span>
+      <h2 class="sec-title" style="margin-top:8px">Outcomes across <em>the portfolio.</em></h2>
+    </div>
+    <div class="stats-strip">
+      <div class="cell"><div class="v">+34<em>%</em></div><div class="l">Avg conversion lift</div></div>
+      <div class="cell"><div class="v">−42<em>%</em></div><div class="l">Avg drop-off reduction</div></div>
+      <div class="cell"><div class="v">68<em>%</em></div><div class="l">Enquiries auto-handled</div></div>
+      <div class="cell"><div class="v">98<em>%</em></div><div class="l">Client retention</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap cta-inner">
+    <span class="eyebrow">Start a project</span>
+    <h2>Yours next, <em>maybe?</em></h2>
+    <p>Tell us what you want to ship — we'll come back with a plan and a price inside 24 hours.</p>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href="contact.html">
+        Start a project
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="services.html">Browse services</a>
+    </div>
+  </div>
+</section>
+
+<div data-slot="footer"></div>
+
+<script src="assets/partials.js"></script>
+<script>
+  const WORKS = [
+    { id: 1, title: "Subscription store, doubled", company: "Roma Supplements", category: "Ecommerce",
+      desc: "Subscribe-and-save flow with bundle discounts, account portal and churn-saver emails.",
+      tags: ["Shopify","Subscriptions","Klaviyo"], media: "peach", feature: true, mark: "Roma" },
+    { id: 2, title: "Bookings paid in the first weekend", company: "Bloom Hair & Beauty", category: "Booking",
+      desc: "Salon booking with deposits, reminders and a stylist-by-stylist flow.",
+      tags: ["Booking","Stripe","SMS"], media: "stone", mark: "Bloom" },
+    { id: 3, title: "An n8n flow that runs admin", company: "Ledger & Co", category: "Automation",
+      desc: "Enquiry → enrichment → AI summary → CRM, with a Slack alert at every step.",
+      tags: ["n8n","AI","HubSpot"], media: "dark", mark: "Ledger" },
+    { id: 4, title: "Class schedule that fills itself", company: "Yoga concept", category: "Booking",
+      desc: "Capacity, waitlists, member passes and the reminder cadence that keeps mats full.",
+      tags: ["Booking","Memberships"], media: "", mark: "Yoga" },
+    { id: 5, title: "Support chatbot that answers 70%", company: "Stille Skincare", category: "AI",
+      desc: "Trained on FAQs, product docs and order history. Honest 'I don't know' mode included.",
+      tags: ["OpenAI","Zendesk","Shopify"], media: "copper", mark: "Stille" },
+    { id: 6, title: "Tee-time booking, member-aware", company: "Concept · Golf club", category: "Booking",
+      desc: "Member rates, deposits, weather-aware reminders and a clean admin panel.",
+      tags: ["Booking","Calendar","Stripe"], media: "olive", mark: "Tee-time" },
+    { id: 7, title: "Northline editorial relaunch", company: "Northline Studio", category: "Ecommerce",
+      desc: "Headless storefront with editorial cadence — sections feel hand-set, but they're CMS-driven.",
+      tags: ["Shopify","Sanity","Tailwind"], media: "stone", feature: true, mark: "Northline" },
+    { id: 8, title: "Enquiry triage with AI summaries", company: "Northwind Studio", category: "Automation",
+      desc: "Form → enriched → AI summary → assigned to the right partner. 3-minute response promise.",
+      tags: ["n8n","OpenAI","Slack"], media: "dark", mark: "Triage" },
+    { id: 9, title: "Outbound copilot for SDRs", company: "Reach (internal tool)", category: "AI",
+      desc: "Human-in-the-loop assistant with hard guardrails and a complete audit trail.",
+      tags: ["Python","FastAPI","LLM"], media: "copper", mark: "Reach" },
+    { id: 10, title: "Maple onboarding rebuilt", company: "Maple", category: "Ecommerce",
+      desc: "From cold visitor to verified account in under three minutes — measured across 8,000 sessions.",
+      tags: ["TypeScript","Stripe","Plaid"], media: "peach", mark: "Maple" },
+    { id: 11, title: "Clinic intake & reminders", company: "Atlas Health", category: "Booking",
+      desc: "Frictionless intake form, calmer scheduling flow, measurable drop-off reductions.",
+      tags: ["Booking","HIPAA-style","SMS"], media: "", mark: "Atlas" },
+    { id: 12, title: "Product description generator", company: "Field & Foundry", category: "AI",
+      desc: "Brand-trained generator that drafts product copy in three voices, with editor approval.",
+      tags: ["OpenAI","Notion","Shopify"], media: "olive", mark: "F&F" },
+  ];
+
+  const grid = document.getElementById("work-grid");
+  const pillsBox = document.getElementById("work-pills");
+  const countEl = document.getElementById("work-count");
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function render(list) {
+    grid.innerHTML = list.map((w, i) => `
+      <a class="wcard ${w.feature ? 'feature' : ''}" href="case-study.html">
+        <div class="media ${w.media || ''}">
+          <span class="tag-top">${w.category}</span>
+          <span class="num-corner">${pad(i+1)} / ${pad(list.length)}</span>
+          <div class="mark">${w.mark}</div>
+        </div>
+        <div class="body">
+          <div class="meta"><span>${w.company}</span><span>2026</span></div>
+          <h3>${w.title}</h3>
+          <p>${w.desc}</p>
+        </div>
+        <div class="foot">
+          <div class="tags">${w.tags.map(t => `<span class="t">${t}</span>`).join("")}</div>
+          <span class="link-arrow">Case study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+    `).join("");
+    countEl.textContent = list.length;
+  }
+
+  function filter(cat) {
+    [...pillsBox.children].forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+    render(cat === "All" ? WORKS : WORKS.filter(w => w.category === cat));
+  }
+
+  pillsBox.addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (b) filter(b.dataset.cat);
+  });
+
+  // honour ?cat= param
+  const params = new URLSearchParams(location.search);
+  const initial = params.get("cat") || "All";
+  filter(initial);
+</script>
+
+</body>
+</html>
